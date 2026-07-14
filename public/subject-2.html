@@ -1,1 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Grade 12 Learning - Choose Your Subject</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           1. DESIGN SYSTEM TOKENS & SYSTEM VARIABLES
+           ========================================================================== */
+        :root {
+            /* Brand Color Space */
+            --brand-primary: #1d68f2;
+            --brand-primary-rgb: 29, 104, 242;
+            --brand-hover: #1153cb;
+            --brand-active: #0a3da1;
+            --brand-light: #eff6ff;
+            --brand-border: #dbeafe;
+            
+            /* High-Contrast Typography Colorways */
+            --color-text-title: #07122c;
+            --color-text-body: #4b5b75;
+            --color-text-muted: #64748b;
+            
+            /* Layout Grid Borders & Surfaces */
+            --color-border-light: #f1f5f9;
+            --color-border-medium: #cbd5e1;
+            --bg-canvas: #f8fafc;
+            --bg-card: #ffffff;
+            
+            /* Fluid Easing Curves & Transitions */
+            --easing-fluid: cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-speed: 0.25s;
+            --transition-smooth: all var(--transition-speed) var(--easing-fluid);
+            
+            /* Micro-Shadow Profiles matching the design blueprint */
+            --shadow-subtle: 0 4px 20px rgba(29, 104, 242, 0.015);
+            --shadow-hover: 0 12px 36px rgba(29, 104, 242, 0.04);
+            --shadow-soft-card: 0 8px 30px rgba(0, 0, 0, 0.02);
+        }
+
+        /* ==========================================================================
+           2. GLOBAL RESET & SIDEWAYS SCROLL SHIELD
+           ========================================================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+            background-color: var(--bg-canvas);
+            color: var(--color-text-title);
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            
+            /* Absolute Structural Shield: Prevents accidental horizontal layout breaks */
+            overflow-x: hidden !important; 
+            
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        /* ==========================================================================
+           3. APP STRUCTURAL CONTAINER
+           ========================================================================== */
+        .app-root {
+            width: 100%;
+            max-width: 1024px; /* Matches the exact width envelope of the tablet/desktop layout */
+            padding: 0 24px 80px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            box-sizing: border-box;
+        }
+
+        /* ==========================================================================
+           4. NAVIGATION BAR MODULE
+           ========================================================================== */
+        .navigation-outer-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            background: transparent;
+            z-index: 100;
+        }
+
+        .navigation-bar {
+            width: 100%;
+            max-width: 1024px;
+            padding: 32px 24px 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: transparent;
+            box-sizing: border-box;
+        }
+
+        .brand-identity {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--color-text-title);
+            font-weight: 800;
+            font-size: 1.65rem;
+            letter-spacing: -0.8px;
+            user-select: none;
+            transition: var(--transition-smooth);
+        }
+
+        .brand-identity:hover {
+            opacity: 0.95;
+        }
+
+        .brand-logo-container svg {
+            width: 38px;
+            height: 38px;
+            fill: none;
+            stroke: var(--brand-primary);
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .brand-identity span {
+            color: var(--brand-primary);
+            font-weight: 600;
+        }
+
+        .user-account-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
+            padding: 4px;
+            border-radius: 50px;
+            transition: var(--transition-smooth);
+        }
+
+        .user-account-menu:hover {
+            opacity: 0.85;
+        }
+
+        .user-avatar-wrapper {
+            width: 38px;
+            height: 38px;
+            background-color: var(--brand-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+        }
+
+        .user-avatar-wrapper svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--brand-primary);
+        }
+
+        .user-greeting {
+            font-weight: 600;
+            font-size: 0.98rem;
+            color: var(--color-text-title);
+            letter-spacing: -0.2px;
+        }
+
+        .dropdown-chevron-icon {
+            width: 12px;
+            height: 12px;
+            stroke: var(--brand-primary);
+            stroke-width: 2.5;
+            fill: none;
+            margin-left: 2px;
+        }
+
+        /* ==========================================================================
+           5. HERO PAGE HEADER (ROUNDED SQUIRCLE MATCH)
+           ========================================================================== */
+        .page-hero {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-top: 8px;
+            background: transparent;
+            box-sizing: border-box;
+        }
+
+        .hero-illustration-wrapper {
+            width: 80px;
+            height: 80px;
+            background-color: var(--brand-light);
+            border: 1px solid var(--brand-border);
+            border-radius: 22px; /* Precision squircle radius matched to photo */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .hero-illustration-wrapper svg {
+            width: 38px;
+            height: 38px;
+            stroke: var(--brand-primary);
+            stroke-width: 1.8;
+            fill: none;
+        }
+
+        .hero-text-block h1 {
+            font-size: 2.35rem;
+            font-weight: 800;
+            letter-spacing: -1.2px;
+            margin-bottom: 6px;
+            color: var(--color-text-title);
+            line-height: 1.15;
+        }
+
+        .hero-text-block p {
+            font-size: 1.05rem;
+            color: var(--color-text-body);
+            font-weight: 500;
+            line-height: 1.45;
+        }
+
+        /* ==========================================================================
+           6. SUBJECT MODULE GRID (RESPONSIVE GRID SYSTEMS)
+           ========================================================================== */
+        .subject-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr)); /* Prevent card components from overflowing outer scope boundaries */
+            gap: 24px;
+            box-sizing: border-box;
+        }
+
+        .subject-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 36px;
+            border: 1px solid rgba(226, 232, 240, 0.7);
+            box-shadow: var(--shadow-soft-card);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 290px;
+            transition: var(--transition-smooth);
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(29, 104, 242, 0.15);
+        }
+
+        .subject-card-header {
+            margin-bottom: 24px;
+        }
+
+        .subject-icon-box {
+            width: 68px;
+            height: 68px;
+            background-color: var(--brand-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            transition: var(--transition-smooth);
+        }
+
+        .subject-icon-box svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--brand-primary);
+            stroke-width: 1.8;
+            fill: none;
+        }
+
+        .subject-card h2 {
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--color-text-title);
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .subject-card p {
+            font-size: 0.95rem;
+            color: var(--color-text-body);
+            line-height: 1.55;
+            font-weight: 500;
+        }
+
+        .subject-card-action-row {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 100%;
+        }
+
+        .subject-action-btn {
+            width: 52px;
+            height: 52px;
+            border: 1px solid var(--color-border-light);
+            background: var(--bg-card);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .subject-action-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--brand-primary);
+            stroke-width: 2.2;
+            fill: none;
+            transition: var(--transition-smooth);
+        }
+
+        .subject-card:hover .subject-action-btn {
+            background-color: var(--brand-primary);
+            border-color: var(--brand-primary);
+        }
+
+        .subject-card:hover .subject-action-btn svg {
+            stroke: #ffffff;
+            transform: translateX(2px);
+        }
+
+        /* ==========================================================================
+           7. VALUE PROP FEATURES SECTION (4-COLUMN ROW)
+           ========================================================================== */
+        .features-horizontal-bar {
+            background: var(--bg-card);
+            border: 1px solid rgba(226, 232, 240, 0.7);
+            border-radius: 24px;
+            padding: 32px;
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            box-shadow: var(--shadow-soft-card);
+            box-sizing: border-box;
+        }
+
+        .feature-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 8px 16px;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        /* Architectural Dividers */
+        .feature-node:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 15%;
+            height: 70%;
+            width: 1px;
+            background-color: var(--color-border-light);
+        }
+
+        .feature-icon-wrapper {
+            width: 52px;
+            height: 52px;
+            background-color: var(--brand-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+
+        .feature-icon-wrapper svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--brand-primary);
+            stroke-width: 1.8;
+            fill: none;
+        }
+
+        .feature-node h3 {
+            font-size: 0.96rem;
+            font-weight: 800;
+            color: var(--color-text-title);
+            margin-bottom: 8px;
+            letter-spacing: -0.2px;
+        }
+
+        .feature-node p {
+            font-size: 0.8rem;
+            color: var(--color-text-body);
+            line-height: 1.45;
+            font-weight: 500;
+            max-width: 185px;
+        }
+
+        /* ==========================================================================
+           8. SYSTEM BULLETINS & SECURITY NOTIFIERS
+           ========================================================================== */
+        .dashboard-tip-card {
+            background-color: #f0f7ff;
+            border: 1px solid rgba(219, 234, 254, 0.6);
+            border-radius: 16px;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-sizing: border-box;
+        }
+
+        .dashboard-tip-card svg {
+            width: 22px;
+            height: 22px;
+            stroke: var(--brand-primary);
+            stroke-width: 2;
+            fill: none;
+            flex-shrink: 0;
+        }
+
+        .dashboard-tip-card p {
+            font-size: 0.92rem;
+            color: var(--color-text-body);
+            font-weight: 600;
+        }
+
+        .encryption-status-card {
+            background-color: #f8fafc;
+            border: 1px solid rgba(226, 232, 240, 0.7);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            box-sizing: border-box;
+        }
+
+        .encryption-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .encryption-left svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--brand-primary);
+            stroke-width: 2;
+            fill: none;
+            flex-shrink: 0;
+        }
+
+        .encryption-text h4 {
+            font-size: 0.96rem;
+            font-weight: 800;
+            color: var(--color-text-title);
+            margin-bottom: 2px;
+        }
+
+        .encryption-text p {
+            font-size: 0.85rem;
+            color: var(--color-text-body);
+            font-weight: 500;
+        }
+
+        .encryption-link {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--brand-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            white-space: nowrap;
+            transition: var(--transition-smooth);
+        }
+
+        .encryption-link svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--brand-primary);
+            stroke-width: 2.5;
+            fill: none;
+            transition: var(--transition-smooth);
+        }
+
+        .encryption-link:hover {
+            color: var(--brand-hover);
+        }
+
+        .encryption-link:hover svg {
+            transform: translateX(2px);
+            stroke: var(--brand-hover);
+        }
+
+        /* ==========================================================================
+           9. BRAND FOOTER
+           ========================================================================== */
+        .page-footer {
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            font-weight: 600;
+            border-top: 1px solid var(--color-border-light);
+            padding-top: 24px;
+            margin-top: 12px;
+        }
+
+        /* ==========================================================================
+           10. SCREEN ADAPTATION BREAKPOINTS (0% SIDE-SCROLL SHIELD ACTIVE)
+           ========================================================================== */
+        @media (max-width: 1024px) {
+            .app-root {
+                padding: 0 20px 64px 20px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .features-horizontal-bar {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 24px;
+                padding: 24px;
+            }
+            .feature-node::after {
+                display: none !important; /* Strips vertical border lines when stacked to prevent UI clipping */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navigation-bar {
+                padding: 24px 20px 16px 20px;
+            }
+            .app-root {
+                gap: 24px;
+            }
+            .page-hero {
+                gap: 16px;
+                margin-top: 4px;
+            }
+            .hero-illustration-wrapper {
+                width: 64px;
+                height: 64px;
+                border-radius: 16px;
+            }
+            .hero-illustration-wrapper svg {
+                width: 30px;
+                height: 30px;
+            }
+            .hero-text-block h1 {
+                font-size: 1.95rem;
+            }
+            .hero-text-block p {
+                font-size: 0.92rem;
+            }
+            .subject-cards-grid {
+                grid-template-columns: 1fr; /* Pure vertical linearity prevents horizontal layout breaks on small tablets */
+                gap: 20px;
+            }
+            .subject-card {
+                padding: 28px;
+                min-height: auto;
+            }
+            .subject-icon-box {
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .brand-identity {
+                font-size: 1.35rem;
+            }
+            .brand-logo-container svg {
+                width: 32px;
+                height: 32px;
+            }
+            .user-greeting {
+                display: none; /* Flexibly hides greeting to preserve status bar space on thin devices */
+            }
+            .user-avatar-wrapper {
+                width: 34px;
+                height: 34px;
+            }
+            .dropdown-chevron-icon {
+                display: none;
+            }
+            .features-horizontal-bar {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+            .encryption-status-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+                padding: 20px;
+            }
+            .encryption-link {
+                align-self: flex-start;
+                padding-top: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navigation-outer-container">
+        <div class="navigation-bar">
+            <a href="#" class="brand-identity">
+                <div class="brand-logo-container">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                        <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/>
+                    </svg>
+                </div>
+                Grade 12 <span>Learning</span>
+            </a>
+            <div class="user-account-menu">
+                <div class="user-avatar-wrapper">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                </div>
+                <span class="user-greeting">Hi, Paul</span>
+                <svg class="dropdown-chevron-icon" viewBox="0 0 24 24">
+                    <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+    </nav>
+
+    <div class="app-root">
+        
+        <header class="page-hero">
+            <div class="hero-illustration-wrapper">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                </svg>
+            </div>
+            <div class="hero-text-block">
+                <h1>Choose Your Subject</h1>
+                <p>Select a subject to explore past exam papers and watch step-by-step video explanations.</p>
+            </div>
+        </header>
+
+        <main class="subject-cards-grid">
+            
+            <section class="subject-card">
+                <div class="subject-card-header">
+                    <div class="subject-icon-box">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 12h2l3 9 4-15h9"/>
+                            <path d="M14 11l4 4M18 11l-4 4"/>
+                        </svg>
+                    </div>
+                    <h2>Mathematics</h2>
+                    <p>Access past exam papers and master every question with clear explanations.</p>
+                </div>
+                <div class="subject-card-action-row">
+                    <button class="subject-action-btn" aria-label="Go to Mathematics">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </section>
+
+            <section class="subject-card">
+                <div class="subject-card-header">
+                    <div class="subject-icon-box">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 3h12M12 3v13M10 12h4M5 21h14M7 3l4.5 9.5a1 1 0 0 1 0 1L7 21h10l-4.5-7.5a1 1 0 0 1 0-1L17 3H7z"/>
+                        </svg>
+                    </div>
+                    <h2>Physical Sciences</h2>
+                    <p>Step-by-step solutions to help you understand and excel in Physical Sciences.</p>
+                </div>
+                <div class="subject-card-action-row">
+                    <button class="subject-action-btn" aria-label="Go to Physical Sciences">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </section>
+
+            <section class="subject-card">
+                <div class="subject-card-header">
+                    <div class="subject-icon-box">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+                            <line x1="8" y1="6" x2="16" y2="6"/>
+                            <line x1="16" y1="10" x2="16" y2="18"/>
+                            <circle cx="8" cy="11" r="1"/>
+                            <circle cx="12" cy="11" r="1"/>
+                            <circle cx="8" cy="15" r="1"/>
+                            <circle cx="12" cy="15" r="1"/>
+                        </svg>
+                    </div>
+                    <h2>Accounting</h2>
+                    <p>Detailed explanations to strengthen your Accounting skills and confidence.</p>
+                </div>
+                <div class="subject-card-action-row">
+                    <button class="subject-action-btn" aria-label="Go to Accounting">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </section>
+
+            <section class="subject-card">
+                <div class="subject-card-header">
+                    <div class="subject-icon-box">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10" stroke-width="2.5"/>
+                            <line x1="12" y1="20" x2="12" y2="4" stroke-width="2.5"/>
+                            <line x1="6" y1="20" x2="6" y2="14" stroke-width="2.5"/>
+                        </svg>
+                    </div>
+                    <h2>Mathematical Literacy</h2>
+                    <p>Learn concepts step-by-step and improve your problem-solving skills.</p>
+                </div>
+                <div class="subject-card-action-row">
+                    <button class="subject-action-btn" aria-label="Go to Mathematical Literacy">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            </section>
+
+        </main>
+
+        <section class="features-horizontal-bar">
+            
+            <div class="feature-node">
+                <div class="feature-icon-wrapper">
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polygon points="10 8 16 12 10 16 10 8"/>
+                    </svg>
+                </div>
+                <h3>Video Explanations</h3>
+                <p>Watch clear, step-by-step solutions for every question.</p>
+            </div>
+
+            <div class="feature-node">
+                <div class="feature-icon-wrapper">
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10 9 9 9 8 9"/>
+                    </svg>
+                </div>
+                <h3>Past Exam Papers</h3>
+                <p>Access a wide range of papers by year and subject.</p>
+            </div>
+
+            <div class="feature-node">
+                <div class="feature-icon-wrapper">
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <circle cx="12" cy="12" r="6"/>
+                        <circle cx="12" cy="12" r="2"/>
+                    </svg>
+                </div>
+                <h3>Learn at Your Pace</h3>
+                <p>Pause, rewind and replay until you truly understand.</p>
+            </div>
+
+            <div class="feature-node">
+                <div class="feature-icon-wrapper">
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                        <polyline points="17 6 23 6 23 12"/>
+                    </svg>
+                </div>
+                <h3>Improve & Succeed</h3>
+                <p>Practice more, learn better and boost your results.</p>
+            </div>
+
+        </section>
+
+        <section class="dashboard-tip-card">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.5 1.5-3.5A5.5 5.5 0 0 0 12.5 2.5a5.5 5.5 0 0 0-5.5 5.5c0 1.3.5 2.5 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/>
+                <path d="M9 18h6M10 22h4"/>
+            </svg>
+            <p>Tip: You can change your subject anytime from the dashboard.</p>
+        </section>
+
+        <section class="encryption-status-card">
+            <div class="encryption-left">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <div class="encryption-text">
+                    <h4>Your data is secure</h4>
+                    <p>Your progress and information are encrypted and stored securely.</p>
+                </div>
+            </div>
+            <a href="#" class="encryption-link">
+                Learn more 
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </section>
+
+        <footer class="page-footer">
+            &copy; 2026 Grade 12 Learning. All rights reserved.
+        </footer>
+
+    </div>
+
+</body>
+</html>
 
