@@ -2,48 +2,42 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Grade 12 Learning - Mathematics Question Workspace</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 12 Learning - Mathematics 2025 Paper 1</title>
     
+    <!-- Premium Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
+    <!-- Math Formula Typesetting Engine (KaTeX) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="initializeMathematicalTypesetting()"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="initializeMath()"></script>
 
     <style>
         /* ==========================================================================
-           1. CORE DESIGN SYSTEM & VARIABLES
+           1. MODERN MODERNIST BRAND COLOR PALETTE
            ========================================================================== */
         :root {
             --brand-primary: #1d68f2;
-            --brand-primary-rgb: 29, 104, 242;
             --brand-hover: #1153cb;
-            --brand-active: #0a3da1;
-            --brand-light: #eff6ff;
-            --brand-border: #dbeafe;
+            --brand-light-bg: #f5f8ff;
+            --brand-accent-green: #e6f7ed;
+            --brand-text-green: #1f8a4c;
             
-            --color-text-title: #07122c;
-            --color-text-body: #4b5b75;
-            --color-text-muted: #64748b;
-            
+            --color-title: #07122c;
+            --color-body: #4b5b75;
+            --color-muted: #64748b;
+            --color-border: #e2e8f0;
             --color-border-light: #f1f5f9;
-            --color-border-card: #e2e8f0;
-            --color-border-active: #cbd5e1;
             
             --bg-canvas: #f8fafc;
             --bg-card: #ffffff;
             
-            --easing-fluid: cubic-bezier(0.4, 0, 0.2, 1);
-            --transition-speed: 0.28s;
-            --transition-smooth: all var(--transition-speed) var(--easing-fluid);
-            
-            --shadow-subtle: 0 4px 20px rgba(29, 104, 242, 0.015);
-            --shadow-hover: 0 12px 36px rgba(29, 104, 242, 0.05);
-            --shadow-soft-card: 0 8px 30px rgba(0, 0, 0, 0.02);
-            --shadow-modal: 0 24px 60px rgba(7, 18, 44, 0.16);
+            --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.02);
+            --shadow-card: 0 8px 30px rgba(7, 18, 44, 0.03);
+            --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         /* ==========================================================================
@@ -53,948 +47,773 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html {
-            font-size: 16px;
-            scroll-behavior: smooth;
-            text-rendering: optimizeLegibility;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            width: 100%;
-            height: 100%;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
         body {
-            width: 100%;
-            min-height: 100vh;
             background-color: var(--bg-canvas);
-            color: var(--color-text-title);
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            overflow-x: hidden !important; 
-            position: relative;
+            color: var(--color-body);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: flex-start;
+            overflow-x: hidden;
+            padding: 0;
         }
 
         /* ==========================================================================
-           3. CONTAINER SYSTEM
+           3. SITE HEADER SYSTEM
            ========================================================================== */
-        .app-root-container {
+        .site-header {
             width: 100%;
-            max-width: 840px; 
-            padding: 0 24px 80px 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-            box-sizing: border-box;
-        }
-
-        /* ==========================================================================
-           4. NAVIGATION HEADER SYSTEM
-           ========================================================================== */
-        .nav-outer-wrapper {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            background: transparent;
-            z-index: 100;
-        }
-
-        .navigation-header {
-            width: 100%;
-            max-width: 840px;
-            padding: 32px 24px 20px 24px;
+            max-width: 900px;
+            padding: 24px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: transparent;
-            box-sizing: border-box;
         }
 
-        .back-button {
-            display: inline-flex;
+        .logo-group {
+            display: flex;
             align-items: center;
-            gap: 8px;
-            color: var(--brand-primary);
+            gap: 12px;
             text-decoration: none;
-            font-size: 0.98rem;
-            font-weight: 700;
-            transition: var(--transition-smooth);
-            background: none;
-            border: none;
-            cursor: pointer;
         }
 
-        .back-button:hover {
-            color: var(--brand-hover);
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            fill: var(--brand-primary);
         }
 
-        .back-button svg {
-            width: 18px;
-            height: 18px;
-            stroke: currentColor;
-            stroke-width: 2.8;
-            fill: none;
+        .logo-text {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--color-title);
         }
 
-        .user-dropdown-trigger {
+        .logo-text span {
+            color: var(--brand-primary);
+        }
+
+        .user-dropdown-pill {
             display: flex;
             align-items: center;
             gap: 10px;
             cursor: pointer;
-            user-select: none;
-            padding: 4px;
+            padding: 6px 14px;
             border-radius: 50px;
+            background: #ffffff;
+            border: 1px solid var(--color-border);
             transition: var(--transition-smooth);
         }
 
-        .user-dropdown-trigger:hover {
-            opacity: 0.85;
+        .user-dropdown-pill:hover {
+            border-color: var(--brand-primary);
         }
 
-        .user-avatar-circle {
-            width: 38px;
-            height: 38px;
-            background-color: var(--brand-light);
+        .avatar-circle {
+            width: 30px;
+            height: 30px;
+            background-color: #e0ebff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: var(--transition-smooth);
         }
 
-        .user-avatar-circle svg {
-            width: 20px;
-            height: 20px;
+        .avatar-circle svg {
+            width: 16px;
+            height: 16px;
             fill: var(--brand-primary);
         }
 
-        .user-name-label {
+        .username-label {
             font-weight: 700;
-            font-size: 0.98rem;
-            color: var(--color-text-title);
-            letter-spacing: -0.2px;
+            font-size: 0.92rem;
+            color: var(--color-title);
         }
 
-        .dropdown-chevron {
+        .dropdown-arrow {
             width: 12px;
             height: 12px;
-            stroke: var(--color-text-title);
+            stroke: var(--color-title);
             stroke-width: 2.5;
             fill: none;
-            margin-left: 2px;
         }
 
         /* ==========================================================================
-           5. ACCORDION HEADER
+           4. MAIN CONTENT CONTAINER
            ========================================================================== */
-        .accordion-wrapper-card {
-            background: var(--bg-card);
-            border-radius: 20px;
-            border: 1px solid rgba(226, 232, 240, 0.85);
-            box-shadow: var(--shadow-soft-card);
-            overflow: hidden;
+        .main-app-container {
             width: 100%;
-            transition: var(--transition-smooth);
+            max-width: 900px;
+            padding: 0 24px 80px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
         }
 
-        .accordion-wrapper-card:hover {
-            box-shadow: var(--shadow-hover);
-            border-color: rgba(29, 104, 242, 0.1);
-        }
-
-        .accordion-header-btn {
-            width: 100%;
-            padding: 24px;
+        /* ==========================================================================
+           5. PAPER TITLE BANNER
+           ========================================================================== */
+        .paper-title-banner {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            text-align: left;
+            gap: 24px;
+            margin-top: 12px;
         }
 
-        .accordion-meta-group {
+        .title-left-side {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 20px;
         }
 
-        .accordion-calendar-icon-box {
-            width: 44px;
-            height: 44px;
-            background-color: #f1f5f9;
-            border-radius: 12px;
+        .subject-math-icon-box {
+            width: 68px;
+            height: 68px;
+            background: #eef2ff;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
         }
 
-        .accordion-calendar-icon-box svg {
-            width: 22px;
-            height: 22px;
+        .subject-math-icon-box svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--brand-primary);
+            stroke-width: 2.2;
+            fill: none;
+        }
+
+        .subject-headers h1 {
+            font-size: 1.68rem;
+            font-weight: 800;
+            color: var(--color-title);
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .subject-headers p {
+            font-size: 0.98rem;
+            color: var(--color-muted);
+            font-weight: 550;
+        }
+
+        .back-nav-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border: 1px solid var(--brand-primary);
+            border-radius: 12px;
+            color: var(--brand-primary);
+            font-weight: 700;
+            font-size: 0.92rem;
+            background: transparent;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .back-nav-button:hover {
+            background-color: var(--brand-light-bg);
+            box-shadow: 0 4px 12px rgba(29, 104, 242, 0.08);
+        }
+
+        .back-nav-button svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            fill: none;
+        }
+
+        /* ==========================================================================
+           6. QUESTION BANNER CARD
+           ========================================================================== */
+        .question-banner-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid var(--color-border);
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .question-label {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--brand-primary);
+            white-space: nowrap;
+        }
+
+        .question-formula-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--color-title);
+            flex-grow: 1;
+            margin-left: 24px;
+        }
+
+        .question-marks-badge {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-title);
+            white-space: nowrap;
+        }
+
+        /* ==========================================================================
+           7. ANSWER BLOCK
+           ========================================================================== */
+        .answer-block {
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid var(--color-border);
+            padding: 28px;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .answer-block-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .answer-title-text {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: var(--color-title);
+        }
+
+        .toggle-visibility-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--brand-primary);
+            font-weight: 700;
+            font-size: 0.95rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .toggle-visibility-btn:hover {
+            color: var(--brand-hover);
+        }
+
+        .toggle-visibility-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.2;
+        }
+
+        .final-answer-container {
+            border: 1.5px solid var(--color-border);
+            border-radius: 14px;
+            padding: 14px 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            min-width: 260px;
+            transition: var(--transition-smooth);
+        }
+
+        .final-badge {
+            background-color: var(--brand-accent-green);
+            color: var(--brand-text-green);
+            font-size: 0.85rem;
+            font-weight: 800;
+            padding: 6px 12px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .final-equation-box {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--brand-primary);
+        }
+
+        /* ==========================================================================
+           8. STEP-BY-STEP SOLUTION CARD
+           ========================================================================== */
+        .solutions-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .solution-section-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--color-title);
+            margin-bottom: 4px;
+            letter-spacing: -0.2px;
+        }
+
+        .solution-card-container {
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid var(--color-border);
+            padding: 24px;
+            box-shadow: var(--shadow-subtle);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .step-block {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            padding-bottom: 24px;
+            border-bottom: 1.5px dashed var(--color-border-light);
+        }
+
+        .step-block:last-of-type {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .step-meta-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .step-label-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .step-number-badge {
+            width: 28px;
+            height: 28px;
+            background-color: var(--brand-primary);
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 800;
+        }
+
+        .step-description-text {
+            font-size: 0.98rem;
+            font-weight: 600;
+            color: var(--color-title);
+        }
+
+        .step-tag {
+            background-color: var(--brand-light-bg);
+            color: var(--brand-primary);
+            font-size: 0.82rem;
+            font-weight: 800;
+            padding: 5px 12px;
+            border-radius: 6px;
+            letter-spacing: 0.2px;
+        }
+
+        .step-math-calculations {
+            text-align: center;
+            font-size: 1.25rem;
+            color: var(--color-title);
+            line-height: 1.8;
+            padding: 8px 0;
+        }
+
+        /* Tip Alert Section */
+        .tip-card-alert {
+            background-color: var(--brand-light-bg);
+            border: 1.5px solid #dbeafe;
+            border-radius: 16px;
+            padding: 20px 24px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .tip-icon-box {
+            flex-shrink: 0;
+            width: 42px;
+            height: 42px;
+            background-color: #ffffff;
+            border: 1.5px solid #bfdbfe;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tip-icon-box svg {
+            width: 20px;
+            height: 20px;
             stroke: var(--brand-primary);
             stroke-width: 2;
             fill: none;
         }
 
-        .accordion-subject-title {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: var(--color-text-title);
-            letter-spacing: -0.4px;
-        }
-
-        .accordion-arrow-indicator {
-            width: 20px;
-            height: 20px;
-            stroke: var(--brand-primary);
-            stroke-width: 2.5;
-            fill: none;
-            transition: transform 0.28s var(--easing-fluid);
-        }
-
-        .accordion-wrapper-card.is-expanded .accordion-arrow-indicator {
-            transform: rotate(180deg);
-        }
-
-        .accordion-transition-panel {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.28s var(--easing-fluid);
-        }
-
-        .accordion-wrapper-card.is-expanded .accordion-transition-panel {
-            max-height: 250px;
-        }
-
-        .accordion-inner-content {
-            padding: 0 24px 24px 24px;
-            border-top: 1px solid var(--color-border-light);
-            padding-top: 20px;
-            display: flex;
-            gap: 12px;
-        }
-
-        .segmented-tab-btn {
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition-smooth);
-            border: 1px solid var(--brand-border);
-            background: #ffffff;
-            color: var(--brand-primary);
-        }
-
-        .segmented-tab-btn.is-active {
-            background: var(--brand-primary);
-            border-color: var(--brand-primary);
-            color: #ffffff;
-            box-shadow: 0 4px 12px rgba(29, 104, 242, 0.15);
-        }
-
-        /* ==========================================================================
-           6. SYLLABUS SECTION BREAKS
-           ========================================================================== */
-        .section-separator-bar {
-            margin-top: 12px;
-            margin-bottom: 4px;
-        }
-
-        .section-separator-title {
-            font-size: 1.35rem;
-            font-weight: 800;
-            color: var(--color-text-title);
-            letter-spacing: -0.5px;
-        }
-
-        /* ==========================================================================
-           7. SYSTEM WORKSPACE GRID
-           ========================================================================== */
-        .questions-vertical-stack {
+        .tip-content-inner {
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            width: 100%;
+            gap: 4px;
         }
 
-        .question-item-card {
+        .tip-heading {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--color-title);
+        }
+
+        .tip-body {
+            font-size: 0.92rem;
+            color: var(--color-body);
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        /* ==========================================================================
+           9. BOTTOM CALL TO ACTION (VIDEO HERO BANNER)
+           ========================================================================== */
+        .video-promo-banner {
             background: var(--bg-card);
-            border-radius: 24px;
-            border: 1px solid rgba(226, 232, 240, 0.85);
-            box-shadow: var(--shadow-soft-card);
-            padding: 24px 28px;
-            transition: var(--transition-smooth);
-            width: 100%;
-        }
-
-        .question-item-card:hover {
-            box-shadow: var(--shadow-hover);
-            border-color: rgba(29, 104, 242, 0.1);
-        }
-
-        .question-flex-body {
+            border-radius: 20px;
+            border: 1px solid var(--color-border);
+            padding: 28px 32px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 24px;
-            width: 100%;
+            box-shadow: var(--shadow-subtle);
         }
 
-        .question-content-left {
+        .video-promo-left {
             display: flex;
             align-items: center;
-            gap: 16px;
-            flex: 1;
+            gap: 20px;
         }
 
-        .question-index-number {
-            font-size: 1.15rem;
-            font-weight: 800;
-            color: var(--brand-primary);
-            white-space: nowrap;
-        }
-
-        .question-text-content {
-            font-size: 1.05rem;
-            font-weight: 600;
-            color: var(--color-text-title);
-            line-height: 1.55;
-            display: inline-flex;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .math-typeset-wrapper {
-            display: inline-block;
-            margin-left: 8px;
-            font-size: 1.15rem;
-            vertical-align: middle;
-        }
-
-        .question-elements-right {
+        .play-branding-box {
+            width: 56px;
+            height: 56px;
+            background: #eef2ff;
+            border: 1.5px solid #c3daff;
+            border-radius: 14px;
             display: flex;
             align-items: center;
-            gap: 16px;
+            justify-content: center;
             flex-shrink: 0;
         }
 
-        .points-weight-pill {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--color-text-muted);
-            background-color: #f1f5f9;
-            padding: 6px 12px;
-            border-radius: 8px;
-            white-space: nowrap;
+        .play-branding-box svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--brand-primary);
         }
 
-        .question-actions-toolbar {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .video-promo-text h3 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--color-title);
+            margin-bottom: 4px;
         }
 
-        .action-button {
+        .video-promo-text p {
+            font-size: 0.92rem;
+            color: var(--color-muted);
+            font-weight: 600;
+        }
+
+        .explain-action-btn {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 22px;
-            font-size: 0.9rem;
-            font-weight: 700;
+            gap: 12px;
+            padding: 14px 28px;
+            border: 1.5px solid var(--brand-primary);
             border-radius: 12px;
+            color: var(--brand-primary);
+            font-weight: 800;
+            font-size: 0.95rem;
+            background: #ffffff;
             cursor: pointer;
             transition: var(--transition-smooth);
-            text-decoration: none;
             white-space: nowrap;
         }
 
-        .action-button-outline {
-            background: #ffffff;
-            border: 1px solid var(--brand-border);
-            color: var(--brand-primary);
-        }
-
-        .action-button-outline:hover {
-            background-color: var(--brand-light);
-            border-color: var(--brand-primary);
-        }
-
-        .action-button-solid {
-            background: var(--brand-primary);
-            border: 1px solid var(--brand-primary);
+        .explain-action-btn:hover {
+            background-color: var(--brand-primary);
             color: #ffffff;
-            box-shadow: 0 4px 12px rgba(29, 104, 242, 0.1);
+            box-shadow: 0 6px 20px rgba(29, 104, 242, 0.15);
         }
 
-        .action-button-solid:hover {
-            background: var(--brand-hover);
-            border-color: var(--brand-hover);
-            box-shadow: 0 6px 16px rgba(17, 83, 203, 0.2);
-        }
-
-        .action-button-solid svg {
-            width: 12px;
-            height: 12px;
+        .explain-action-btn svg {
+            width: 14px;
+            height: 14px;
             fill: currentColor;
         }
 
         /* ==========================================================================
-           8. RESPONSIVE MODAL SYSTEM
+           10. FOOTER
            ========================================================================== */
-        .backdrop-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(7, 18, 44, 0.4);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .backdrop-overlay.is-active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .modal-surface-card {
-            background: #ffffff;
-            width: 90%;
-            max-width: 620px;
-            border-radius: 28px;
-            padding: 36px;
-            box-shadow: var(--shadow-modal);
-            transform: scale(0.92);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-        }
-
-        .backdrop-overlay.is-active .modal-surface-card {
-            transform: scale(1);
-        }
-
-        .modal-dismiss-btn {
-            position: absolute;
-            top: 28px;
-            right: 28px;
-            background: #f1f5f9;
-            border: none;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--color-text-body);
-            transition: var(--transition-smooth);
-        }
-
-        .modal-dismiss-btn:hover {
-            background-color: var(--brand-light);
-            color: var(--brand-primary);
-        }
-
-        .modal-heading {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: var(--color-text-title);
-            margin-bottom: 18px;
-            letter-spacing: -0.4px;
-        }
-
-        .modal-content-container {
-            font-size: 1.02rem;
-            color: var(--color-text-body);
-            line-height: 1.65;
-            max-height: 60vh;
-            overflow-y: auto;
-            padding-right: 8px;
-        }
-
-        .embedded-video-player {
-            background-color: #07122c;
-            width: 100%;
-            aspect-ratio: 16/9;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            margin-top: 16px;
-        }
-
-        .video-control-play-btn {
-            width: 72px;
-            height: 72px;
-            background: var(--brand-primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: transform 0.2s ease, background-color 0.2s ease;
-            box-shadow: 0 8px 24px rgba(29, 104, 242, 0.3);
-        }
-
-        .video-control-play-btn:hover {
-            transform: scale(1.08);
-            background-color: var(--brand-hover);
-        }
-
-        .video-control-play-btn svg {
-            width: 26px;
-            height: 26px;
-            fill: currentColor;
-            margin-left: 4px;
-        }
-
-        /* ==========================================================================
-           9. SYSTEM FOOTER
-           ========================================================================== */
-        .page-footer {
+        .site-footer {
             text-align: center;
             font-size: 0.85rem;
-            color: var(--color-text-muted);
+            color: var(--color-muted);
             font-weight: 600;
-            padding: 48px 0 16px 0;
+            padding: 40px 0 24px 0;
             width: 100%;
             border-top: 1px solid var(--color-border-light);
-            margin-top: 24px;
+            margin-top: auto;
         }
 
         /* ==========================================================================
-           10. FLUID MEDIA QUERIES
+           11. RESPONSIVE MEDIA BREAKPOINTS
            ========================================================================== */
-        @media (max-width: 820px) {
-            .question-flex-body {
+        @media (max-width: 768px) {
+            .paper-title-banner {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 16px;
             }
 
-            .question-elements-right {
+            .back-nav-button {
+                align-self: flex-start;
                 width: 100%;
-                justify-content: space-between;
-                border-top: 1px solid var(--color-border-light);
-                padding-top: 16px;
-                margin-top: 4px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .navigation-header {
-                padding: 24px 20px 16px 20px;
-            }
-            
-            .app-root-container {
-                padding: 0 16px 60px 16px;
-                gap: 20px;
+                justify-content: center;
             }
 
-            .question-item-card {
-                padding: 20px;
-                border-radius: 20px;
-            }
-            
-            .question-content-left {
+            .question-banner-card {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 12px;
             }
 
-            .math-typeset-wrapper {
-                display: block;
+            .question-formula-text {
                 margin-left: 0;
-                margin-top: 10px;
-                font-size: 1.1rem;
             }
-            
-            .question-elements-right {
+
+            .video-promo-banner {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 14px;
+                gap: 20px;
             }
 
-            .points-weight-pill {
-                align-self: flex-start;
-            }
-
-            .question-actions-toolbar {
-                flex-direction: column; 
+            .explain-action-btn {
                 width: 100%;
-                gap: 10px;
-            }
-            
-            .action-button {
-                width: 100%; 
-                text-align: center;
-            }
-            
-            .user-name-label, .dropdown-chevron {
-                display: none; 
-            }
-            
-            .accordion-inner-content {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .segmented-tab-btn {
-                width: 100%;
-                text-align: center;
-            }
-
-            .modal-surface-card {
-                padding: 24px;
-                border-radius: 20px;
+                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
 
-    <nav class="nav-outer-wrapper">
-        <header class="navigation-header">
-            <button class="back-button" onclick="history.back();">
+    <!-- Site Header Navigation -->
+    <header class="site-header">
+        <a href="#" class="logo-group">
+            <svg class="logo-icon" viewBox="0 0 24 24">
+                <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>
+                <path d="M12 18.5c-2.3 0-4.43-.8-6.12-2.13l-1.42 1.42C6.73 19.5 9.24 20.5 12 20.5s5.27-1 7.54-2.71l-1.42-1.42c-1.69 1.33-3.82 2.13-6.12 2.13z"/>
+            </svg>
+            <span class="logo-text">Grade 12 <span>Learning</span></span>
+        </a>
+
+        <div class="user-dropdown-pill">
+            <div class="avatar-circle">
                 <svg viewBox="0 0 24 24">
-                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                 </svg>
-                Back to Papers
-            </button>
-            
-            <div class="user-dropdown-trigger">
-                <div class="user-avatar-circle">
+            </div>
+            <span class="username-label">Hi, Paul</span>
+            <svg class="dropdown-arrow" viewBox="0 0 24 24">
+                <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <main class="main-app-container">
+
+        <!-- Subject Header Section -->
+        <section class="paper-title-banner">
+            <div class="title-left-side">
+                <div class="subject-math-icon-box">
                     <svg viewBox="0 0 24 24">
-                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        <path d="M4 12h8M16 8l4 4-4 4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M3 3h18v18H3z"/>
                     </svg>
                 </div>
-                <span class="user-name-label">Hi, Paul</span>
-                <svg class="dropdown-chevron" viewBox="0 0 24 24">
-                    <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+                <div class="subject-headers">
+                    <h1>Mathematics – 2025 Paper 1</h1>
+                    <p>Select a question to view the answer and watch the step-by-step explanation.</p>
+                </div>
             </div>
-        </header>
-    </nav>
+            <button class="back-nav-button" onclick="history.back()">
+                <svg viewBox="0 0 24 24">
+                    <path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Back to Questions
+            </button>
+        </section>
 
-    <div class="app-root-container">
-        
-        <div class="accordion-wrapper-card is-expanded" id="examAccordion">
-            <button class="accordion-header-btn" onclick="toggleExamAccordion()" aria-expanded="true" aria-controls="examAccordionPanel">
-                <div class="accordion-meta-group">
-                    <div class="accordion-calendar-icon-box">
+        <!-- Dynamic Question Panel -->
+        <div class="question-banner-card">
+            <span class="question-label">Question 1.1</span>
+            <div class="question-formula-text">
+                Solve for $x$: $2x + 3 = 11$
+            </div>
+            <span class="question-marks-badge">(2 Marks)</span>
+        </div>
+
+        <!-- Answer Panel -->
+        <section class="answer-block">
+            <div class="answer-block-header">
+                <h2 class="answer-title-text">Answer</h2>
+                <button class="toggle-visibility-btn" id="toggleVisibilityBtn" onclick="toggleAnswerVisibility()">
+                    <svg id="visibilityIcon" viewBox="0 0 24 24">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    <span id="visibilityText">Hide Answer</span>
+                </button>
+            </div>
+            <div class="final-answer-container" id="answerPayload">
+                <span class="final-badge">Final Answer</span>
+                <span class="final-equation-box">$x = 4$</span>
+            </div>
+        </section>
+
+        <!-- Step-by-Step Solution Layout -->
+        <section class="solutions-wrapper">
+            <h2 class="solution-section-title">Step-by-Step Solution</h2>
+            
+            <div class="solution-card-container">
+                <!-- Step 1 -->
+                <div class="step-block">
+                    <div class="step-meta-row">
+                        <div class="step-label-group">
+                            <span class="step-number-badge">1</span>
+                            <span class="step-description-text">Subtract 3 from both sides to isolate the term with $x$.</span>
+                        </div>
+                        <span class="step-tag">Step 1</span>
+                    </div>
+                    <div class="step-math-calculations">
+                        $$2x + 3 = 11$$
+                        $$2x + 3 - 3 = 11 - 3$$
+                        $$2x = 8$$
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="step-block">
+                    <div class="step-meta-row">
+                        <div class="step-label-group">
+                            <span class="step-number-badge">2</span>
+                            <span class="step-description-text">Divide both sides by 2 to solve for $x$.</span>
+                        </div>
+                        <span class="step-tag">Step 2</span>
+                    </div>
+                    <div class="step-math-calculations">
+                        $$2x = 8$$
+                        $$\frac{2x}{2} = \frac{8}{2}$$
+                        $$x = 4$$
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="step-block">
+                    <div class="step-meta-row">
+                        <div class="step-label-group">
+                            <span class="step-number-badge">3</span>
+                            <span class="step-description-text">Therefore, the value of $x$ is 4.</span>
+                        </div>
+                        <span class="step-tag">Step 3</span>
+                    </div>
+                    <div class="step-math-calculations">
+                        $$x = 4$$
+                    </div>
+                </div>
+
+                <!-- Informational Tip Element -->
+                <div class="tip-card-alert">
+                    <div class="tip-icon-box">
                         <svg viewBox="0 0 24 24">
-                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                            <line x1="16" y1="2" x2="16" y2="6"/>
-                            <line x1="8" y1="2" x2="8" y2="6"/>
-                            <line x1="3" y1="10" x2="21" y2="10"/>
+                            <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A5 5 0 0 0 8 8c0 1 .3 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <line x1="9" y1="18" x2="15" y2="18"/>
+                            <line x1="10" y1="21" x2="14" y2="21"/>
                         </svg>
                     </div>
-                    <span class="accordion-subject-title">2025 Latest</span>
-                </div>
-                <svg class="accordion-arrow-indicator" viewBox="0 0 24 24">
-                    <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </button>
-            
-            <div class="accordion-transition-panel" id="examAccordionPanel" style="max-height: 250px;">
-                <div class="accordion-inner-content">
-                    <button class="segmented-tab-btn is-active" id="paper1Btn" onclick="switchPaperChannel(1)">Mathematics Paper 1</button>
-                    <button class="segmented-tab-btn" id="paper2Btn" onclick="switchPaperChannel(2)">Mathematics Paper 2</button>
+                    <div class="tip-content-inner">
+                        <span class="tip-heading">Tip</span>
+                        <p class="tip-body">Always balance both sides of the equation when solving for $x$.</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="section-separator-bar">
-            <h2 class="section-separator-title" id="sectionHeaderA">Section A: Algebra</h2>
-        </div>
-
-        <main class="questions-vertical-stack" id="questionsContainerSectionA">
-        </main>
-
-        <div class="section-separator-bar" style="margin-top: 32px;">
-            <h2 class="section-separator-title" id="sectionHeaderB">Section B: Functions & Graphs</h2>
-        </div>
-
-        <main class="questions-vertical-stack" id="questionsContainerSectionB">
-        </main>
-
-        <footer class="page-footer">
-            &copy; 2026 Grade 12 Learning. All rights reserved.
-        </footer>
-
-    </div>
-
-    <div class="backdrop-overlay" id="workspaceModalBackdrop">
-        <div class="modal-surface-card">
-            <button class="modal-dismiss-btn" onclick="dismissWorkspaceModal()" aria-label="Close solutions window">✕</button>
-            <h3 class="modal-heading" id="modalWindowHeader">View Answer</h3>
-            <div class="modal-content-container" id="modalWindowBody"></div>
-        </div>
-    </div>
-
-    <script>
-        /* ==========================================================================
-           11. HIGH-FIDELITY SOLUTION MANIFEST DATA (ALIGNED WITH PROVIDED DESIGN)
-           ========================================================================== */
-        const paperContentDatabase = {
-            1: {
-                sectionA: {
-                    title: "Section A: Equations, Inequalities & Algebraic Expansion",
-                    questions: [
-                        {
-                            id: "1.1.1",
-                            text: "Solve for $x$:",
-                            math: "x^2 - 6x - 16 = 0",
-                            points: "(3)",
-                            solution: {
-                                heading: "Solution Steps: Question 1.1.1",
-                                bodyHtml: `
-                                    <p style="margin-bottom: 14px; font-weight: 500;">Factorize the quadratic expression by finding two factors of $-16$ that add up to $-6$:</p>
-                                    <div style="background: #f8fafc; border: 1px solid var(--color-border-light); padding: 18px; border-radius: 16px; margin-bottom: 18px;">
-                                        $$(x - 8)(x + 2) = 0$$
-                                    </div>
-                                    <p style="margin-bottom: 14px; font-weight: 500;">Set each linear factor individually to zero to resolve the target variables:</p>
-                                    <p style="margin-bottom: 8px; padding-left: 12px; border-left: 3px solid var(--color-border-active); font-weight: 600;">$x - 8 = 0 \\implies x = 8$</p>
-                                    <p style="margin-bottom: 18px; padding-left: 12px; border-left: 3px solid var(--color-border-active); font-weight: 600;">$x + 2 = 0 \\implies x = -2$</p>
-                                    <div style="background: var(--brand-light); border-left: 5px solid var(--brand-primary); padding: 16px; border-radius: 8px 16px 16px 8px; font-weight: 700;">
-                                        Final Roots: $x = 8 \\quad \\text{or} \\quad x = -2$
-                                    </div>
-                                `
-                            }
-                        },
-                        {
-                            id: "1.1.2",
-                            text: "Solve for $x$ (correct to two decimal places):",
-                            math: "2x^2 + 7x - 1 = 0",
-                            points: "(3)",
-                            solution: {
-                                heading: "Solution Steps: Question 1.1.2",
-                                bodyHtml: `
-                                    <p style="margin-bottom: 14px; font-weight: 500;">Apply the quadratic formula standard form parameter constants where $a = 2, b = 7, c = -1$:</p>
-                                    <div style="background: #f8fafc; border: 1px solid var(--color-border-light); padding: 18px; border-radius: 16px; margin-bottom: 18px;">
-                                        $$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$
-                                        $$x = \\frac{-(7) \\pm \\sqrt{(7)^2 - 4(2)(-1)}}{2(2)}$$
-                                        $$x = \\frac{-7 \\pm \\sqrt{49 + 8}}{4}$$
-                                        $$x = \\frac{-7 \\pm \\sqrt{57}}{4}$$
-                                    </div>
-                                    <p style="margin-bottom: 14px; font-weight: 500;">Calculate decimal solutions approximating to two digits:</p>
-                                    <p style="margin-bottom: 8px; padding-left: 12px; border-left: 3px solid var(--color-border-active); font-weight: 600;">$x \\approx 0.14$</p>
-                                    <p style="margin-bottom: 18px; padding-left: 12px; border-left: 3px solid var(--color-border-active); font-weight: 600;">$x \\approx -3.64$</p>
-                                    <div style="background: var(--brand-light); border-left: 5px solid var(--brand-primary); padding: 16px; border-radius: 8px 16px 16px 8px; font-weight: 700;">
-                                        Final Roots: $x = 0.14 \\quad \\text{or} \\quad x = -3.64$
-                                    </div>
-                                `
-                            }
-                        },
-                        {
-                            id: "1.1.3",
-                            text: "Solve for the inequality expression value of $x$:",
-                            math: "(x - 3)(x + 5) < 0",
-                            points: "(3)",
-                            solution: {
-                                heading: "Solution Steps: Question 1.1.3",
-                                bodyHtml: `
-                                    <p style="margin-bottom: 14px; font-weight: 500;">Identify critical value intercepts of the expression curve:</p>
-                                    <p style="margin-bottom: 8px; padding-left: 12px; border-left: 3px solid var(--color-border-active); font-weight: 600;">Critical values: $x = 3 \\quad \\text{and} \\quad x = -5$</p>
-                                    <p style="margin-bottom: 14px; font-weight: 500;">Since the inequality seeks values strictly less than zero ($< 0$), the solution lies between these boundary points:</p>
-                                    <div style="background: var(--brand-light); border-left: 5px solid var(--brand-primary); padding: 16px; border-radius: 8px 16px 16px 8px; font-weight: 700;">
-                                        Interval Range: $-5 < x < 3$
-                                    </div>
-                                `
-                            }
-                        }
-                    ]
-                },
-                sectionB: {
-                    title: "Section B: Simultaneous Equations & Exponents",
-                    questions: [
-                        {
-                            id: "1.2",
-                            text: "Solve for $x$ and $y$ simultaneously:",
-                            math: "y = 2x - 3 \\quad \\text{and} \\quad x^2 + 2xy - y^2 = -7",
-                            points: "(6)",
-                            solution: {
-                                heading: "Solution Steps: Question 1.2",
-                                bodyHtml: `
-                                    <p style="margin-bottom: 14px; font-weight: 500;">Substitute the linear expression equation variable $y = 2x - 3$ into the quadratic equation structure:</p>
-                                    <div style="background: #f8fafc; border: 1px solid var(--color-border-light); padding: 18px; border-radius: 16px; margin-bottom: 18px;">
-                                        $$x^2 + 2x(2x - 3) - (2x - 3)^2 = -7$$
-                                        $$x^2 + 4x^2 - 6x - (4x^2 - 12x + 9) = -7$$
-                                        $$x^2 + 6x - 9 = -7$$
-                                        $$x^2 + 6x - 2 = 0$$
-                                    </div>
-                                    <p style="margin-bottom: 14px; font-weight: 500;">Using quadratic equation formulas to derive matching solution pairs:</p>
-                                    <p style="margin-bottom: 8px; font-weight: 600;">$x = -3 + \\sqrt{11} \\implies y = 2(-3 + \\sqrt{11}) - 3$</p>
-                                    <div style="background: var(--brand-light); border-left: 5px solid var(--brand-primary); padding: 16px; border-radius: 8px 16px 16px 8px; font-weight: 700;">
-                                        Final coordinates generated as specified.
-                                    </div>
-                                `
-                            }
-                        }
-                    ]
-                }
-            },
-            2: {
-                sectionA: {
-                    title: "Section A: Trigonometry Foundations",
-                    questions: [
-                        {
-                            id: "1.1",
-                            text: "Solve for $\\theta$ where $[0^\\circ; 180^\\circ]$:",
-                            math: "2\\sin(\\theta) - 1 = 0",
-                            points: "(3)",
-                            solution: {
-                                heading: "Solution Steps: Question 1.1 (Paper 2)",
-                                bodyHtml: `
-                                    <p style="margin-bottom: 14px; font-weight: 500;">Isolate the primary trigonometric expression ratio value:</p>
-                                    <div style="background: #f8fafc; border: 1px solid var(--color-border-light); padding: 18px; border-radius: 16px; margin-bottom: 18px;">
-                                        $$2\\sin(\\theta) = 1 \\implies \\sin(\\theta) = \\frac{1}{2}$$
-                                    </div>
-                                    <div style="background: var(--brand-light); border-left: 5px solid var(--brand-primary); padding: 16px; border-radius: 8px 16px 16px 8px; font-weight: 700;">
-                                        Roots: $\\theta = 30^\\circ \\quad \\text{or} \\quad \\theta = 150^\\circ$
-                                    </div>
-                                `
-                            }
-                        }
-                    ]
-                },
-                sectionB: {
-                    title: "Section B: Coordinate Distance Theorems",
-                    questions: [
-                        {
-                            id: "2.1",
-                            text: "Calculate coordinates distance connecting vectors $A(1; 2)$ and $B(3; 6)$:",
-                            math: "d = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}",
-                            points: "(3)",
-                            solution: {
-                                heading: "Solution Steps: Question 2.1 (Paper 2)",
-                                bodyHtml: `
-                                    <p style="margin-bottom: 14px; font-weight: 500;">Substitute the given points directly into the algebraic theorem:</p>
-                                    <div style="background: #f8fafc; border: 1px solid var(--color-border-light); padding: 18px; border-radius: 16px; margin-bottom: 18px;">
-                                        $$d = \\sqrt{(3 - 1)^2 + (6 - 2)^2} = \\sqrt{20}$$
-                                    </div>
-                                    <div style="background: var(--brand-light); border-left: 5px solid var(--brand-primary); padding: 16px; border-radius: 8px 16px 16px 8px; font-weight: 700;">
-                                        Distance result: $2\\sqrt{5} \\text{ units}$
-                                    </div>
-                                `
-                            }
-                        }
-                    ]
-                }
-            }
-        };
-
-        let currentActivePaper = 1;
-
-        const backdropElement = document.getElementById('workspaceModalBackdrop');
-        const modalHeaderElement = document.getElementById('modalWindowHeader');
-        const modalBodyElement = document.getElementById('modalWindowBody');
-        const paper1Button = document.getElementById('paper1Btn');
-        const paper2Button = document.getElementById('paper2Btn');
-        const sectionHeaderA = document.getElementById('sectionHeaderA');
-        const sectionHeaderB = document.getElementById('sectionHeaderB');
-        const questionsContainerSectionA = document.getElementById('questionsContainerSectionA');
-        const questionsContainerSectionB = document.getElementById('questionsContainerSectionB');
-
-        function toggleExamAccordion() {
-            const accordionCard = document.getElementById('examAccordion');
-            const transitionPanel = document.getElementById('examAccordionPanel');
-            const toggleButton = accordionCard.querySelector('.accordion-header-btn');
-            
-            if (accordionCard.classList.contains('is-expanded')) {
-                accordionCard.classList.remove('is-expanded');
-                transitionPanel.style.maxHeight = '0';
-                toggleButton.setAttribute('aria-expanded', 'false');
-            } else {
-                accordionCard.classList.add('is-expanded');
-                transitionPanel.style.maxHeight = '250px';
-                toggleButton.setAttribute('aria-expanded', 'true');
-            }
-        }
-
-        function populateWorkspaceQuestions() {
-            const activeData = paperContentDatabase[currentActivePaper];
-            
-            sectionHeaderA.textContent = activeData.sectionA.title;
-            sectionHeaderB.textContent = activeData.sectionB.title;
-
-            questionsContainerSectionA.innerHTML = '';
-            questionsContainerSectionB.innerHTML = '';
-
-            activeData.sectionA.questions.forEach((q) => {
-                const card = createQuestionCardHtml(q);
-                questionsContainerSectionA.appendChild(card);
-            });
-
-            activeData.sectionB.questions.forEach((q) => {
-                const card = createQuestionCardHtml(q);
-                questionsContainerSectionB.appendChild(card);
-            });
-
-            initializeMathematicalTypesetting();
-        }
-
-        function createQuestionCardHtml(question) {
-            const article = document.createElement('article');
-            article.className = 'question-item-card';
-            article.innerHTML = `
-                <div class="question-flex-body">
-                    <div class="question-content-left">
-                        <span class="question-index-number">${question.id}</span>
-                        <div class="question-text-content">
-                            ${question.text}
-                            <span class="math-typeset-wrapper">$$${question.math}$$</span>
-                        </div>
-                    </div>
-                    <div class="question-elements-right">
-                        <span class="points-weight-pill">${question.points}</span>
-                        <div class="question-actions-toolbar">
-                            <button class="action-button action-button-outline" onclick="triggerAnswerOverlay('${question.id}')">View Answer</button>
-                            <button class="action-button action-button-solid" onclick="triggerVideoOverlay('${question.id}')">
-                                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                                Explain Answer
-                            </button>
-                        </div>
-                    </div>
+        <!-- Video CTAs -->
+        <section class="video-promo-banner">
+            <div class="video-promo-left">
+                <div class="play-branding-box">
+                    <svg viewBox="0 0 24 24">
+                        <polygon points="5 3 19 12 5 21 5 3"/>
+                    </svg>
                 </div>
-            `;
-            return article;
-        }
+                <div class="video-promo-text">
+                    <h3>Want to understand this better?</h3>
+                    <p>Watch a step-by-step video explanation for this question.</p>
+                </div>
+            </div>
+            <button class="explain-action-btn">
+                Explain Answer
+                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </button>
+        </section>
 
-        function switchPaperChannel(paperNumber) {
-            currentActivePaper = paperNumber;
-            if (paperNumber === 1) {
-                paper1Button.classList.add('is-active');
-                paper2Button.classList.remove('is-active');
+    </main>
+
+    <footer class="site-footer">
+        &copy; 2025 Grade 12 Learning. All rights reserved.
+    </footer>
+
+    <!-- Scripting Engine -->
+    <script>
+        function toggleAnswerVisibility() {
+            const payload = document.getElementById('answerPayload');
+            const toggleText = document.getElementById('visibilityText');
+            const visibilityIcon = document.getElementById('visibilityIcon');
+            
+            if (payload.style.display === 'none') {
+                payload.style.display = 'inline-flex';
+                toggleText.textContent = 'Hide Answer';
+                visibilityIcon.innerHTML = `
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="12" cy="12" r="3"/>
+                `;
             } else {
-                paper1Button.classList.remove('is-active');
-                paper2Button.classList.add('is-active');
+                payload.style.display = 'none';
+                toggleText.textContent = 'Show Answer';
+                visibilityIcon.innerHTML = `
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" stroke-linecap="round" stroke-linejoin="round"/>
+                    <line x1="1" y1="1" x2="23" y2="23" stroke-linecap="round" stroke-linejoin="round"/>
+                `;
             }
-            populateWorkspaceQuestions();
         }
 
-        function initializeMathematicalTypesetting() {
+        function initializeMath() {
             if (typeof renderMathInElement === 'function') {
                 renderMathInElement(document.body, {
                     delimiters: [
@@ -1005,48 +824,7 @@
                 });
             }
         }
-
-        function triggerAnswerOverlay(questionIdentifier) {
-            const activeData = paperContentDatabase[currentActivePaper];
-            let questionObj = activeData.sectionA.questions.find(q => q.id === questionIdentifier);
-            if (!questionObj) {
-                questionObj = activeData.sectionB.questions.find(q => q.id === questionIdentifier);
-            }
-
-            if (questionObj && questionObj.solution) {
-                modalHeaderElement.textContent = questionObj.solution.heading;
-                modalBodyElement.innerHTML = questionObj.solution.bodyHtml;
-                backdropElement.classList.add('is-active');
-                initializeMathematicalTypesetting();
-            }
-        }
-
-        function triggerVideoOverlay(questionIdentifier) {
-            modalHeaderElement.textContent = "Video Walkthrough: Question " + questionIdentifier;
-            modalBodyElement.innerHTML = `
-                <p style="margin-bottom: 16px; font-weight: 500;">Learn how to solve this algebraic expression step-by-step with an expert tutor guide.</p>
-                <div class="embedded-video-player">
-                    <button class="video-control-play-btn" aria-label="Play video explanation">
-                        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                    </button>
-                </div>
-            `;
-            backdropElement.classList.add('is-active');
-        }
-
-        function dismissWorkspaceModal() {
-            backdropElement.classList.remove('is-active');
-        }
-
-        backdropElement.addEventListener('click', (event) => {
-            if (event.target === backdropElement) {
-                dismissWorkspaceModal();
-            }
-        });
-
-        window.addEventListener('DOMContentLoaded', () => {
-            populateWorkspaceQuestions();
-        });
     </script>
 </body>
-  </html>
+</html>
+
