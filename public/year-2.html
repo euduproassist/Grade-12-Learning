@@ -59,6 +59,7 @@
             
             /* Absolutely locks horizontal scrolling across all mobile & tablet viewports */
             overflow-x: hidden !important; 
+            scroll-behavior: smooth;
         }
 
         body {
@@ -616,7 +617,7 @@
                         <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </button>
-                <div class="accordion-content-panel" style="max-height: 500px;">
+                <div class="accordion-content-panel">
                     <div class="papers-inner-list">
                         <div class="paper-row">
                             <span class="paper-title">Mathematics Paper 1</span>
@@ -1046,12 +1047,21 @@
     </div>
 
     <script>
+        // Ensure the initial active item (2025) loads its dynamic maximum height correctly on page mount
+        window.addEventListener('DOMContentLoaded', () => {
+            const initialExpanded = document.querySelector('.accordion-item.is-expanded');
+            if (initialExpanded) {
+                const panel = initialExpanded.querySelector('.accordion-content-panel');
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+        });
+
         function toggleAccordion(id) {
             const currentItem = document.getElementById(id);
             const panel = currentItem.querySelector('.accordion-content-panel');
             const isExpanded = currentItem.classList.contains('is-expanded');
             
-            // Collapses open active elements cleanly for seamless mobile UX
+            // Collapses open active elements cleanly for a seamless UX
             document.querySelectorAll('.accordion-item').forEach(item => {
                 if (item !== currentItem) {
                     item.classList.remove('is-expanded');
