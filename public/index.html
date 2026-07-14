@@ -44,6 +44,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 15px; /* Ensures space between logo and button */
         }
 
         .logo {
@@ -54,11 +55,14 @@
             font-weight: 800;
             color: var(--text-dark);
             text-decoration: none;
+            white-space: nowrap; /* Prevents logo text from breaking into multiple lines */
+            flex-shrink: 0;      /* Prevents logo from being compressed */
         }
 
         .logo i {
             color: var(--primary);
             font-size: 1.6rem;
+            flex-shrink: 0;
         }
 
         .logo span {
@@ -78,6 +82,8 @@
             font-size: 0.9rem;
             text-decoration: none;
             transition: all 0.2s ease;
+            white-space: nowrap; /* Prevents "Log in" text from splitting up */
+            flex-shrink: 0;      /* Prevents button from squishing */
         }
 
         .login-btn:hover {
@@ -204,6 +210,7 @@
             flex-direction: column;
             gap: 8px;
             width: 180px;
+            transition: all 0.3s ease;
         }
 
         .subject-item {
@@ -641,7 +648,24 @@
             }
         }
 
+        /* Mobile Adjustments */
         @media (max-width: 520px) {
+            .navbar {
+                padding: 16px;
+                gap: 8px; /* Snug spacing to fit small screens */
+            }
+            .logo {
+                font-size: 1.1rem; /* Marginally scales logo down so it perfectly fits on phone widths */
+                gap: 6px;
+            }
+            .logo i {
+                font-size: 1.3rem;
+            }
+            .login-btn {
+                padding: 8px 14px; /* Reduced padding on small screens to save valuable space */
+                font-size: 0.8rem;
+                gap: 6px;
+            }
             .hero-left h1 {
                 font-size: 2.3rem;
             }
@@ -654,12 +678,32 @@
             .stats-grid {
                 grid-template-columns: 1fr;
             }
-            /* Adjustments for subject menu to layout correctly on narrow mobile frames */
+            
+            /* Displays the menu on mobile exactly like desktop, but scaled down perfectly */
             .subject-menu {
-                display: none; /* Hide interactive absolute overlay on small mobile to ensure zero side-scrolling */
+                display: flex; 
+                left: -12px; /* Pull it slightly right to overlap nicely without spilling off screen */
+                top: 10%;
+                width: 130px; /* Slimmer layout to match mobile aspect ratio */
+                padding: 8px;
+                gap: 4px;
+                box-shadow: 0 5px 15px rgba(15, 23, 42, 0.15);
             }
+            
+            .subject-item {
+                padding: 6px 8px;
+                font-size: 0.65rem; /* Slightly smaller text for tight spacing */
+                gap: 6px;
+                border-radius: 4px;
+            }
+            
+            .subject-item i {
+                font-size: 0.75rem;
+            }
+
             .graphic-wrapper {
                 max-width: 100%;
+                padding-left: 14px; /* Tiny padding shield so the left menu absolute offset remains fully visible */
             }
         }
     </style>
