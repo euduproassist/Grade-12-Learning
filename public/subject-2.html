@@ -2,111 +2,150 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
     <title>Grade 12 Learning - Master Grade 12 The Smart Way</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
-
     <style>
+        /* ==========================================================================
+           1. DESIGN SYSTEM & TOKENS (PIXEL PERFECT COMPILATION)
+           ========================================================================== */
         :root {
+            /* Brand Color Palette */
             --primary: #1d68f2;
-            --primary-hover: #1452c7;
+            --primary-hover: #1552ca;
             --primary-light: #eff6ff;
-            --primary-border: #bfdbfe;
+            --primary-light-hover: #e0f2fe;
+            --primary-border: #dbeafe;
+            
+            /* Neutral Color Scale */
             --text-dark: #0f172a;
             --text-muted: #475569;
+            --neutral-grey-500: #64748b;
             --border: #e2e8f0;
             --bg-light: #f8fafc;
-            --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
-            --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.08);
-            --shadow-lg: 0 20px 40px rgba(15, 23, 42, 0.12);
+            --white: #ffffff;
+            
+            /* Typography */
+            --font-family: 'Plus Jakarta Sans', sans-serif;
+            
+            /* Layout & Spacing */
+            --max-width: 1200px;
+            --transition-speed: 250ms;
+            --timing-curve: cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* -------------------------------------------------------------
-           STRICT ANTI-HORIZONTAL SCROLL ROOT CONTROLS
-        ------------------------------------------------------------- */
-        html, body {
-            width: 100%;
-            max-width: 100vw;
-            overflow-x: hidden !important;
-            position: relative;
+        /* ==========================================================================
+           2. GLOBAL RESET & SCROLLPROOF SAFETY SHIELDS (0% SIDE-SCROLL)
+           ========================================================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            background-color: #ffffff;
+        }
+
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden !important; /* Absolute guard against horizontal spillover */
+            background-color: #fbfcff;
             color: var(--text-dark);
-            min-height: 100vh;
+            font-family: var(--font-family);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Viewport Wrapper to shield layouts from iOS elastic scroll bugs */
+        .viewport-wrapper {
+            width: 100%;
+            max-width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            scroll-behavior: smooth;
+            overflow-x: hidden !important;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-        }
-
-        /* Universal Container Protection */
+        /* Container Limit Guards */
         .container {
             width: 100%;
-            max-width: 1200px;
-            padding: 0 24px 80px 24px;
-            position: relative;
-            box-sizing: border-box;
+            max-width: var(--max-width);
+            padding: 0 24px;
+            margin: 0 auto;
         }
 
-        /* -------------------------------------------------------------
-           NAVIGATION HEADER (Exact Matches Logo & Clean Wrap Mobile)
-        ------------------------------------------------------------- */
+        /* ==========================================================================
+           3. DYNAMIC HEADER SYSTEM (RESPONSIVE INTERACTIVE TOP-BAR)
+           ========================================================================== */
         .navbar {
             width: 100%;
-            max-width: 1200px;
-            padding: 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding: 24px 0;
             gap: 16px;
-            box-sizing: border-box;
-            background: #ffffff;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 1.5rem;
+            gap: 10px;
+            font-size: 1.4rem;
             font-weight: 800;
             color: var(--text-dark);
             text-decoration: none;
             white-space: nowrap;
             flex-shrink: 0;
-            letter-spacing: -0.5px;
-        }
-
-        .logo-icon-wrapper {
-            background-color: var(--primary);
-            color: #ffffff;
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 10px rgba(29, 104, 242, 0.2);
         }
 
         .logo span {
             color: var(--primary);
+        }
+
+        .logo-icon-svg {
+            color: var(--primary);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* Navigation Actions Wrapper */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* Interactive Demo Toggle Switch */
+        .demo-toggle {
+            display: flex;
+            background: var(--border);
+            padding: 4px;
+            border-radius: 30px;
+            gap: 2px;
+        }
+
+        .toggle-tab {
+            padding: 6px 14px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 20px;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            transition: all var(--transition-speed) var(--timing-curve);
+        }
+
+        .toggle-tab.active {
+            background: var(--primary);
+            color: var(--white);
         }
 
         .login-btn {
@@ -114,14 +153,14 @@
             align-items: center;
             gap: 8px;
             padding: 10px 20px;
-            background: #ffffff;
+            background: var(--white);
             color: var(--text-dark);
             border: 1px solid var(--border);
             border-radius: 8px;
-            font-weight: 700;
+            font-weight: 600;
             font-size: 0.9rem;
             text-decoration: none;
-            transition: all 0.2s ease-in-out;
+            transition: all 0.2s ease;
             white-space: nowrap;
             flex-shrink: 0;
         }
@@ -129,47 +168,94 @@
         .login-btn:hover {
             background: var(--bg-light);
             border-color: #cbd5e1;
-            transform: translateY(-1px);
         }
 
-        /* -------------------------------------------------------------
-           HERO SECTION
-        ------------------------------------------------------------- */
+        .user-profile-widget {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 40px;
+            background-color: transparent;
+            transition: background var(--transition-speed) var(--timing-curve);
+            user-select: none;
+        }
+
+        .user-profile-widget:hover {
+            background-color: var(--primary-light);
+        }
+
+        .user-avatar-element {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #e0f2fe;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .user-name-text {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        /* ==========================================================================
+           4. VIEWPORT PAGES (LANDING VS SUBJECT SELECTOR DASHBOARD)
+           ========================================================================== */
+        .page-view {
+            display: none;
+            width: 100%;
+            animation: fadeIn 350ms var(--timing-curve) forwards;
+        }
+
+        .page-view.active-view {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ==========================================================================
+           5. VIEW A: LANDING PAGE SPECIFIC ELEMENTS
+           ========================================================================== */
         .hero {
             display: grid;
-            grid-template-columns: 1.15fr 0.85fr;
-            gap: 48px;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 40px;
             align-items: center;
-            margin-top: 24px;
+            margin-top: 20px;
             margin-bottom: 80px;
-            width: 100%;
         }
 
         .hero-left {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            z-index: 2;
         }
 
         .badge {
             background-color: var(--primary-light);
             color: var(--primary);
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 0.85rem;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
             font-weight: 700;
             margin-bottom: 24px;
             border: 1px solid var(--primary-border);
-            display: inline-flex;
-            align-items: center;
         }
 
         .hero-left h1 {
-            font-size: 3.6rem;
+            font-size: 3.4rem;
             font-weight: 800;
-            line-height: 1.12;
-            letter-spacing: -1.8px;
+            line-height: 1.15;
+            letter-spacing: -1.5px;
             margin-bottom: 24px;
             color: var(--text-dark);
         }
@@ -179,95 +265,87 @@
         }
 
         .hero-left p {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             color: var(--text-muted);
-            line-height: 1.65;
-            margin-bottom: 36px;
-            max-width: 520px;
+            line-height: 1.6;
+            margin-bottom: 32px;
+            max-width: 480px;
         }
 
         .cta-button {
-            padding: 16px 32px;
+            padding: 14px 28px;
             background-color: var(--primary);
-            color: #ffffff;
-            border-radius: 10px;
+            color: var(--white);
+            border-radius: 8px;
             font-weight: 700;
-            font-size: 1.05rem;
+            font-size: 1rem;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 12px;
-            transition: all 0.2s ease-in-out;
-            white-space: nowrap;
-            box-shadow: 0 8px 20px rgba(29, 104, 242, 0.25);
+            transition: background 0.2s ease;
             border: none;
             cursor: pointer;
         }
 
         .cta-button:hover {
             background-color: var(--primary-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 24px rgba(29, 104, 242, 0.35);
         }
 
         .sub-link {
             margin-top: 20px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .sub-link a {
             color: var(--primary);
             text-decoration: none;
-            font-weight: 700;
+            font-weight: 600;
         }
 
         .sub-link a:hover {
             text-decoration: underline;
         }
 
-        /* -------------------------------------------------------------
-           HERO INTERACTIVE DESKTOP OVERLAY GRAPHIC
-        ------------------------------------------------------------- */
+        /* Graphic Laptop Frame Stack */
         .hero-right {
             display: flex;
             justify-content: flex-end;
             align-items: center;
             position: relative;
-            width: 100%;
         }
 
         .graphic-wrapper {
             position: relative;
             width: 100%;
-            max-width: 520px;
+            max-width: 500px;
         }
 
-        /* Subjects Overlaid Floating Menu (Desktop Only) */
         .subject-menu {
             position: absolute;
-            left: -50px;
+            left: -35px;
             top: 15%;
             z-index: 10;
-            background: #ffffff;
-            padding: 14px;
-            border-radius: 16px;
-            box-shadow: var(--shadow-md);
+            background: var(--white);
+            padding: 12px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
             border: 1px solid var(--border);
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            width: 210px;
+            gap: 8px;
+            width: 180px;
         }
 
         .subject-item {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px 14px;
-            border-radius: 8px;
-            font-size: 0.82rem;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 0.78rem;
             font-weight: 700;
             color: var(--text-dark);
             cursor: pointer;
@@ -281,21 +359,14 @@
             border-color: #bfdbfe;
         }
 
-        .subject-item i {
-            font-size: 1.05rem;
-            width: 18px;
-            text-align: center;
-        }
-
-        /* Laptop Mockup Frame Container */
         .laptop-frame {
             width: 100%;
-            background: #ffffff;
-            border-radius: 20px;
+            background: var(--white);
+            border-radius: 16px;
             border: 1px solid var(--border);
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
             overflow: hidden;
-            padding: 14px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -303,16 +374,15 @@
 
         .screen {
             width: 100%;
-            background: #090d16;
-            border-radius: 12px;
+            background: #0f172a;
+            border-radius: 8px;
             aspect-ratio: 16 / 10;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            padding: 20px;
-            overflow: hidden;
+            padding: 16px;
         }
 
         .video-overlay {
@@ -321,74 +391,57 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            background: radial-gradient(circle at center, rgba(15, 23, 42, 0.7) 0%, rgba(9, 13, 22, 0.95) 100%);
-            border-radius: 8px;
-            padding: 16px;
-            position: relative;
-            z-index: 2;
+            background: radial-gradient(circle, rgba(15,23,42,0.85) 0%, rgba(15,23,42,0.95) 100%);
+            border-radius: 4px;
+            padding: 12px;
         }
 
         .video-header {
-            font-size: 0.85rem;
-            font-weight: 700;
+            font-size: 0.8rem;
+            font-weight: 600;
             color: #94a3b8;
-            letter-spacing: 0.5px;
         }
 
-        /* High-Definition Math Rendering Panel */
         .math-equation-box {
             align-self: center;
             text-align: center;
-            font-size: 1.15rem;
-            font-weight: 600;
+            font-size: 0.95rem;
+            font-weight: 700;
             color: #60a5fa;
             line-height: 1.8;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            user-select: none;
-        }
-
-        /* Fallback pure CSS equations rendering */
-        .math-row {
-            display: block;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            letter-spacing: 0.5px;
         }
 
         .play-btn-circle {
-            width: 56px;
-            height: 56px;
-            background: rgba(29, 104, 242, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #ffffff;
-            font-size: 1.3rem;
+            color: var(--white);
+            font-size: 1.2rem;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             cursor: pointer;
             backdrop-filter: blur(4px);
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 8px 24px rgba(29, 104, 242, 0.4);
+            transition: transform 0.2s ease;
         }
 
         .play-btn-circle:hover {
-            transform: translate(-50%, -50%) scale(1.1);
-            background: var(--primary);
+            transform: translate(-50%, -50%) scale(1.08);
         }
 
         .video-controls {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             color: #94a3b8;
-            gap: 12px;
         }
 
         .control-left {
@@ -398,10 +451,11 @@
         }
 
         .progress-bar {
-            height: 4px;
-            background: #334155;
+            height: 3px;
+            background: #475569;
             flex-grow: 1;
-            border-radius: 4px;
+            margin: 0 10px;
+            border-radius: 2px;
             position: relative;
         }
 
@@ -409,90 +463,75 @@
             width: 42%;
             height: 100%;
             background-color: var(--primary);
-            border-radius: 4px;
+            border-radius: 2px;
         }
 
         .laptop-keyboard-base {
             width: 100%;
-            height: 16px;
+            height: 14px;
             background: #e2e8f0;
-            border-radius: 0 0 16px 16px;
-            margin-top: 12px;
-            border-bottom: 4px solid #cbd5e1;
+            border-radius: 0 0 12px 12px;
+            margin-top: 10px;
+            border-bottom: 3px solid #cbd5e1;
         }
 
-        /* -------------------------------------------------------------
-           FEATURES CARD GRID
-        ------------------------------------------------------------- */
+        /* Features Section */
         .features {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 24px;
             margin-bottom: 80px;
-            width: 100%;
         }
 
         .feature-card {
-            background: #ffffff;
+            background: var(--white);
             border-radius: 16px;
-            padding: 36px 24px;
+            padding: 32px 24px;
             border: 1px solid var(--border);
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: all 0.25s ease-in-out;
-            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s ease;
         }
 
         .feature-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
-            border-color: #cbd5e1;
+            transform: translateY(-2px);
         }
 
         .icon-circle {
-            width: 56px;
-            height: 56px;
+            width: 52px;
+            height: 52px;
             background-color: var(--primary-light);
             color: var(--primary);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.35rem;
-            margin-bottom: 24px;
-            transition: all 0.25s ease;
-        }
-
-        .feature-card:hover .icon-circle {
-            background-color: var(--primary);
-            color: #ffffff;
+            font-size: 1.25rem;
+            margin-bottom: 20px;
         }
 
         .feature-card h3 {
-            font-size: 1.05rem;
+            font-size: 1rem;
             font-weight: 800;
             color: var(--text-dark);
             margin-bottom: 12px;
         }
 
         .feature-card p {
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
-            line-height: 1.55;
+            line-height: 1.5;
         }
 
-        /* -------------------------------------------------------------
-           HOW IT WORKS SECTION
-        ------------------------------------------------------------- */
+        /* How it Works */
         .section-header {
             text-align: center;
-            font-size: 2rem;
+            font-size: 1.75rem;
             font-weight: 800;
             color: var(--text-dark);
             margin-bottom: 48px;
-            letter-spacing: -0.5px;
         }
 
         .steps-grid {
@@ -501,92 +540,83 @@
             gap: 24px;
             position: relative;
             margin-bottom: 80px;
-            width: 100%;
         }
 
         .step-card {
-            background: #ffffff;
-            padding: 32px 24px;
+            background: var(--white);
+            padding: 24px;
             border-radius: 16px;
-            border: 1px solid var(--border);
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
-            box-shadow: var(--shadow-sm);
         }
 
         .step-num {
             position: absolute;
             top: -12px;
-            left: 24px;
-            width: 28px;
-            height: 28px;
+            left: 20px;
+            width: 24px;
+            height: 24px;
             background-color: var(--primary);
             color: white;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: 800;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(29, 104, 242, 0.3);
         }
 
         .step-card .icon-circle {
-            background-color: #ffffff;
+            background-color: var(--white);
             border: 1px solid var(--border);
             color: var(--primary);
         }
 
         .step-card h4 {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 800;
             color: var(--text-dark);
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .step-card p {
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             color: var(--text-muted);
-            line-height: 1.55;
+            line-height: 1.5;
         }
 
-        /* Connecting lines on desktop */
         .step-card::after {
             content: '';
             position: absolute;
-            top: 60px;
+            top: 50px;
             right: -24px;
             width: 24px;
-            border-top: 2px dashed #cbd5e1;
-            z-index: 1;
+            border-top: 2px dotted #cbd5e1;
+            z-index: -1;
         }
 
         .step-card:last-child::after {
             display: none;
         }
 
-        /* -------------------------------------------------------------
-           STATISTICS BOX (Image 1 Bottom Layout)
-        ------------------------------------------------------------- */
+        /* Trust Stats Banner Layout */
         .stats-box {
             background-color: var(--bg-light);
             border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 48px 40px;
+            border-radius: 16px;
+            padding: 40px;
             text-align: center;
             margin-bottom: 40px;
-            width: 100%;
         }
 
         .stats-box h3 {
-            font-size: 1.35rem;
+            font-size: 1.15rem;
             font-weight: 800;
             color: var(--text-dark);
-            margin-bottom: 40px;
-            letter-spacing: -0.3px;
+            margin-bottom: 32px;
         }
 
         .stats-grid {
@@ -600,29 +630,24 @@
             align-items: center;
             gap: 16px;
             text-align: left;
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-sm);
         }
 
         .stat-icon {
             width: 48px;
             height: 48px;
-            background: var(--primary-light);
-            border: 1px solid var(--primary-border);
+            background: var(--white);
+            border: 1px solid var(--border);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             color: var(--primary);
             flex-shrink: 0;
         }
 
         .stat-info h4 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 800;
             color: var(--text-dark);
             line-height: 1.1;
@@ -631,80 +656,347 @@
         .stat-info p {
             font-size: 0.8rem;
             color: var(--text-muted);
-            font-weight: 700;
-            margin-top: 4px;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
+            font-weight: 600;
+            margin-top: 2px;
         }
 
-        /* -------------------------------------------------------------
-           CALL TO ACTION PANEL
-        ------------------------------------------------------------- */
+        /* Call To Action Panel */
         .cta-panel {
             background-color: var(--primary-light);
             border: 1px solid #bfdbfe;
-            border-radius: 20px;
-            padding: 40px 48px;
+            border-radius: 16px;
+            padding: 32px 40px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 32px;
+            gap: 30px;
             margin-bottom: 40px;
-            width: 100%;
         }
 
         .cta-left {
             display: flex;
             align-items: center;
-            gap: 24px;
+            gap: 20px;
         }
 
         .cta-panel-icon {
-            width: 60px;
-            height: 60px;
-            background: #ffffff;
+            width: 56px;
+            height: 56px;
+            background: var(--white);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--primary);
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(29, 104, 242, 0.1);
+            box-shadow: 0 4px 10px rgba(29, 104, 242, 0.05);
         }
 
         .cta-text h3 {
-            font-size: 1.45rem;
+            font-size: 1.25rem;
             font-weight: 800;
             color: var(--text-dark);
-            margin-bottom: 6px;
-            letter-spacing: -0.3px;
+            margin-bottom: 4px;
         }
 
         .cta-text p {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--text-muted);
-            font-weight: 600;
+            font-weight: 500;
         }
 
+        /* ==========================================================================
+           6. VIEW B: SUBJECTS SELECTOR DASHBOARD SPECIFIC ELEMENTS
+           ========================================================================== */
+        .dashboard-hero {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 32px 0;
+        }
+
+        .dashboard-hero-icon {
+            width: 84px;
+            height: 84px;
+            background-color: var(--primary-light);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            flex-shrink: 0;
+            border: 1.5px solid var(--primary-border);
+        }
+
+        .dashboard-hero-text h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+
+        .dashboard-hero-text p {
+            font-size: 1.06rem;
+            color: var(--neutral-grey-500);
+            font-weight: 500;
+            line-height: 1.5;
+            max-width: 680px;
+        }
+
+        /* Subjects Dashboard Cards Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 24px;
+            margin-bottom: 48px;
+        }
+
+        .subject-card {
+            background-color: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 270px;
+            transition: all var(--transition-speed) var(--timing-curve);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-4px);
+            border-color: #cbd5e1;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        .subject-card-icon {
+            width: 64px;
+            height: 64px;
+            background-color: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            margin-bottom: 24px;
+            transition: background var(--transition-speed) var(--timing-curve);
+        }
+
+        .subject-card:hover .subject-card-icon {
+            background-color: var(--primary-light-hover);
+        }
+
+        .subject-card h2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .subject-card p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-weight: 500;
+            max-width: 90%;
+        }
+
+        .subject-card-footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
+
+        .card-arrow-btn {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            background-color: var(--white);
+            border: 1.5px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            transition: all var(--transition-speed) var(--timing-curve);
+        }
+
+        .subject-card:hover .card-arrow-btn {
+            background-color: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        /* Dash Props */
+        .dash-props {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 32px 16px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            margin-bottom: 32px;
+        }
+
+        .dash-prop-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 0 16px;
+            position: relative;
+        }
+
+        .dash-prop-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 10%;
+            height: 80%;
+            width: 1px;
+            background-color: var(--border);
+        }
+
+        .dash-prop-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background-color: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 1.2rem;
+        }
+
+        .dash-prop-item h3 {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .dash-prop-item p {
+            font-size: 0.8rem;
+            color: var(--neutral-grey-500);
+            line-height: 1.5;
+            font-weight: 500;
+            max-width: 180px;
+        }
+
+        /* Tips & Security Info layouts */
+        .tip-banner {
+            background-color: #f0f7ff;
+            border: 1px solid #e0f2fe;
+            border-radius: 16px;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .tip-icon {
+            color: var(--primary);
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .tip-text {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .security-card {
+            background-color: var(--white);
+            border: 1.5px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .security-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .security-icon {
+            color: var(--primary);
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .security-text-group {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .security-title {
+            font-size: 0.94rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .security-desc {
+            font-size: 0.81rem;
+            color: var(--neutral-grey-500);
+            font-weight: 500;
+        }
+
+        .security-link {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            transition: color var(--transition-speed) var(--timing-curve);
+        }
+
+        .security-link:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+
+        /* ==========================================================================
+           7. SYSTEM FOOTER
+           ========================================================================== */
         .footer {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: var(--text-muted);
             text-align: center;
-            margin-top: 24px;
-            font-weight: 500;
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
             width: 100%;
         }
 
-        /* -------------------------------------------------------------
-           MEDIA BREAKPOINTS & ULTIMATE RESPONSIVE RECONSTRUCTION
-        ------------------------------------------------------------- */
-        @media (max-width: 1100px) {
+        /* ==========================================================================
+           8. RESPONSIVE BREAKPOINT MATRICES (GUARANTEED NO SIDE-SCROLL AT ALL SCREEN WIDTHS)
+           ========================================================================== */
+        @media (max-width: 1024px) {
             .hero {
                 grid-template-columns: 1fr;
                 text-align: center;
-                gap: 56px;
-                margin-bottom: 60px;
+                gap: 48px;
             }
             .hero-left {
                 align-items: center;
@@ -727,339 +1019,544 @@
             }
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 32px;
+            }
+            .dashboard-grid {
+                gap: 24px;
+            }
+            .dash-props {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 32px;
+                padding: 32px;
+            }
+            .dash-prop-item:not(:last-child)::after {
+                display: none;
             }
         }
 
-        /* Tablet Breakpoint Adjustments */
         @media (max-width: 768px) {
             .navbar {
-                padding: 16px 24px;
+                padding: 16px 0;
             }
             .cta-panel {
                 flex-direction: column;
                 text-align: center;
-                padding: 36px 24px;
+                padding: 32px 24px;
             }
             .cta-left {
                 flex-direction: column;
-                gap: 16px;
+                gap: 14px;
             }
             .cta-panel .cta-button {
                 width: 100%;
                 justify-content: center;
             }
+            .dashboard-hero {
+                gap: 16px;
+                padding: 24px 0;
+            }
+            .dashboard-hero-icon {
+                width: 64px;
+                height: 64px;
+                border-radius: 16px;
+            }
+            .dashboard-hero-text h1 {
+                font-size: 1.85rem;
+            }
+            .dashboard-hero-text p {
+                font-size: 0.95rem;
+            }
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .subject-card {
+                min-height: auto;
+                padding: 24px;
+            }
+            .subject-card-icon {
+                margin-bottom: 16px;
+            }
+            .security-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            .security-link {
+                align-self: flex-end;
+            }
         }
 
-        /* Strict Responsive Code for Screens Down to 320px Wide (Smartphones) */
-        @media (max-width: 580px) {
-            .navbar {
-                padding: 16px;
-                gap: 8px;
-            }
+        /* Compact Mobile Viewport Lock */
+        @media (max-width: 520px) {
             .logo {
-                font-size: 1.25rem;
-                gap: 8px;
+                font-size: 1.15rem;
+                gap: 6px;
             }
-            .logo-icon-wrapper {
-                width: 32px;
-                height: 32px;
-                font-size: 0.95rem;
+            .logo-icon-svg {
+                width: 26px;
+                height: 26px;
             }
             .login-btn {
                 padding: 8px 14px;
                 font-size: 0.8rem;
                 gap: 6px;
-                border-radius: 6px;
             }
-            .container {
-                padding: 0 16px 60px 16px;
+            .user-name-text {
+                display: none; /* Hide profile name text to make room for toggle menu on ultra-small screens */
+            }
+            .user-profile-widget {
+                padding: 4px;
+            }
+            .user-avatar-element {
+                width: 32px;
+                height: 32px;
             }
             .hero-left h1 {
-                font-size: 2.4rem;
-                letter-spacing: -1px;
+                font-size: 2.3rem;
             }
-            .hero-left p {
-                font-size: 1rem;
-            }
-
-            /* RECONSTRUCT GRAPHIC SECTION TO REMOVE MOBILE OVERLAPPING (Image 3 Fix) */
-            .hero-right {
-                flex-direction: column;
-                gap: 20px;
-            }
-            .graphic-wrapper {
-                display: flex;
-                flex-direction: column-reverse; /* Put Menu under/above mockup to stop visual clipping */
-                gap: 24px;
-                width: 100%;
-            }
-            .subject-menu {
-                position: static; /* Convert overlay to interactive stacked panel */
-                width: 100%;
-                box-shadow: var(--shadow-sm);
-                padding: 8px;
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
-            }
-            .subject-item {
-                padding: 10px;
-                font-size: 0.72rem;
-                justify-content: center;
-                border-radius: 6px;
-            }
-            .subject-item i {
-                font-size: 0.85rem;
-            }
-
-            .laptop-frame {
-                border-radius: 12px;
-                padding: 8px;
-            }
-            .screen {
-                border-radius: 8px;
-                padding: 12px;
-            }
-            .video-overlay {
-                padding: 10px;
-            }
-            .video-header {
-                font-size: 0.72rem;
-            }
-            .math-equation-box {
-                font-size: 0.82rem;
-                gap: 4px;
-            }
-            .play-btn-circle {
-                width: 44px;
-                height: 44px;
-                font-size: 1rem;
-            }
-            .video-controls {
-                font-size: 0.65rem;
-            }
-
-            /* Re-stack Grid Structures */
             .features {
                 grid-template-columns: 1fr;
-                gap: 16px;
             }
             .steps-grid {
                 grid-template-columns: 1fr;
-                gap: 24px;
-            }
-            .step-card {
-                padding: 24px 16px;
-            }
-            .stats-box {
-                padding: 32px 16px;
-            }
-            .stats-box h3 {
-                font-size: 1.15rem;
-                margin-bottom: 24px;
             }
             .stats-grid {
                 grid-template-columns: 1fr;
+            }
+            .dash-props {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            /* Displays subject floating menu responsively without falling off device borders */
+            .subject-menu {
+                left: -10px;
+                top: 10%;
+                width: 130px;
+                padding: 8px;
+                gap: 4px;
+            }
+            .subject-item {
+                padding: 6px 8px;
+                font-size: 0.65rem;
+                border-radius: 4px;
+            }
+            .graphic-wrapper {
+                padding-left: 12px;
+            }
+            .dashboard-hero {
+                flex-direction: column;
+                align-items: flex-start;
                 gap: 16px;
-            }
-            .stat-item {
-                padding: 16px;
-            }
-            .cta-panel {
-                padding: 32px 16px;
-            }
-            .cta-text h3 {
-                font-size: 1.25rem;
-            }
-            .cta-text p {
-                font-size: 0.85rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <a href="#" class="logo">
-            <div class="logo-icon-wrapper">
-                <i class="fas fa-graduation-cap"></i>
-            </div>
-            Grade 12 <span>Learning</span>
-        </a>
-        <a href="#" class="login-btn">
-            <i class="far fa-user"></i> Log in
-        </a>
-    </nav>
+    <div class="viewport-wrapper">
+        <div class="container">
+            
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <span class="logo-icon-svg">
+                        <svg viewBox="0 0 24 24" fill="currentColor" width="100%" height="100%">
+                            <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>
+                            <path d="M19 12.18l-7 3.82-7-3.82V17l7 4 7-4v-4.82z"/>
+                        </svg>
+                    </span>
+                    Grade 12 <span>Learning</span>
+                </a>
+                
+                <div class="nav-actions">
+                    <div class="demo-toggle">
+                        <button class="toggle-tab active" onclick="switchView('landing', this)">Home</button>
+                        <button class="toggle-tab" onclick="switchView('dashboard', this)">Dashboard</button>
+                    </div>
 
-    <div class="container">
-        
-        <section class="hero">
-            <div class="hero-left">
-                <div class="badge">Master Today. Excel Tomorrow.</div>
-                <h1>Master Grade 12 <br><span>The Smart Way</span></h1>
-                <p>Step-by-step video explanations for every question in past exam papers. Learn, practice and ace your exams with confidence.</p>
-                
-                <a href="#" class="cta-button">Start Learning <i class="fas fa-arrow-right"></i></a>
-                
-                <div class="sub-link">
-                    Already have an account? <a href="#">Log in</a>
+                    <a href="#" id="auth-button" class="login-btn" onclick="toggleDemoLogin(event)"><i class="far fa-user"></i> Log in</a>
+                    
+                    <div id="auth-profile" class="user-profile-widget" style="display: none;">
+                        <div class="user-avatar-element">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 16px; height: 16px;">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                        </div>
+                        <span class="user-name-text">Hi, Paul</span>
+                    </div>
                 </div>
-            </div>
+            </nav>
 
-            <div class="hero-right">
-                <div class="graphic-wrapper">
-                    <div class="subject-menu">
-                        <div class="subject-item active">
-                            <i class="fas fa-chart-line"></i> Mathematics
-                        </div>
-                        <div class="subject-item">
-                            <i class="fas fa-flask"></i> Physical Sciences
-                        </div>
-                        <div class="subject-item">
-                            <i class="fas fa-calculator"></i> Accounting
-                        </div>
-                        <div class="subject-item">
-                            <i class="fas fa-percent"></i> Mathematical Literacy
+            <div id="landing-page" class="page-view active-view">
+                <section class="hero">
+                    <div class="hero-left">
+                        <div class="badge">Master Today. Excel Tomorrow.</div>
+                        <h1>Master Grade 12 <br><span>The Smart Way</span></h1>
+                        <p>Step-by-step video explanations for every question in past exam papers. Learn, practice and ace your exams with confidence.</p>
+                        
+                        <button class="cta-button" onclick="goToDashboardDemo()">Start Learning <i class="fas fa-arrow-right"></i></button>
+                        
+                        <div class="sub-link">
+                            Already have an account? <a href="#" onclick="toggleDemoLogin(event)">Log in</a>
                         </div>
                     </div>
 
-                    <div class="laptop-frame">
-                        <div class="screen">
-                            <div class="video-overlay">
-                                <div class="video-header">Question 2.1</div>
-                                
-                                <div class="math-equation-box">
-                                    <span class="math-row">$$2x^2 + 3x - 2$$</span>
-                                    <span class="math-row">$$= (2x - 1)(x + 2)$$</span>
-                                    <span class="math-row">$$= 2x^2 + 4x - x - 2$$</span>
-                                    <span class="math-row">$$= 2x^2 + 3x - 2$$</span>
+                    <div class="hero-right">
+                        <div class="graphic-wrapper">
+                            <div class="subject-menu">
+                                <div class="subject-item active">
+                                    <i class="fas fa-chart-line"></i> Mathematics
                                 </div>
-                                
-                                <div class="play-btn-circle">
-                                    <i class="fas fa-play"></i>
+                                <div class="subject-item">
+                                    <i class="fas fa-flask"></i> Physical Sciences
                                 </div>
-                                
-                                <div class="video-controls">
-                                    <div class="control-left">
-                                        <i class="fas fa-pause"></i>
-                                        <span>02:45 / 06:30</span>
-                                    </div>
-                                    <div class="progress-bar">
-                                        <div class="progress-current"></div>
-                                    </div>
-                                    <div class="control-right">
-                                        <i class="fas fa-volume-up" style="margin-right: 8px;"></i>
-                                        <i class="fas fa-expand"></i>
-                                    </div>
+                                <div class="subject-item">
+                                    <i class="fas fa-calculator"></i> Accounting
+                                </div>
+                                <div class="subject-item">
+                                    <i class="fas fa-percent"></i> Mathematical Literacy
                                 </div>
                             </div>
+
+                            <div class="laptop-frame">
+                                <div class="screen">
+                                    <div class="video-overlay">
+                                        <div class="video-header">Question 2.1</div>
+                                        
+                                        <div class="math-equation-box">
+                                            $$2x^2 + 3x - 2$$<br>
+                                            $$= (2x - 1)(x + 2)$$<br>
+                                            $$= 2x^2 + 4x - x - 2$$<br>
+                                            $$= 2x^2 + 3x - 2$$
+                                        </div>
+                                        
+                                        <div class="play-btn-circle">
+                                            <i class="fas fa-play"></i>
+                                        </div>
+                                        
+                                        <div class="video-controls">
+                                            <div class="control-left">
+                                                <i class="fas fa-pause"></i>
+                                                <span>02:45 / 06:30</span>
+                                            </div>
+                                            <div class="progress-bar">
+                                                <div class="progress-current"></div>
+                                            </div>
+                                            <div class="control-right">
+                                                <i class="fas fa-volume-up" style="margin-right: 8px;"></i>
+                                                <i class="fas fa-expand"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="laptop-keyboard-base"></div>
+                            </div>
                         </div>
-                        <div class="laptop-keyboard-base"></div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </section>
 
-        <section class="features">
-            <div class="feature-card">
-                <div class="icon-circle"><i class="fas fa-play"></i></div>
-                <h3>Video Explanations</h3>
-                <p>Watch clear, step-by-step solutions for every question.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon-circle"><i class="far fa-file-alt"></i></div>
-                <h3>Past Exam Papers</h3>
-                <p>Access a wide range of past papers by year and subject.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon-circle"><i class="fas fa-crosshairs"></i></div>
-                <h3>Learn at Your Pace</h3>
-                <p>Pause, rewind and replay until you truly understand.</p>
-            </div>
-            <div class="feature-card">
-                <div class="icon-circle"><i class="fas fa-chart-line"></i></div>
-                <h3>Improve & Succeed</h3>
-                <p>Practice more, learn better and boost your results.</p>
-            </div>
-        </section>
-
-        <h2 class="section-header">How It Works</h2>
-        <section class="steps-grid">
-            <div class="step-card">
-                <div class="step-num">1</div>
-                <div class="icon-circle"><i class="far fa-user"></i></div>
-                <h4>Create an Account</h4>
-                <p>Sign up or log in to get started.</p>
-            </div>
-            <div class="step-card">
-                <div class="step-num">2</div>
-                <div class="icon-circle"><i class="fas fa-book-open"></i></div>
-                <h4>Choose Subject & Paper</h4>
-                <p>Pick your subject, year and exam paper.</p>
-            </div>
-            <div class="step-card">
-                <div class="step-num">3</div>
-                <div class="icon-circle"><i class="fas fa-play"></i></div>
-                <h4>Watch Explanations</h4>
-                <p>Tap any question to watch a step-by-step video.</p>
-            </div>
-            <div class="step-card">
-                <div class="step-num">4</div>
-                <div class="icon-circle"><i class="fas fa-shield-alt"></i></div>
-                <h4>Learn & Excel</h4>
-                <p>Understand better and ace your exams.</p>
-            </div>
-        </section>
-
-        <section class="stats-box">
-            <h3>Trusted by Thousands of South African Students</h3>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-icon"><i class="fas fa-graduation-cap"></i></div>
-                    <div class="stat-info">
-                        <h4>4+</h4>
-                        <p>Subjects Covered</p>
+                <section class="features">
+                    <div class="feature-card">
+                        <div class="icon-circle"><i class="fas fa-play"></i></div>
+                        <h3>Video Explanations</h3>
+                        <p>Watch clear, step-by-step solutions for every question.</p>
                     </div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon"><i class="far fa-file-alt"></i></div>
-                    <div class="stat-info">
-                        <h4>200+</h4>
-                        <p>Past Papers Available</p>
+                    <div class="feature-card">
+                        <div class="icon-circle"><i class="far fa-file-alt"></i></div>
+                        <h3>Past Exam Papers</h3>
+                        <p>Access a wide range of past papers by year and subject.</p>
                     </div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon"><i class="fas fa-shield-alt"></i></div>
-                    <div class="stat-info">
-                        <h4>100%</h4>
-                        <p>Focused on Success</p>
+                    <div class="feature-card">
+                        <div class="icon-circle"><i class="fas fa-crosshairs"></i></div>
+                        <h3>Learn at Your Pace</h3>
+                        <p>Pause, rewind and replay until you truly understand.</p>
                     </div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon"><i class="fas fa-users"></i></div>
-                    <div class="stat-info">
-                        <h4>10,000+</h4>
-                        <p>Active Students</p>
+                    <div class="feature-card">
+                        <div class="icon-circle"><i class="fas fa-chart-line"></i></div>
+                        <h3>Improve & Succeed</h3>
+                        <p>Practice more, learn better and boost your results.</p>
                     </div>
-                </div>
+                </section>
+
+                <h2 class="section-header">How It Works</h2>
+                <section class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-num">1</div>
+                        <div class="icon-circle"><i class="far fa-user"></i></div>
+                        <h4>Create an Account</h4>
+                        <p>Sign up or log in to get started.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">2</div>
+                        <div class="icon-circle"><i class="fas fa-book-open"></i></div>
+                        <h4>Choose Subject & Paper</h4>
+                        <p>Pick your subject, year and exam paper.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">3</div>
+                        <div class="icon-circle"><i class="fas fa-play"></i></div>
+                        <h4>Watch Explanations</h4>
+                        <p>Tap any question to watch a step-by-step video.</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-num">4</div>
+                        <div class="icon-circle"><i class="fas fa-shield-alt"></i></div>
+                        <h4>Learn & Excel</h4>
+                        <p>Understand better and ace your exams.</p>
+                    </div>
+                </section>
+
+                <section class="stats-box">
+                    <h3>Trusted by Thousands of South African Students</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="fas fa-graduation-cap"></i></div>
+                            <div class="stat-info">
+                                <h4>4+</h4>
+                                <p>Subjects Covered</p>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="far fa-file-alt"></i></div>
+                            <div class="stat-info">
+                                <h4>200+</h4>
+                                <p>Past Papers Available</p>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="fas fa-shield-alt"></i></div>
+                            <div class="stat-info">
+                                <h4>100%</h4>
+                                <p>Focused on Your Success</p>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-icon"><i class="fas fa-users"></i></div>
+                            <div class="stat-info">
+                                <h4>10,000+</h4>
+                                <p>Students Learning Smarter</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="cta-panel">
+                    <div class="cta-left">
+                        <div class="cta-panel-icon"><i class="fas fa-graduation-cap"></i></div>
+                        <div class="cta-text">
+                            <h3>Your Success. Our Mission.</h3>
+                            <p>Start learning today and take the next step towards your future.</p>
+                        </div>
+                    </div>
+                    <button class="cta-button" onclick="goToDashboardDemo()">Start Learning <i class="fas fa-arrow-right"></i></button>
+                </section>
             </div>
-        </section>
 
-        <section class="cta-panel">
-            <div class="cta-left">
-                <div class="cta-panel-icon"><i class="fas fa-graduation-cap"></i></div>
-                <div class="cta-text">
-                    <h3>Your Success. Our Mission.</h3>
-                    <p>Start learning today and take the next step towards your future.</p>
-                </div>
+            <div id="dashboard-page" class="page-view">
+                <section class="dashboard-hero">
+                    <div class="dashboard-hero-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 38px; height: 38px;">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                        </svg>
+                    </div>
+                    <div class="dashboard-hero-text">
+                        <h1>Choose Your Subject</h1>
+                        <p>Select a subject to explore past exam papers and watch step-by-step video explanations.</p>
+                    </div>
+                </section>
+
+                <section class="dashboard-grid">
+                    <a href="#" class="subject-card" aria-label="Open Mathematics Portal">
+                        <div>
+                            <div class="subject-card-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 28px; height: 28px;">
+                                    <path d="M3 12h2l4 8 7-16h5"/>
+                                    <path d="M14 11l5 5M19 11l-5 5"/>
+                                </svg>
+                            </div>
+                            <h2>Mathematics</h2>
+                            <p>Access past exam papers and master every question with clear explanations.</p>
+                        </div>
+                        <div class="subject-card-footer">
+                            <div class="card-arrow-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+                                    <line x1="5" y1="12" x2="19" y2="12"/>
+                                    <polyline points="12 5 19 12 12 19"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="subject-card" aria-label="Open Physical Sciences Portal">
+                        <div>
+                            <div class="subject-card-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 28px; height: 28px;">
+                                    <path d="M6 3h12"/>
+                                    <path d="M9 3v8L4 18a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2l-5-7V3"/>
+                                    <path d="M8.5 13h7"/>
+                                </svg>
+                            </div>
+                            <h2>Physical Sciences</h2>
+                            <p>Step-by-step solutions to help you understand and excel in Physical Sciences.</p>
+                        </div>
+                        <div class="subject-card-footer">
+                            <div class="card-arrow-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+                                    <line x1="5" y1="12" x2="19" y2="12"/>
+                                    <polyline points="12 5 19 12 12 19"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="subject-card" aria-label="Open Accounting Portal">
+                        <div>
+                            <div class="subject-card-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 28px; height: 28px;">
+                                    <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+                                    <line x1="8" y1="6" x2="16" y2="6"/>
+                                    <line x1="16" y1="14" x2="16" y2="18"/>
+                                    <line x1="8" y1="10" x2="12" y2="10"/>
+                                    <line x1="8" y1="14" x2="12" y2="14"/>
+                                    <line x1="8" y1="18" x2="12" y2="18"/>
+                                </svg>
+                            </div>
+                            <h2>Accounting</h2>
+                            <p>Detailed explanations to strengthen your Accounting skills and confidence.</p>
+                        </div>
+                        <div class="subject-card-footer">
+                            <div class="card-arrow-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+                                    <line x1="5" y1="12" x2="19" y2="12"/>
+                                    <polyline points="12 5 19 12 12 19"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="#" class="subject-card" aria-label="Open Mathematical Literacy Portal">
+                        <div>
+                            <div class="subject-card-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 28px; height: 28px;">
+                                    <line x1="18" y1="20" x2="18" y2="10"/>
+                                    <line x1="12" y1="20" x2="12" y2="4"/>
+                                    <line x1="6" y1="20" x2="6" y2="14"/>
+                                </svg>
+                            </div>
+                            <h2>Mathematical Literacy</h2>
+                            <p>Learn concepts step-by-step and improve your problem-solving skills.</p>
+                        </div>
+                        <div class="subject-card-footer">
+                            <div class="card-arrow-btn">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+                                    <line x1="5" y1="12" x2="19" y2="12"/>
+                                    <polyline points="12 5 19 12 12 19"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </section>
+
+                <section class="dash-props">
+                    <div class="dash-prop-item">
+                        <div class="dash-prop-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3>Video Explanations</h3>
+                        <p>Watch clear, step-by-step solutions for every question.</p>
+                    </div>
+                    <div class="dash-prop-item">
+                        <div class="dash-prop-icon">
+                            <i class="far fa-file-alt"></i>
+                        </div>
+                        <h3>Past Exam Papers</h3>
+                        <p>Access a wide range of papers by year and subject.</p>
+                    </div>
+                    <div class="dash-prop-item">
+                        <div class="dash-prop-icon">
+                            <i class="far fa-clock"></i>
+                        </div>
+                        <h3>Learn at Your Pace</h3>
+                        <p>Pause, rewind and replay until you truly understand.</p>
+                    </div>
+                    <div class="dash-prop-item">
+                        <div class="dash-prop-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Improve & Succeed</h3>
+                        <p>Practice more, learn better and boost your results.</p>
+                    </div>
+                </section>
+
+                <section class="tip-banner">
+                    <span class="tip-icon"><i class="far fa-lightbulb"></i></span>
+                    <span class="tip-text">Tip: You can change your subject anytime from the dashboard.</span>
+                </section>
+
+                <section class="security-card">
+                    <div class="security-info">
+                        <span class="security-icon"><i class="fas fa-shield-alt"></i></span>
+                        <div class="security-text-group">
+                            <h4 class="security-title">Your data is secure</h4>
+                            <p class="security-desc">Your progress and information are encrypted and stored securely.</p>
+                        </div>
+                    </div>
+                    <a href="#" class="security-link">
+                        Learn more <i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i>
+                    </a>
+                </section>
             </div>
-            <a href="#" class="cta-button">Start Learning <i class="fas fa-arrow-right"></i></a>
-        </section>
 
-        <footer class="footer">
-            &copy; 2026 Grade 12 Learning. All rights reserved.
-        </footer>
+            <footer class="footer">
+                &copy; 2026 Grade 12 Learning. All rights reserved.
+            </footer>
 
-    </div> 
+        </div>
+    </div>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <script>
+        // Simple client routing helper to switch pages perfectly 
+        function switchView(viewId, tabButton) {
+            document.querySelectorAll('.page-view').forEach(view => {
+                view.classList.remove('active-view');
+            });
+            document.querySelectorAll('.toggle-tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            if(viewId === 'landing') {
+                document.getElementById('landing-page').classList.add('active-view');
+            } else {
+                document.getElementById('dashboard-page').classList.add('active-view');
+            }
+            tabButton.classList.add('active');
+        }
+
+        function goToDashboardDemo() {
+            const dashBtn = document.querySelectorAll('.toggle-tab')[1];
+            switchView('dashboard', dashBtn);
+        }
+
+        // Live interactive login simulator inside user-header mockup
+        function toggleDemoLogin(event) {
+            event.preventDefault();
+            const authBtn = document.getElementById('auth-button');
+            const authProfile = document.getElementById('auth-profile');
+
+            if(authBtn.style.display !== 'none') {
+                authBtn.style.display = 'none';
+                authProfile.style.display = 'flex';
+            } else {
+                authBtn.style.display = 'inline-flex';
+                authProfile.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
