@@ -2,1070 +2,676 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Grade 12 Learning - Master Grade 12 The Smart Way</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 12 Learning - Choose Your Subject</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    
     <style>
+        /* ==========================================================================
+           GLOBAL VARIABLES & SYSTEM TOKENS
+           ========================================================================== */
         :root {
-            --primary: #1d68f2;
-            --primary-hover: #1452c7;
-            --primary-light: #eff6ff;
-            --primary-border: #bfdbfe;
-            --text-dark: #0f172a;
-            --text-muted: #475569;
-            --border: #e2e8f0;
-            --bg-light: #f8fafc;
-            --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
-            --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.08);
-            --shadow-lg: 0 20px 40px rgba(15, 23, 42, 0.12);
+            --primary-blue: #1d68f2;
+            --primary-hover-blue: #144eb7;
+            --primary-light-blue: #eff6ff;
+            --primary-border-blue: #dbeafe;
+            
+            --text-main-dark: #0f172a;
+            --text-secondary-muted: #475569;
+            --text-light-gray: #64748b;
+            
+            --border-ui-light: #f1f5f9;
+            --border-ui-medium: #cbd5e1;
+            
+            --bg-canvas: #fafbfe;
+            --bg-card-pure: #ffffff;
+            
+            --shadow-subtle: 0 4px 24px rgba(15, 23, 42, 0.02);
+            --shadow-hover: 0 10px 30px rgba(15, 23, 42, 0.04);
+            
+            --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* -------------------------------------------------------------
-           STRICT ANTI-HORIZONTAL SCROLL ROOT CONTROLS
-        ------------------------------------------------------------- */
-        html, body {
-            width: 100%;
-            max-width: 100vw;
-            overflow-x: hidden !important;
-            position: relative;
-            margin: 0;
-            padding: 0;
-            background-color: #ffffff;
-            color: var(--text-dark);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            scroll-behavior: smooth;
-        }
-
+        /* ==========================================================================
+           RESET & DOCUMENT OVERRIDES (PREVENTS SIDE-SCROLLING GLOBALLY)
+           ========================================================================== */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Universal Container Protection */
-        .container {
+        html, body {
             width: 100%;
-            max-width: 1200px;
-            padding: 0 24px 80px 24px;
-            position: relative;
-            box-sizing: border-box;
+            min-height: 100vh;
+            background-color: var(--bg-canvas);
+            color: var(--text-main-dark);
+            overflow-x: hidden !important; /* Absolute guardrail against horizontal scroll on any viewport size */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* -------------------------------------------------------------
-           NAVIGATION HEADER (Exact Matches Logo & Clean Wrap Mobile)
-        ------------------------------------------------------------- */
+        /* ==========================================================================
+           PAGE LAYOUT WRAPPERS
+           ========================================================================== */
+        .app-container {
+            width: 100%;
+            max-width: 1120px; /* Aligned to design grid system */
+            padding: 0 24px 80px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        /* ==========================================================================
+           1. NAVIGATION BAR STYLING
+           ========================================================================== */
+        .navbar-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            background: transparent;
+        }
+
         .navbar {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1120px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: transparent;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text-main-dark);
+            text-decoration: none;
+            user-select: none;
+            letter-spacing: -0.5px;
+        }
+
+        .navbar-brand i {
+            color: var(--primary-blue);
+            font-size: 1.8rem;
+        }
+
+        .navbar-brand span {
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+
+        .navbar-user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 6px 16px 6px 6px;
+            background: var(--bg-card-pure);
+            border-radius: 50px;
+            border: 1px solid var(--border-ui-light);
+            box-shadow: var(--shadow-subtle);
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            user-select: none;
+        }
+
+        .navbar-user-profile:hover {
+            border-color: var(--border-ui-medium);
+            transform: translateY(-1px);
+        }
+
+        .profile-avatar-circle {
+            width: 36px;
+            height: 36px;
+            background-color: var(--primary-light-blue);
+            color: var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .profile-username-label {
+            font-weight: 700;
+            font-size: 0.92rem;
+            color: var(--text-main-dark);
+        }
+
+        .profile-dropdown-arrow {
+            font-size: 0.8rem;
+            color: var(--primary-blue);
+            margin-left: 2px;
+        }
+
+        /* ==========================================================================
+           2. PAGE HEADER / HERO ICON & TITLE
+           ========================================================================== */
+        .page-header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-top: 16px;
+        }
+
+        .header-graphic-box {
+            width: 80px;
+            height: 80px;
+            background-color: var(--primary-light-blue);
+            color: var(--primary-blue);
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            flex-shrink: 0;
+            border: 1px solid var(--primary-border-blue);
+        }
+
+        .header-content h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: -1.2px;
+            margin-bottom: 6px;
+            color: var(--text-main-dark);
+        }
+
+        .header-content p {
+            font-size: 1.05rem;
+            color: var(--text-secondary-muted);
+            font-weight: 500;
+            line-height: 1.5;
+        }
+
+        /* ==========================================================================
+           3. SUBJECT CARDS - GRID LAYOUT (2x2)
+           ========================================================================== */
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .subject-card {
+            background: var(--bg-card-pure);
+            border-radius: 24px;
+            padding: 36px;
+            border: 1px solid var(--border-ui-light);
+            box-shadow: var(--shadow-subtle);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 290px;
+            position: relative;
+            transition: var(--transition-smooth);
+        }
+
+        .subject-card:hover {
+            transform: translateY(-4px);
+            border-color: #e2e8f0;
+            box-shadow: var(--shadow-hover);
+        }
+
+        .subject-card-body {
+            margin-bottom: 24px;
+        }
+
+        .subject-card-icon-container {
+            width: 68px;
+            height: 68px;
+            background-color: var(--primary-light-blue);
+            color: var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 24px;
+        }
+
+        .subject-card h2 {
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--text-main-dark);
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .subject-card p {
+            font-size: 0.94rem;
+            color: var(--text-secondary-muted);
+            line-height: 1.6;
+            font-weight: 500;
+            max-width: 95%;
+        }
+
+        .subject-card-footer {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 100%;
+        }
+
+        .subject-card-action-btn {
+            width: 52px;
+            height: 52px;
+            border: 1px solid var(--border-ui-light);
+            background: var(--bg-card-pure);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+
+        .subject-card:hover .subject-card-action-btn {
+            background-color: var(--primary-blue);
+            color: #ffffff;
+            border-color: var(--primary-blue);
+            transform: translateX(2px);
+        }
+
+        /* ==========================================================================
+           4. SUB-FEATURES BANNER (4 COLUMNS / VERTICAL SEPARATORS)
+           ========================================================================== */
+        .features-horizontal-bar {
+            background: var(--bg-card-pure);
+            border: 1px solid var(--border-ui-light);
+            border-radius: 24px;
+            padding: 32px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .horizontal-feature-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 8px 16px;
+            position: relative;
+        }
+
+        /* Vertical spacer separation lines */
+        .horizontal-feature-node:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: -12px;
+            top: 15%;
+            height: 70%;
+            width: 1px;
+            background-color: var(--border-ui-light);
+        }
+
+        .horizontal-feature-icon-wrapper {
+            width: 52px;
+            height: 52px;
+            background-color: var(--primary-light-blue);
+            color: var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            margin-bottom: 18px;
+        }
+
+        .horizontal-feature-node h3 {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-main-dark);
+            margin-bottom: 8px;
+        }
+
+        .horizontal-feature-node p {
+            font-size: 0.8rem;
+            color: var(--text-secondary-muted);
+            line-height: 1.5;
+            font-weight: 500;
+            max-width: 190px;
+        }
+
+        /* ==========================================================================
+           5. DASHBOARD BULLETINS & ANNOUNCEMENT UTILITY BARS
+           ========================================================================== */
+        
+        /* Dashboard smart-tip component */
+        .dashboard-tip-banner {
+            background-color: #f0f7ff;
+            border: 1px solid #e0f2fe;
+            border-radius: 16px;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .dashboard-tip-banner i {
+            color: var(--primary-blue);
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .dashboard-tip-banner p {
+            font-size: 0.9rem;
+            color: var(--text-secondary-muted);
+            font-weight: 600;
+        }
+
+        /* Strict data encryption security notifier card */
+        .encryption-status-banner {
+            background-color: #f8fafc;
+            border: 1px solid var(--border-ui-light);
+            border-radius: 16px;
             padding: 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 16px;
-            box-sizing: border-box;
-            background: #ffffff;
         }
 
-        .logo {
+        .encryption-content-left {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-dark);
-            text-decoration: none;
-            white-space: nowrap;
+            gap: 18px;
+        }
+
+        .encryption-content-left i {
+            color: var(--primary-blue);
+            font-size: 1.45rem;
             flex-shrink: 0;
-            letter-spacing: -0.5px;
         }
 
-        .logo-icon-wrapper {
-            background-color: var(--primary);
-            color: #ffffff;
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
+        .encryption-details h4 {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-main-dark);
+            margin-bottom: 4px;
+        }
+
+        .encryption-details p {
+            font-size: 0.85rem;
+            color: var(--text-secondary-muted);
+            font-weight: 500;
+        }
+
+        .encryption-learn-more-link {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-decoration: none;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 10px rgba(29, 104, 242, 0.2);
-        }
-
-        .logo span {
-            color: var(--primary);
-        }
-
-        .login-btn {
-            display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 20px;
-            background: #ffffff;
-            color: var(--text-dark);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            text-decoration: none;
-            transition: all 0.2s ease-in-out;
             white-space: nowrap;
-            flex-shrink: 0;
+            transition: var(--transition-smooth);
         }
 
-        .login-btn:hover {
-            background: var(--bg-light);
-            border-color: #cbd5e1;
-            transform: translateY(-1px);
-        }
-
-        /* -------------------------------------------------------------
-           HERO SECTION
-        ------------------------------------------------------------- */
-        .hero {
-            display: grid;
-            grid-template-columns: 1.15fr 0.85fr;
-            gap: 48px;
-            align-items: center;
-            margin-top: 24px;
-            margin-bottom: 80px;
-            width: 100%;
-        }
-
-        .hero-left {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            z-index: 2;
-        }
-
-        .badge {
-            background-color: var(--primary-light);
-            color: var(--primary);
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            margin-bottom: 24px;
-            border: 1px solid var(--primary-border);
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .hero-left h1 {
-            font-size: 3.6rem;
-            font-weight: 800;
-            line-height: 1.12;
-            letter-spacing: -1.8px;
-            margin-bottom: 24px;
-            color: var(--text-dark);
-        }
-
-        .hero-left h1 span {
-            color: var(--primary);
-        }
-
-        .hero-left p {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            line-height: 1.65;
-            margin-bottom: 36px;
-            max-width: 520px;
-        }
-
-        .cta-button {
-            padding: 16px 32px;
-            background-color: var(--primary);
-            color: #ffffff;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 1.05rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            transition: all 0.2s ease-in-out;
-            white-space: nowrap;
-            box-shadow: 0 8px 20px rgba(29, 104, 242, 0.25);
-            border: none;
-            cursor: pointer;
-        }
-
-        .cta-button:hover {
-            background-color: var(--primary-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 24px rgba(29, 104, 242, 0.35);
-        }
-
-        .sub-link {
-            margin-top: 20px;
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            font-weight: 600;
-        }
-
-        .sub-link a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 700;
-        }
-
-        .sub-link a:hover {
+        .encryption-learn-more-link:hover {
+            color: var(--primary-hover-blue);
             text-decoration: underline;
         }
 
-        /* -------------------------------------------------------------
-           HERO INTERACTIVE DESKTOP OVERLAY GRAPHIC
-        ------------------------------------------------------------- */
-        .hero-right {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            position: relative;
-            width: 100%;
-        }
-
-        .graphic-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 520px;
-        }
-
-        /* Subjects Overlaid Floating Menu (Desktop Only) */
-        .subject-menu {
-            position: absolute;
-            left: -80px;
-            top: 15%;
-            z-index: 10;
-            background: #ffffff;
-            padding: 14px;
-            border-radius: 16px;
-            box-shadow: var(--shadow-md);
-            border: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            width: 230px;
-        }
-
-        .subject-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 14px;
-            border-radius: 8px;
-            font-size: 0.88rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            border: 1px solid transparent;
-        }
-
-        .subject-item.active {
-            background-color: var(--primary-light);
-            color: var(--primary);
-            border-color: #bfdbfe;
-        }
-
-        .subject-item i {
-            font-size: 1.05rem;
-            width: 18px;
+        /* ==========================================================================
+           6. COMPREHENSIVE SITE FOOTER
+           ========================================================================== */
+        .app-footer {
             text-align: center;
-        }
-
-        /* Laptop Mockup Frame Container */
-        .laptop-frame {
-            width: 100%;
-            background: #ffffff;
-            border-radius: 20px;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-lg);
-            overflow: hidden;
-            padding: 14px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .screen {
-            width: 100%;
-            background: #090d16;
-            border-radius: 12px;
-            aspect-ratio: 16 / 10;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            padding: 20px;
-            overflow: hidden;
-        }
-
-        .video-overlay {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            background: radial-gradient(circle at center, rgba(15, 23, 42, 0.7) 0%, rgba(9, 13, 22, 0.95) 100%);
-            border-radius: 8px;
-            padding: 16px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .video-header {
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: #94a3b8;
-            letter-spacing: 0.5px;
-        }
-
-        /* High-Definition Mock Math Rendering Panel */
-        .math-equation-box {
-            align-self: center;
-            text-align: center;
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #60a5fa;
-            line-height: 1.8;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            user-select: none;
-        }
-
-        .math-row {
-            display: block;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            font-family: 'Times New Roman', Times, serif;
-            font-style: italic;
-        }
-
-        .math-row span.operator {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-style: normal;
-            padding: 0 4px;
-        }
-
-        .play-btn-circle {
-            width: 56px;
-            height: 56px;
-            background: rgba(29, 104, 242, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ffffff;
-            font-size: 1.3rem;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            cursor: pointer;
-            backdrop-filter: blur(4px);
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 8px 24px rgba(29, 104, 242, 0.4);
-        }
-
-        .play-btn-circle:hover {
-            transform: translate(-50%, -50%) scale(1.1);
-            background: var(--primary);
-        }
-
-        .video-controls {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 0.75rem;
-            color: #94a3b8;
-            gap: 12px;
-        }
-
-        .control-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .progress-bar {
-            height: 4px;
-            background: #334155;
-            flex-grow: 1;
-            border-radius: 4px;
-            position: relative;
-        }
-
-        .progress-current {
-            width: 42%;
-            height: 100%;
-            background-color: var(--primary);
-            border-radius: 4px;
-        }
-
-        .laptop-keyboard-base {
-            width: 100%;
-            height: 16px;
-            background: #e2e8f0;
-            border-radius: 0 0 16px 16px;
-            margin-top: 12px;
-            border-bottom: 4px solid #cbd5e1;
-        }
-
-        /* -------------------------------------------------------------
-           FEATURES CARD GRID
-        ------------------------------------------------------------- */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-            margin-bottom: 80px;
-            width: 100%;
-        }
-
-        .feature-card {
-            background: #ffffff;
-            border-radius: 16px;
-            padding: 36px 24px;
-            border: 1px solid var(--border);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: all 0.25s ease-in-out;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
-            border-color: #cbd5e1;
-        }
-
-        .icon-circle {
-            width: 56px;
-            height: 56px;
-            background-color: var(--primary-light);
-            color: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.35rem;
-            margin-bottom: 24px;
-            transition: all 0.25s ease;
-        }
-
-        .feature-card:hover .icon-circle {
-            background-color: var(--primary);
-            color: #ffffff;
-        }
-
-        .feature-card h3 {
-            font-size: 1.05rem;
-            font-weight: 800;
-            color: var(--text-dark);
-            margin-bottom: 12px;
-        }
-
-        .feature-card p {
-            font-size: 0.88rem;
-            color: var(--text-muted);
-            line-height: 1.55;
-        }
-
-        /* -------------------------------------------------------------
-           HOW IT WORKS SECTION
-        ------------------------------------------------------------- */
-        .section-header {
-            text-align: center;
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--text-dark);
-            margin-bottom: 48px;
-            letter-spacing: -0.5px;
-        }
-
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-            position: relative;
-            margin-bottom: 80px;
-            width: 100%;
-        }
-
-        .step-card {
-            background: #ffffff;
-            padding: 32px 24px;
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .step-num {
-            position: absolute;
-            top: -12px;
-            left: 24px;
-            width: 28px;
-            height: 28px;
-            background-color: var(--primary);
-            color: white;
-            font-size: 0.85rem;
-            font-weight: 800;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 10px rgba(29, 104, 242, 0.3);
-        }
-
-        .step-card .icon-circle {
-            background-color: #ffffff;
-            border: 1px solid var(--border);
-            color: var(--primary);
-        }
-
-        .step-card h4 {
-            font-size: 1rem;
-            font-weight: 800;
-            color: var(--text-dark);
-            margin-bottom: 10px;
-        }
-
-        .step-card p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.55;
-        }
-
-        /* Connecting lines on desktop */
-        .step-card::after {
-            content: '';
-            position: absolute;
-            top: 60px;
-            right: -24px;
-            width: 24px;
-            border-top: 2px dashed #cbd5e1;
-            z-index: 1;
-        }
-
-        .step-card:last-child::after {
-            display: none;
-        }
-
-        /* -------------------------------------------------------------
-           STATISTICS BOX
-        ------------------------------------------------------------- */
-        .stats-box {
-            background-color: var(--bg-light);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 48px 40px;
-            text-align: center;
-            margin-bottom: 40px;
-            width: 100%;
-        }
-
-        .stats-box h3 {
-            font-size: 1.35rem;
-            font-weight: 800;
-            color: var(--text-dark);
-            margin-bottom: 40px;
-            letter-spacing: -0.3px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-        }
-
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            text-align: left;
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .stat-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--primary-light);
-            border: 1px solid var(--primary-border);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            color: var(--primary);
-            flex-shrink: 0;
-        }
-
-        .stat-info h4 {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-dark);
-            line-height: 1.1;
-        }
-
-        .stat-info p {
             font-size: 0.8rem;
-            color: var(--text-muted);
-            font-weight: 700;
-            margin-top: 4px;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-
-        /* -------------------------------------------------------------
-           CALL TO ACTION PANEL
-        ------------------------------------------------------------- */
-        .cta-panel {
-            background-color: var(--primary-light);
-            border: 1px solid #bfdbfe;
-            border-radius: 20px;
-            padding: 40px 48px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 32px;
-            margin-bottom: 40px;
-            width: 100%;
-        }
-
-        .cta-left {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
-        .cta-panel-icon {
-            width: 60px;
-            height: 60px;
-            background: #ffffff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 1.6rem;
-            flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(29, 104, 242, 0.1);
-        }
-
-        .cta-text h3 {
-            font-size: 1.45rem;
-            font-weight: 800;
-            color: var(--text-dark);
-            margin-bottom: 6px;
-            letter-spacing: -0.3px;
-        }
-
-        .cta-text p {
-            font-size: 0.95rem;
-            color: var(--text-muted);
+            color: var(--text-light-gray);
             font-weight: 600;
+            margin-top: 12px;
+            border-top: 1px solid var(--border-ui-light);
+            padding-top: 24px;
         }
 
-        .footer {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            text-align: center;
-            margin-top: 24px;
-            font-weight: 500;
-            width: 100%;
-        }
-
-        /* -------------------------------------------------------------
-           MEDIA BREAKPOINTS & RESPONSIVE RECONSTRUCTION
-        ------------------------------------------------------------- */
-        @media (max-width: 1100px) {
-            .hero {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 56px;
-                margin-bottom: 60px;
-            }
-            .hero-left {
-                align-items: center;
-            }
-            .hero-left p {
-                max-width: 100%;
-            }
-            .hero-right {
-                justify-content: center;
-            }
-            .subject-menu {
-                left: -40px;
-            }
-            .features {
+        /* ==========================================================================
+           FLUID & ABSOLUTE RESPONSIVE OVERRIDES (SIDE-SCROLL SAFE SYSTEM)
+           ========================================================================== */
+        @media (max-width: 1024px) {
+            .subject-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
             }
-            .steps-grid {
+            .features-horizontal-bar {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 40px;
+                gap: 32px;
             }
-            .step-card::after {
-                display: none;
-            }
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .horizontal-feature-node::after {
+                display: none !important; /* Strips vertical spacers when wrapping occurs */
             }
         }
 
-        /* Tablet Breakpoint Adjustments */
         @media (max-width: 768px) {
             .navbar {
-                padding: 16px 24px;
+                padding: 16px;
             }
-            .cta-panel {
-                flex-direction: column;
-                text-align: center;
-                padding: 36px 24px;
+            .app-container {
+                padding: 12px 16px 48px 16px;
+                gap: 24px;
             }
-            .cta-left {
-                flex-direction: column;
+            .page-header {
                 gap: 16px;
+                margin-top: 8px;
             }
-            .cta-panel .cta-button {
-                width: 100%;
-                justify-content: center;
+            .header-graphic-box {
+                width: 64px;
+                height: 64px;
+                font-size: 1.8rem;
+                border-radius: 16px;
+            }
+            .header-content h1 {
+                font-size: 1.95rem;
+            }
+            .header-content p {
+                font-size: 0.95rem;
+            }
+            .subject-grid {
+                grid-template-columns: 1fr; /* Pure linear stack ensures 0% horizontal overflow on mobile screens */
+                gap: 20px;
+            }
+            .subject-card {
+                padding: 28px;
+                min-height: auto;
+            }
+            .subject-card-icon-container {
+                margin-bottom: 20px;
             }
         }
 
-        /* Smart Mobile Refactoring (Solves overlap & text wrapping) */
-        @media (max-width: 580px) {
-            .navbar {
-                padding: 16px;
-                gap: 8px;
-            }
-            .logo {
-                font-size: 1.2rem;
-                gap: 6px;
-            }
-            .logo-icon-wrapper {
-                width: 32px;
-                height: 32px;
-                font-size: 0.9rem;
-            }
-            .login-btn {
-                padding: 6px 12px;
-                font-size: 0.85rem;
-                gap: 4px;
-                border-radius: 6px;
-            }
-            .container {
-                padding: 0 16px 60px 16px;
-            }
-            .hero-left h1 {
-                font-size: 2.2rem;
-                letter-spacing: -1px;
-            }
-            .hero-left p {
-                font-size: 1rem;
-            }
-
-            /* Stack floating panels on mobile */
-            .hero-right {
-                flex-direction: column;
-                gap: 20px;
-            }
-            .graphic-wrapper {
-                display: flex;
-                flex-direction: column-reverse; 
-                gap: 20px;
-                width: 100%;
-            }
-            .subject-menu {
-                position: static; 
-                width: 100%;
-                box-shadow: var(--shadow-sm);
-                padding: 10px;
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
-            }
-            .subject-item {
-                padding: 10px;
-                font-size: 0.78rem;
-                justify-content: flex-start;
-                border-radius: 8px;
-            }
-            .subject-item i {
-                font-size: 0.85rem;
-            }
-
-            .laptop-frame {
-                border-radius: 12px;
-                padding: 8px;
-            }
-            .screen {
-                border-radius: 8px;
-                padding: 12px;
-            }
-            .video-overlay {
-                padding: 10px;
-            }
-            .video-header {
-                font-size: 0.72rem;
-            }
-            .math-equation-box {
-                font-size: 0.9rem;
-                gap: 4px;
-            }
-            .play-btn-circle {
-                width: 44px;
-                height: 44px;
-                font-size: 1rem;
-            }
-            .video-controls {
-                font-size: 0.65rem;
-            }
-
-            /* Re-stack Grid Structures */
-            .features {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-            .steps-grid {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
-            .step-card {
-                padding: 24px 16px;
-            }
-            .stats-box {
-                padding: 32px 16px;
-            }
-            .stats-box h3 {
-                font-size: 1.15rem;
-                margin-bottom: 24px;
-            }
-            .stats-grid {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-            .stat-item {
-                padding: 16px;
-            }
-            .cta-panel {
-                padding: 32px 16px;
-            }
-            .cta-text h3 {
+        @media (max-width: 480px) {
+            .navbar-brand {
                 font-size: 1.25rem;
             }
-            .cta-text p {
-                font-size: 0.85rem;
+            .profile-username-label {
+                display: none; /* Collapses text labels on extreme viewports to preserve status bar bounds */
+            }
+            .navbar-user-profile {
+                padding: 6px;
+                border-radius: 50%;
+            }
+            .profile-dropdown-arrow {
+                display: none;
+            }
+            .features-horizontal-bar {
+                grid-template-columns: 1fr; /* Complete vertical alignment */
+                padding: 20px;
+            }
+            .encryption-status-banner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 18px;
+            }
+            .encryption-learn-more-link {
+                align-self: flex-end;
             }
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <a href="#" class="logo">
-            <div class="logo-icon-wrapper">
-                <i class="fas fa-graduation-cap"></i>
+    <nav class="navbar-wrapper">
+        <div class="navbar">
+            <a href="#" class="navbar-brand">
+                <i class="fas fa-graduation-cap"></i> Grade 12 <span>Learning</span>
+            </a>
+            <div class="navbar-user-profile">
+                <div class="profile-avatar-circle">
+                    <i class="fas fa-user"></i>
+                </div>
+                <span class="profile-username-label">Hi, Paul</span>
+                <i class="fas fa-chevron-down profile-dropdown-arrow"></i>
             </div>
-            Grade 12 <span>Learning</span>
-        </a>
-        <a href="#" class="login-btn">
-            <i class="far fa-user"></i> Log in
-        </a>
+        </div>
     </nav>
 
-    <div class="container">
+    <div class="app-container">
         
-        <section class="hero">
-            <div class="hero-left">
-                <div class="badge">Master Today. Excel Tomorrow.</div>
-                <h1>Master Grade 12 <br><span>The Smart Way</span></h1>
-                <p>Step-by-step video explanations for every question in past exam papers. Learn, practice and ace your exams with confidence.</p>
-                
-                <a href="#" class="cta-button">Start Learning <i class="fas fa-arrow-right"></i></a>
-                
-                <div class="sub-link">
-                    Already have an account? <a href="#">Log in</a>
-                </div>
+        <header class="page-header">
+            <div class="header-graphic-box">
+                <i class="fas fa-book-open"></i>
             </div>
-
-            <div class="hero-right">
-                <div class="graphic-wrapper">
-                    <div class="subject-menu">
-                        <div class="subject-item active">
-                            <i class="fas fa-chart-line"></i> Mathematics
-                        </div>
-                        <div class="subject-item">
-                            <i class="fas fa-flask"></i> Physical Sciences
-                        </div>
-                        <div class="subject-item">
-                            <i class="fas fa-calculator"></i> Accounting
-                        </div>
-                        <div class="subject-item">
-                            <i class="fas fa-percent"></i> Mathematical Literacy
-                        </div>
-                    </div>
-
-                    <div class="laptop-frame">
-                        <div class="screen">
-                            <div class="video-overlay">
-                                <div class="video-header">Question 2.1</div>
-                                
-                                <div class="math-equation-box">
-                                    <span class="math-row">2x<sup>2</sup> <span class="operator">+</span> 3x <span class="operator">-</span> 2</span>
-                                    <span class="math-row"><span class="operator">=</span> (2x <span class="operator">-</span> 1)(x <span class="operator">+</span> 2)</span>
-                                    <span class="math-row"><span class="operator">=</span> 2x<sup>2</sup> <span class="operator">+</span> 4x <span class="operator">-</span> x <span class="operator">-</span> 2</span>
-                                    <span class="math-row"><span class="operator">=</span> 2x<sup>2</sup> <span class="operator">+</span> 3x <span class="operator">-</span> 2</span>
-                                </div>
-                                
-                                <div class="play-btn-circle">
-                                    <i class="fas fa-play"></i>
-                                </div>
-                                
-                                <div class="video-controls">
-                                    <div class="control-left">
-                                        <i class="fas fa-pause"></i>
-                                        <span>02:45 / 06:30</span>
-                                    </div>
-                                    <div class="progress-bar">
-                                        <div class="progress-current"></div>
-                                    </div>
-                                    <div class="control-right">
-                                        <i class="fas fa-volume-up" style="margin-right: 8px;"></i>
-                                        <i class="fas fa-expand"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="laptop-keyboard-base"></div>
-                    </div>
-                </div>
+            <div class="header-content">
+                <h1>Choose Your Subject</h1>
+                <p>Select a subject to explore past exam papers and watch step-by-step video explanations.</p>
             </div>
-        </section>
+        </header>
 
-        <section class="features">
-            <div class="feature-card">
-                <div class="icon-circle"><i class="fas fa-play"></i></div>
+        <main class="subject-grid">
+            
+            <section class="subject-card">
+                <div class="subject-card-body">
+                    <div class="subject-card-icon-container">
+                        <i class="fas fa-square-root-alt"></i>
+                    </div>
+                    <h2>Mathematics</h2>
+                    <p>Access past exam papers and master every question with clear explanations.</p>
+                </div>
+                <div class="subject-card-footer">
+                    <button class="subject-card-action-btn" aria-label="Go to Mathematics">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <section class="subject-card">
+                <div class="subject-card-body">
+                    <div class="subject-card-icon-container">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h2>Physical Sciences</h2>
+                    <p>Step-by-step solutions to help you understand and excel in Physical Sciences.</p>
+                </div>
+                <div class="subject-card-footer">
+                    <button class="subject-card-action-btn" aria-label="Go to Physical Sciences">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <section class="subject-card">
+                <div class="subject-card-body">
+                    <div class="subject-card-icon-container">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h2>Accounting</h2>
+                    <p>Detailed explanations to strengthen your Accounting skills and confidence.</p>
+                </div>
+                <div class="subject-card-footer">
+                    <button class="subject-card-action-btn" aria-label="Go to Accounting">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <section class="subject-card">
+                <div class="subject-card-body">
+                    <div class="subject-card-icon-container">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h2>Mathematical Literacy</h2>
+                    <p>Learn concepts step-by-step and improve your problem-solving skills.</p>
+                </div>
+                <div class="subject-card-footer">
+                    <button class="subject-card-action-btn" aria-label="Go to Mathematical Literacy">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </section>
+
+        </main>
+
+        <section class="features-horizontal-bar">
+            
+            <div class="horizontal-feature-node">
+                <div class="horizontal-feature-icon-wrapper">
+                    <i class="fas fa-play-circle"></i>
+                </div>
                 <h3>Video Explanations</h3>
                 <p>Watch clear, step-by-step solutions for every question.</p>
             </div>
-            <div class="feature-card">
-                <div class="icon-circle"><i class="far fa-file-alt"></i></div>
+
+            <div class="horizontal-feature-node">
+                <div class="horizontal-feature-icon-wrapper">
+                    <i class="far fa-file-alt"></i>
+                </div>
                 <h3>Past Exam Papers</h3>
-                <p>Access a wide range of past papers by year and subject.</p>
+                <p>Access a wide range of papers by year and subject.</p>
             </div>
-            <div class="feature-card">
-                <div class="icon-circle"><i class="fas fa-crosshairs"></i></div>
+
+            <div class="horizontal-feature-node">
+                <div class="horizontal-feature-icon-wrapper">
+                    <i class="fas fa-bullseye"></i>
+                </div>
                 <h3>Learn at Your Pace</h3>
                 <p>Pause, rewind and replay until you truly understand.</p>
             </div>
-            <div class="feature-card">
-                <div class="icon-circle"><i class="fas fa-chart-line"></i></div>
+
+            <div class="horizontal-feature-node">
+                <div class="horizontal-feature-icon-wrapper">
+                    <i class="fas fa-chart-line"></i>
+                </div>
                 <h3>Improve & Succeed</h3>
                 <p>Practice more, learn better and boost your results.</p>
             </div>
+
         </section>
 
-        <h2 class="section-header">How It Works</h2>
-        <section class="steps-grid">
-            <div class="step-card">
-                <div class="step-num">1</div>
-                <div class="icon-circle"><i class="far fa-user"></i></div>
-                <h4>Create an Account</h4>
-                <p>Sign up or log in to get started.</p>
-            </div>
-            <div class="step-card">
-                <div class="step-num">2</div>
-                <div class="icon-circle"><i class="fas fa-book-open"></i></div>
-                <h4>Choose Subject & Paper</h4>
-                <p>Pick your subject, year and exam paper.</p>
-            </div>
-            <div class="step-card">
-                <div class="step-num">3</div>
-                <div class="icon-circle"><i class="fas fa-play"></i></div>
-                <h4>Watch Explanations</h4>
-                <p>Tap any question to watch a step-by-step video.</p>
-            </div>
-            <div class="step-card">
-                <div class="step-num">4</div>
-                <div class="icon-circle"><i class="fas fa-shield-alt"></i></div>
-                <h4>Learn & Excel</h4>
-                <p>Understand better and ace your exams.</p>
-            </div>
+        <section class="dashboard-tip-banner">
+            <i class="far fa-lightbulb"></i>
+            <p>Tip: You can change your subject anytime from the dashboard.</p>
         </section>
 
-        <section class="stats-box">
-            <h3>Trusted by Thousands of South African Students</h3>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-icon"><i class="fas fa-graduation-cap"></i></div>
-                    <div class="stat-info">
-                        <h4>4+</h4>
-                        <p>Subjects Covered</p>
-                    </div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon"><i class="far fa-file-alt"></i></div>
-                    <div class="stat-info">
-                        <h4>200+</h4>
-                        <p>Past Papers Available</p>
-                    </div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon"><i class="fas fa-shield-alt"></i></div>
-                    <div class="stat-info">
-                        <h4>100%</h4>
-                        <p>Focused on Success</p>
-                    </div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon"><i class="fas fa-users"></i></div>
-                    <div class="stat-info">
-                        <h4>10,000+</h4>
-                        <p>Active Students</p>
-                    </div>
+        <section class="encryption-status-banner">
+            <div class="encryption-content-left">
+                <i class="fas fa-shield-alt"></i>
+                <div class="encryption-details">
+                    <h4>Your data is secure</h4>
+                    <p>Your progress and information are encrypted and stored securely.</p>
                 </div>
             </div>
+            <a href="#" class="encryption-learn-more-link">Learn more <i class="fas fa-chevron-right"></i></a>
         </section>
 
-        <section class="cta-panel">
-            <div class="cta-left">
-                <div class="cta-panel-icon"><i class="fas fa-graduation-cap"></i></div>
-                <div class="cta-text">
-                    <h3>Your Success. Our Mission.</h3>
-                    <p>Start learning today and take the next step towards your future.</p>
-                </div>
-            </div>
-            <a href="#" class="cta-button">Start Learning <i class="fas fa-arrow-right"></i></a>
-        </section>
-
-        <footer class="footer">
-            &copy; 2026 Grade 12 Learning. All rights reserved.
+        <footer class="app-footer">
+            &copy; 2025 Grade 12 Learning. All rights reserved.
         </footer>
 
-    </div> 
+    </div>
+
 </body>
 </html>
