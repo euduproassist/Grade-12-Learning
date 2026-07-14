@@ -1,1 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>MyApply SA - Build Your Academic Passport</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --blue-primary: #0052cc;
+            --blue-hover: #0043a4;
+            --blue-light: #eff6ff;
+            --blue-border: #bfdbfe;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --bg-page: #f8fafc;
+            --border-gray: #e2e8f0;
+            --green-success: #10b981;
+            --red-danger: #ef4444;
+            --white: #ffffff;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Hard safety line preventing any sideways scrolling */
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Responsive Layout Container */
+        .page-container {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* ==================== Navigation Header ==================== */
+        .navbar {
+            width: 100%;
+            background: var(--white);
+            border-bottom: 1px solid var(--border-gray);
+            display: flex;
+            justify-content: center;
+            padding: 16px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .navbar-content {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 1.4rem;
+            color: var(--text-main);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .navbar-brand span {
+            color: var(--blue-primary);
+        }
+
+        .navbar-brand i {
+            color: var(--blue-primary);
+            font-size: 1.5rem;
+        }
+
+        .nav-menu-desktop {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+            list-style: none;
+        }
+
+        .nav-menu-desktop a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-menu-desktop a:hover, .nav-menu-desktop a.active {
+            color: var(--blue-primary);
+        }
+
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .account-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            background: var(--blue-light);
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--blue-border);
+            color: var(--blue-primary);
+            transition: all 0.2s ease;
+        }
+
+        .account-badge:hover {
+            background: #dbeafe;
+        }
+
+        .account-badge i.fa-user-circle {
+            font-size: 1.3rem;
+        }
+
+        /* ==================== Master Central Layout Wrapper ==================== */
+        .wrapper {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            flex-grow: 1;
+        }
+
+        /* ==================== Stepper Progress Panel ==================== */
+        .stepper-panel {
+            background: var(--white);
+            border: 1px solid var(--border-gray);
+            border-radius: 12px;
+            padding: 20px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            white-space: nowrap;
+        }
+
+        .step-badge {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            border: 1px solid var(--border-gray);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .step-item.done .step-badge {
+            background: var(--blue-primary);
+            border-color: var(--blue-primary);
+            color: var(--white);
+        }
+
+        .step-item.current .step-badge {
+            background: transparent;
+            border: 2px solid var(--blue-primary);
+            color: var(--blue-primary);
+            font-weight: 800;
+        }
+
+        .step-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .step-item.current .step-text {
+            color: var(--blue-primary);
+            font-weight: 700;
+        }
+
+        .step-item.done .step-text {
+            color: var(--text-main);
+        }
+
+        .step-divider {
+            flex-grow: 1;
+            height: 1px;
+            background: var(--border-gray);
+            min-width: 20px;
+        }
+
+        /* ==================== Page Header Title Block ==================== */
+        .heading-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            gap: 20px;
+            border-bottom: 2px solid var(--border-gray);
+            padding-bottom: 20px;
+        }
+
+        .heading-left h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.75px;
+            margin-bottom: 8px;
+            color: var(--text-main);
+            line-height: 1.2;
+        }
+
+        .heading-left p {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .legend-box {
+            display: flex;
+            gap: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            background: var(--white);
+            padding: 10px 18px;
+            border-radius: 8px;
+            border: 1px solid var(--border-gray);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .legend-node {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-node.found i { color: var(--green-success); }
+        .legend-node.lost i { color: var(--red-danger); }
+
+        /* ==================== Master Dashboard Canvas Layout ==================== */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 32px;
+            align-items: start;
+        }
+
+        /* Left Column: Data blocks */
+        .dashboard-main-column {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .dashboard-card {
+            background: var(--white);
+            border: 1px solid var(--border-gray);
+            border-radius: 16px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .data-block {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .block-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 14px;
+            margin-bottom: 8px;
+        }
+
+        .block-avatar {
+            width: 38px;
+            height: 38px;
+            background: var(--blue-light);
+            color: var(--blue-primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .block-header h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        /* Table Grid Configuration with Robust Word Wrapping & Fluid Sizing */
+        .data-row {
+            display: grid;
+            grid-template-columns: 2.5fr 3.5fr 0.5fr 0.8fr;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid #f8fafc;
+        }
+
+        .data-row:last-child {
+            border-bottom: none;
+        }
+
+        .cell-label {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .cell-value {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-main);
+            word-break: break-word; /* Prevents overflow strings from pushing columns */
+            overflow-wrap: break-word;
+            padding-right: 8px;
+        }
+
+        .cell-status {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.25rem;
+        }
+
+        .cell-status.valid { color: var(--green-success); }
+        .cell-status.invalid { color: var(--red-danger); }
+
+        .btn-edit {
+            background: var(--white);
+            border: 1px solid var(--border-gray);
+            color: var(--blue-primary);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+            width: 100%;
+            max-width: 80px;
+            justify-self: end;
+        }
+
+        .btn-edit:hover {
+            background: var(--bg-page);
+            border-color: #cbd5e1;
+        }
+
+        /* ==================== Right Column: Live Book Visual & Features ==================== */
+        .dashboard-side-column {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            position: sticky;
+            top: 110px;
+        }
+
+        /* Passport Promo Box */
+        .passport-promo-card {
+            background: radial-gradient(circle at top right, #1e40af, #0f172a);
+            color: var(--white);
+            border-radius: 16px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid #1e293b;
+        }
+
+        .promo-glow {
+            position: absolute;
+            top: -20%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(0,0,0,0) 70%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .promo-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .passport-icon-large {
+            width: 70px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #60a5fa;
+            margin-bottom: 20px;
+        }
+
+        .passport-promo-card h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .passport-promo-card p {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .passport-specs-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+
+        .spec-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+        }
+
+        .spec-item i {
+            color: var(--green-success);
+        }
+
+        /* Micro Security Block */
+        .crypto-notice-bar {
+            background: var(--blue-light);
+            border: 1px solid var(--blue-border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .crypto-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .crypto-left i {
+            font-size: 1.3rem;
+            color: var(--blue-primary);
+        }
+
+        .crypto-details h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 2px;
+        }
+
+        .crypto-details p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .link-info {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--blue-primary);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+
+        .link-info:hover {
+            text-decoration: underline;
+        }
+
+        /* ==================== Trusted Statistics Row ==================== */
+        .trust-container {
+            background: var(--white);
+            border: 1px solid var(--border-gray);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .trust-container h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 28px;
+        }
+
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .trust-stat-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-align: left;
+        }
+
+        .trust-stat-row i {
+            font-size: 1.5rem;
+            color: var(--blue-primary);
+            background: var(--blue-light);
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--blue-border);
+            flex-shrink: 0;
+        }
+
+        .stat-text-block h4 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1.1;
+        }
+
+        .stat-text-block p {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        /* ==================== Interactive Process Timeline Flow ==================== */
+        .section-headline {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .section-subheadline {
+            text-align: center;
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            font-weight: 500;
+        }
+
+        .process-flow {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .process-step {
+            position: relative;
+            background: var(--white);
+            border: 1px solid var(--border-gray);
+            border-radius: 12px;
+            padding: 28px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .process-step:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            width: 26px;
+            height: 26px;
+            background: var(--blue-primary);
+            color: var(--white);
+            border-radius: 50%;
+            font-size: 0.8rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,82,204,0.3);
+        }
+
+        .step-icon-side {
+            width: 46px;
+            height: 46px;
+            background: var(--blue-light);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--blue-primary);
+            font-size: 1.25rem;
+            border: 1px solid var(--blue-border);
+        }
+
+        .step-body {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .step-body h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .step-body p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ==================== Call-to-Action Footer Banner ==================== */
+        .action-banner {
+            background: var(--blue-light);
+            border: 1px solid var(--blue-border);
+            border-radius: 16px;
+            padding: 32px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 32px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .banner-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .banner-icon-container {
+            width: 60px;
+            height: 60px;
+            background: var(--white);
+            border: 1px solid var(--blue-border);
+            border-radius: 50%;
+            color: var(--blue-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .banner-copy h3 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+        }
+
+        .banner-copy p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .btn-submit-master {
+            background: var(--blue-primary);
+            color: var(--white);
+            border: none;
+            padding: 16px 36px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            box-shadow: 0 4px 6px rgba(0, 82, 204, 0.15);
+        }
+
+        .btn-submit-master:hover {
+            background: var(--blue-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 12px rgba(0, 82, 204, 0.2);
+        }
+
+        .copyright-tag {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-top: 10px;
+            padding-bottom: 20px;
+        }
+
+        /* ==================== FLUID RESPONSIVE MEDIA QUERIES ==================== */
+        /* Eliminates any horizontal side-scrolling across target screen sizes */
+
+        @media (max-width: 1100px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .dashboard-side-column {
+                position: static;
+            }
+            .trust-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 850px) {
+            .stepper-panel {
+                overflow-x: auto;
+                padding: 16px 20px;
+                -webkit-overflow-scrolling: touch;
+            }
+            .stepper-panel::-webkit-scrollbar {
+                display: none; /* Keep UI clean and elegant */
+            }
+            .step-item {
+                flex-shrink: 0;
+            }
+            .step-divider {
+                min-width: 24px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 12px 16px;
+            }
+            .nav-menu-desktop {
+                display: none; /* Collapse desktop links to favor clean mobile design */
+            }
+            .wrapper {
+                padding: 20px 16px;
+                gap: 28px;
+            }
+            .heading-container {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 14px;
+            }
+            .heading-left h1 {
+                font-size: 1.8rem;
+            }
+            .legend-box {
+                width: 100%;
+                justify-content: space-around;
+            }
+            .dashboard-card {
+                padding: 20px 16px;
+                gap: 24px;
+            }
+            .data-row {
+                grid-template-columns: 1fr auto;
+                gap: 4px 12px;
+                padding: 14px 0;
+                border-bottom: 1px dashed var(--border-gray);
+            }
+            .cell-label {
+                grid-column: 1 / span 2;
+                font-size: 0.88rem;
+            }
+            .cell-value {
+                grid-column: 1;
+                grid-row: 2;
+                text-align: left;
+                padding-right: 0;
+            }
+            .cell-status {
+                grid-column: 2;
+                grid-row: 2;
+                justify-content: flex-end;
+            }
+            .btn-edit {
+                grid-column: 1 / span 2;
+                grid-row: 3;
+                max-width: 100%;
+                margin-top: 6px;
+                padding: 8px;
+            }
+            .process-flow {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+            }
+            .action-banner {
+                flex-direction: column;
+                text-align: center;
+                padding: 24px 20px;
+                gap: 24px;
+            }
+            .banner-info {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .btn-submit-master {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .step-text {
+                display: none; /* Show badges only to save screen real estate */
+            }
+            .step-item.current .step-text {
+                display: inline-block;
+                font-size: 0.8rem;
+            }
+            .trust-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .process-flow {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-container">
+
+        <nav class="navbar">
+            <div class="navbar-content">
+                <a href="#" class="navbar-brand">
+                    <i class="fas fa-shield-alt"></i> MyApply <span>SA</span>
+                </a>
+                <ul class="nav-menu-desktop">
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">Universities</a></li>
+                    <li><a href="#">Bursaries</a></li>
+                    <li><a href="#">Course Explorer</a></li>
+                </ul>
+                <div class="navbar-actions">
+                    <div class="account-badge">
+                        <i class="fas fa-user-circle"></i>
+                        <span>Hi, Paul</span>
+                        <i class="fas fa-chevron-down" style="font-size: 0.7rem; margin-left: 4px;"></i>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <main class="wrapper">
+
+            <div class="stepper-panel">
+                <div class="step-item done">
+                    <div class="step-badge"><i class="fas fa-check"></i></div>
+                    <div class="step-text">Upload Documents</div>
+                </div>
+                <div class="step-divider"></div>
+                <div class="step-item done">
+                    <div class="step-badge"><i class="fas fa-check"></i></div>
+                    <div class="step-text">AI Extraction</div>
+                </div>
+                <div class="step-divider"></div>
+                <div class="step-item current">
+                    <div class="step-badge">3</div>
+                    <div class="step-text">Review & Verify</div>
+                </div>
+                <div class="step-divider"></div>
+                <div class="step-item">
+                    <div class="step-badge">4</div>
+                    <div class="step-text">Your Passport</div>
+                </div>
+            </div>
+
+            <div class="heading-container">
+                <div class="heading-left">
+                    <h1>Review & Verify Your Information</h1>
+                    <p>Please review the extracted information and make any necessary corrections.</p>
+                </div>
+                <div class="legend-box">
+                    <div class="legend-node found"><i class="fas fa-check-circle"></i> Extracted</div>
+                    <div class="legend-node lost"><i class="fas fa-times-circle"></i> Missing</div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                
+                <div class="dashboard-main-column">
+                    <div class="dashboard-card">
+                        
+                        <div class="data-block">
+                            <div class="block-header">
+                                <div class="block-avatar"><i class="far fa-user"></i></div>
+                                <h2>Personal Details</h2>
+                            </div>
+                            
+                            <div class="data-row">
+                                <span class="cell-label">Full Name</span>
+                                <span class="cell-value">Paul</span>
+                                <div class="cell-status valid"><i class="fas fa-check-circle"></i></div>
+                                <button class="btn-edit">Edit</button>
+                            </div>
+
+                            <div class="data-row">
+                                <span class="cell-label">Identity Number</span>
+                                <span class="cell-value">************</span>
+                                <div class="cell-status valid"><i class="fas fa-check-circle"></i></div>
+                                <button class="btn-edit">Edit</button>
+                            </div>
+
+                            <div class="data-row">
+                                <span class="cell-label">Date of Birth</span>
+                                <span class="cell-value">12 May 2006</span>
+                                <div class="cell-status valid"><i class="fas fa-check-circle"></i></div>
+                                <button class="btn-edit">Edit</button>
+                            </div>
+
+                            <div class="data-row">
+                                <span class="cell-label">Email Address</span>
+                                <span class="cell-value">paul@example.com</span>
+                                <div class="cell-status valid"><i class="fas fa-check-circle"></i></div>
+                                <button class="btn-edit">Edit</button>
+                            </div>
+
+                            <div class="data-row">
+                                <span class="cell-label">Phone Number</span>
+                                <span class="cell-value">067 123 4567</span>
+                                <div class="cell-status invalid"><i class="fas fa-times-circle"></i></div>
+                                <button class="btn-edit">Edit</button>
+                            </div>
+                        </div>
+
+                        <div class="data-block">
+                            <div class="block-header">
+                                <div class="block-avatar"><i class="fas fa-graduation-cap"></i></div>
+                                <h2>School Information</h2>
+                            </div>
+
+                            <div class="data-row">
+                                <span class="cell-label">School Name</span>
+                                <span class="cell-value">ABC High School</span>
+                                <div class="cell-status valid"><i class="fas fa-check-circle"></i></div>
+                                <button class="btn-edit">Edit</button>
+                            </div>
+
+                            <div class="data-row">
+                                <span class="cell-label">Province</span>
+                                <span class="cell-value">Gauteng</span>
+                                <div class="cell-status valid"><i class="fas fa-check-circle"></i></div>
+                                <button class="btn-edit">Edit</button>
+                            </div>
+
+                            <div class="data-row">
+                                <span class="cell-label">Year Completed</span>
+                                <span class="cell-value">2023</span>
+                                <div class="cell-status valid"><i class="fas fa-check-circle"></i></div>
+                                <button class="btn-edit">Edit</button>
+                            </div>
+                        </div>
+
+                        <div class="data-block">
+                            <div class="block-header">
+                                <div class="block-avatar"><i class="far fa-file-alt"></i></div>
+                                <h2>Subjects & Marks</h2>
+                            </div>
+
+                            <div class="data-row">
+                                <span class="cell-label">Mathematics</span>
+                                <span class="cell-value">85%</span>
+                                <div class="cell-status valid"><i class="fas fa-check-circle"></i></div>
+                                <button class="btn-edit">Edit</button>
+                            </div>
+
+                            <div class="data-row">
+                                <span class="cell-label">English</span>
+                                <span class="cell-value">78%</span>
+                                <div class="cell-status valid"><i class="fas fa-check-circle"></i></div>
+                                <button class="btn-edit">Edit</button>
+                            </div>
+
+                            <div class="data-row">
+                                <span class="cell-label">Physical Sciences</span>
+                                <span class="cell-value">--</span>
+                                <div class="cell-status invalid"><i class="fas fa-times-circle"></i></div>
+                                <button class="btn-edit">Edit</button>
+                            </div>
+
+                            <div class="data-row">
+                                <span class="cell-label">Life Sciences</span>
+                                <span class="cell-value">--</span>
+                                <div class="cell-status invalid"><i class="fas fa-times-circle"></i></div>
+                                <button class="btn-edit">Edit</button>
+                            </div>
+
+                            <div class="data-row">
+                                <span class="cell-label">APS (Estimated)</span>
+                                <span class="cell-value">--</span>
+                                <div class="cell-status invalid"><i class="fas fa-times-circle"></i></div>
+                                <button class="btn-edit">Edit</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="dashboard-side-column">
+                    
+                    <div class="passport-promo-card">
+                        <div class="promo-glow"></div>
+                        <div class="promo-content">
+                            <div class="passport-icon-large">
+                                <i class="fas fa-passport"></i>
+                            </div>
+                            <h3>ACADEMIC PASSPORT</h3>
+                            <p>MyApply SA Authorized Digital Credentials</p>
+                            
+                            <div class="passport-specs-list">
+                                <div class="spec-item">
+                                    <i class="fas fa-check-circle"></i> ID Document Verified
+                                </div>
+                                <div class="spec-item">
+                                    <i class="fas fa-check-circle"></i> Matric Records Secured
+                                </div>
+                                <div class="spec-item">
+                                    <i class="fas fa-check-circle"></i> Verification Stamp Ready
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="crypto-notice-bar">
+                        <div class="crypto-left">
+                            <i class="fas fa-lock"></i>
+                            <div class="crypto-details">
+                                <h4>Security First</h4>
+                                <p>Bank-grade encryption safeguards your profile.</p>
+                            </div>
+                        </div>
+                        <a href="#" class="link-info">Info <i class="fas fa-chevron-right" style="font-size: 0.7rem;"></i></a>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <section class="trust-container">
+                <h3>Trusted by Students Across South Africa</h3>
+                <div class="trust-grid">
+                    <div class="trust-stat-row">
+                        <i class="fas fa-university"></i>
+                        <div class="stat-text-block">
+                            <h4>26+</h4>
+                            <p>Institutions Connected</p>
+                        </div>
+                    </div>
+                    <div class="trust-stat-row">
+                        <i class="fas fa-graduation-cap"></i>
+                        <div class="stat-text-block">
+                            <h4>500+</h4>
+                            <p>Bursaries Open</p>
+                        </div>
+                    </div>
+                    <div class="trust-stat-row">
+                        <i class="fas fa-shield-alt"></i>
+                        <div class="stat-text-block">
+                            <h4>100%</h4>
+                            <p>Secure Storage</p>
+                        </div>
+                    </div>
+                    <div class="trust-stat-row">
+                        <i class="fas fa-users"></i>
+                        <div class="stat-text-block">
+                            <h4>10,000+</h4>
+                            <p>Active Profiles</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <h2 class="section-headline">Simple Verification Process</h2>
+            <p class="section-subheadline">Four simple stages to unlocking your placement channels</p>
+            
+            <section class="process-flow">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon-side"><i class="fas fa-cloud-upload-alt"></i></div>
+                    <div class="step-body">
+                        <h4>Upload Documents</h4>
+                        <p>Securely upload your academic and citizenship documents.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon-side"><i class="far fa-file-alt"></i></div>
+                    <div class="step-body">
+                        <h4>AI Extraction</h4>
+                        <p>Our intelligent system parses and matches key values.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon-side"><i class="fas fa-id-card"></i></div>
+                    <div class="step-body">
+                        <h4>Live Verification</h4>
+                        <p>Confirm the accuracy of extracted entries instantly.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <div class="step-icon-side"><i class="fas fa-paper-plane"></i></div>
+                    <div class="step-body">
+                        <h4>Submit Everywhere</h4>
+                        <p>Apply to your target list with a single automated click.</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="action-banner">
+                <div class="banner-info">
+                    <div class="banner-icon-container">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="banner-copy">
+                        <h3>One passport. Endless opportunities.</h3>
+                        <p>Your Academic Passport makes applying to universities and bursaries faster, easier, and error-free.</p>
+                    </div>
+                </div>
+                <button class="btn-submit-master">Save & Continue <i class="fas fa-arrow-right"></i></button>
+            </div>
+
+            <div class="copyright-tag">
+                &copy; 2026 MyApply SA. All rights reserved.
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+</html>
 
