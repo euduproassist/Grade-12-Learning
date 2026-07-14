@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Grade 12 Learning - Mathematics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 12 Learning - Mathematics - 2025 Paper 1</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Serif+Math&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -15,18 +15,17 @@
             --brand-hover: #144cc7;
             --brand-light: #eff6ff;
             --brand-badge-bg: #e1effe;
-            --brand-badge-text: #1e429f;
             
-            --text-main: #0b1933;
+            --text-main: #06122c;
             --text-body: #4b5563;
             --text-muted: #6b7280;
             
-            --border-color: #f3f4f6;
-            --card-border: #e5e7eb;
+            --border-light: #f3f4f6;
+            --card-border: rgba(226, 232, 240, 0.8);
             --bg-canvas: #f9fafb;
             --bg-card: #ffffff;
             
-            --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         *, *::before, *::after {
@@ -36,40 +35,35 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        html, body {
-            width: 100%;
+        body {
             background-color: var(--bg-canvas);
             color: var(--text-main);
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            -webkit-font-smoothing: antialiased;
         }
 
         .app-container {
             width: 100%;
-            max-width: 800px;
-            padding: 0 20px 80px 20px;
+            max-width: 840px;
+            padding: 0 24px 60px 24px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 24px;
         }
 
         /* ==========================================================================
-           NAV BAR
+           NAVBAR
            ========================================================================== */
         .navbar {
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 36px 0 24px 0;
+            padding: 32px 0 12px 0;
         }
 
         .brand {
@@ -78,13 +72,14 @@
             gap: 10px;
             text-decoration: none;
             color: var(--text-main);
-            font-weight: 700;
-            font-size: 1.5rem;
-            letter-spacing: -0.5px;
+            font-weight: 800;
+            font-size: 1.6rem;
+            letter-spacing: -0.6px;
         }
 
         .brand span {
             color: var(--brand-primary);
+            font-weight: 600;
         }
 
         .brand svg {
@@ -102,7 +97,7 @@
         .avatar {
             width: 38px;
             height: 38px;
-            background-color: #e1effe;
+            background-color: var(--brand-light);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -118,13 +113,12 @@
         .username {
             font-weight: 600;
             font-size: 0.95rem;
-            color: #1f2937;
         }
 
         .chevron-down {
             width: 14px;
             height: 14px;
-            stroke: #4b5563;
+            stroke: var(--brand-primary);
             stroke-width: 2.5;
             fill: none;
         }
@@ -132,149 +126,157 @@
         /* ==========================================================================
            HERO SECTION
            ========================================================================== */
-        .hero {
+        .hero-block {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 8px;
+        }
+
+        .hero-left {
             display: flex;
             align-items: center;
             gap: 20px;
-            margin-bottom: 8px;
-            padding: 10px 0;
         }
 
-        .hero-icon {
-            width: 72px;
-            height: 72px;
+        .hero-square-icon {
+            width: 76px;
+            height: 76px;
             background-color: var(--brand-light);
-            border-radius: 50%;
+            border-radius: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
         }
 
-        .hero-icon svg {
-            width: 34px;
-            height: 34px;
+        .hero-square-icon svg {
+            width: 38px;
+            height: 38px;
+            stroke: var(--brand-primary);
+            stroke-width: 2.2;
+            fill: none;
         }
 
         .hero-text h1 {
-            font-size: 2.1rem;
+            font-size: 1.95rem;
             font-weight: 800;
             letter-spacing: -0.8px;
             margin-bottom: 6px;
-            color: var(--text-main);
         }
 
         .hero-text p {
-            font-size: 0.98rem;
+            font-size: 0.95rem;
             color: var(--text-body);
             font-weight: 500;
-            line-height: 1.45;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border: 1px solid var(--brand-primary);
+            background: #ffffff;
+            color: var(--brand-primary);
+            border-radius: 10px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-back:hover {
+            background-color: var(--brand-light);
+        }
+
+        .btn-back svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--brand-primary);
+            stroke-width: 2.5;
+            fill: none;
         }
 
         /* ==========================================================================
-           ACCORDION SYSTEM
+           MAIN CONTENT CARD
            ========================================================================== */
-        .accordion-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .accordion-item {
+        .papers-card-wrapper {
             background: var(--bg-card);
             border-radius: 16px;
             border: 1px solid var(--card-border);
             overflow: hidden;
-            transition: var(--transition-smooth);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        .accordion-header {
-            width: 100%;
-            padding: 20px 24px;
+        .paper-header-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: none;
-            border: none;
-            cursor: pointer;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-light);
         }
 
-        .header-left {
+        .header-year-block {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
         }
 
-        .calendar-box {
-            width: 40px;
-            height: 40px;
-            background-color: var(--brand-light);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .calendar-box svg {
-            width: 20px;
-            height: 20px;
+        .header-year-block svg {
+            width: 22px;
+            height: 22px;
             stroke: var(--brand-primary);
-            stroke-width: 2;
+            stroke-width: 2.2;
             fill: none;
         }
 
-        .year-text {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--text-main);
+        .header-year-title {
+            font-size: 1.25rem;
+            font-weight: 800;
         }
 
         .badge-latest {
-            background-color: var(--brand-light);
+            background-color: var(--brand-badge-bg);
             color: var(--brand-primary);
-            font-size: 0.75rem;
-            font-weight: 700;
+            font-size: 0.78rem;
+            font-weight: 800;
             padding: 4px 10px;
             border-radius: 6px;
-            text-transform: capitalize;
         }
 
-        .header-arrow {
-            width: 20px;
-            height: 20px;
+        .arrow-up-toggle {
+            width: 22px;
+            height: 22px;
             stroke: var(--brand-primary);
             stroke-width: 2.5;
             fill: none;
-            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .accordion-panel {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .panel-content {
-            padding: 0 24px 20px 24px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .paper-item {
+        .sub-paper-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 18px 0;
-            border-top: 1px solid var(--border-color);
+            padding: 14px 0;
         }
 
-        .paper-name {
+        .sub-paper-row:first-of-type {
+            padding-top: 4px;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 18px;
+        }
+
+        .sub-paper-title {
             font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-main);
+            font-weight: 700;
         }
 
-        .btn-view {
+        .btn-view-paper {
             display: inline-flex;
             align-items: center;
             gap: 8px;
@@ -289,45 +291,186 @@
             transition: var(--transition-smooth);
         }
 
-        .btn-view svg {
-            width: 14px;
-            height: 14px;
-            stroke: var(--brand-primary);
-            stroke-width: 2.5;
-            fill: none;
-        }
-
-        .btn-view:hover {
+        .btn-view-paper:hover {
             background-color: var(--brand-primary);
             color: #ffffff;
         }
 
-        .btn-view:hover svg {
-            stroke: #ffffff;
-        }
-
-        /* Expanded Utility States */
-        .accordion-item.expanded .header-arrow {
-            transform: rotate(180deg);
+        .btn-view-paper svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            fill: none;
         }
 
         /* ==========================================================================
-           TIPS & NOTIFICATIONS BLOCKS
+           QUESTION WORKSPACE ARCHITECTURE
            ========================================================================== */
-        .info-card {
-            background-color: #f8fafc;
-            border: 1px solid var(--card-border);
+        .workspace-card {
+            background: var(--bg-card);
             border-radius: 16px;
+            border: 1px solid var(--card-border);
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section-divider-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text-main);
+            padding-bottom: 16px;
+            margin-bottom: 8px;
+        }
+
+        .section-divider-title.spacing-top {
+            margin-top: 24px;
+            border-top: 1px solid var(--border-light);
+            padding-top: 28px;
+        }
+
+        .question-row {
+            display: flex;
+            align-items: flex-start;
+            padding: 24px 0;
+            border-bottom: 1px solid #f9fafb;
+            position: relative;
+        }
+        
+        .question-row::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: var(--border-light);
+        }
+
+        .question-row:last-child::after {
+            display: none;
+        }
+
+        .q-number {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--brand-primary);
+            width: 45px;
+            flex-shrink: 0;
+            line-height: 1.4;
+        }
+
+        .q-body-block {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-right: 16px;
+        }
+
+        .q-text {
+            font-size: 0.98rem;
+            font-weight: 600;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        /* Standardized mathematical notation styling styling */
+        .math-render {
+            font-family: 'Noto Serif Math', Georgia, serif;
+            font-size: 1.15rem;
+            color: #000000;
+            padding: 4px 0;
+            display: inline-block;
+        }
+        
+        .math-fraction {
+            display: inline-flex;
+            flex-direction: column;
+            vertical-align: middle;
+            text-align: center;
+            font-size: 1rem;
+            padding: 0 4px;
+        }
+        
+        .math-fraction .num {
+            border-bottom: 1.5px solid #000;
+            padding-bottom: 2px;
+        }
+        
+        .math-fraction .den {
+            padding-top: 2px;
+        }
+
+        .q-marks {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #000000;
+            width: 50px;
+            text-align: right;
+            flex-shrink: 0;
+            line-height: 1.4;
+            padding-right: 14px;
+        }
+
+        .q-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border: 1px solid var(--brand-primary);
+            border-radius: 10px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            text-decoration: none;
+            background: #ffffff;
+            color: var(--brand-primary);
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .btn-action.filled {
+            background-color: #ffffff;
+        }
+
+        .btn-action:hover {
+            background-color: var(--brand-primary);
+            color: #ffffff;
+        }
+
+        .btn-action svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            stroke-width: 2.2;
+            fill: none;
+        }
+
+        /* ==========================================================================
+           TIP BOX SYSTEM
+           ========================================================================== */
+        .tip-box {
+            background-color: #f4f8ff;
+            border-radius: 14px;
             padding: 20px 24px;
             display: flex;
             align-items: flex-start;
             gap: 16px;
+            margin-top: 4px;
         }
 
-        .info-icon-container {
-            width: 40px;
-            height: 40px;
-            background-color: var(--brand-light);
+        .tip-icon-circle {
+            width: 38px;
+            height: 38px;
+            background-color: #e1effe;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -335,7 +478,7 @@
             flex-shrink: 0;
         }
 
-        .info-icon-container svg {
+        .tip-icon-circle svg {
             width: 20px;
             height: 20px;
             stroke: var(--brand-primary);
@@ -343,46 +486,38 @@
             fill: none;
         }
 
-        .info-text h4 {
-            font-size: 1rem;
-            font-weight: 700;
+        .tip-text h4 {
+            font-size: 0.95rem;
+            font-weight: 800;
             color: var(--text-main);
             margin-bottom: 3px;
         }
 
-        .info-text p {
-            font-size: 0.9rem;
+        .tip-text p {
+            font-size: 0.88rem;
             color: var(--text-body);
-            font-weight: 500;
+            font-weight: 600;
             line-height: 1.45;
         }
 
-        /* ==========================================================================
-           FOOTER
-           ========================================================================== */
-        .footer {
+        .page-footer {
             text-align: center;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             color: var(--text-muted);
-            font-weight: 500;
-            padding: 24px 0;
-            margin-top: 10px;
+            font-weight: 600;
+            padding: 24px 0 10px 0;
         }
 
-        /* Mobile Breakpoint optimization rules */
-        @media (max-width: 600px) {
-            .navbar { padding: 24px 0 16px 0; }
-            .brand { font-size: 1.35rem; }
-            .username, .chevron-down { display: none; }
-            .hero { gap: 14px; }
-            .hero-icon { width: 60px; height: 60px; }
-            .hero-icon svg { width: 28px; height: 28px; }
-            .hero-text h1 { font-size: 1.75rem; }
-            .hero-text p { font-size: 0.9rem; }
-            .accordion-header { padding: 16px 20px; }
-            .panel-content { padding: 0 20px 16px 20px; }
-            .paper-item { flex-direction: column; align-items: flex-start; gap: 12px; }
-            .btn-view { width: 100%; justify-content: center; padding: 12px; }
+        /* ==========================================================================
+           MOBILE SHIELD RESPONSIVE VIEWPORTS
+           ========================================================================== */
+        @media (max-width: 768px) {
+            .hero-block { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .btn-back { align-self: flex-start; }
+            .question-row { flex-direction: column; gap: 16px; padding: 20px 0; }
+            .q-marks { text-align: left; width: auto; padding: 0; }
+            .q-actions { width: 100%; }
+            .btn-action { flex: 1; justify-content: center; padding: 12px; }
         }
     </style>
 </head>
@@ -390,9 +525,10 @@
 
     <div class="app-container">
         
+        <!-- TOP NAVIGATION -->
         <nav class="navbar">
             <a href="#" class="brand">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg viewBox="0 0 24 24" fill="none">
                     <path d="M12 2L1 9l11 7 9-5.73V17h2V9L12 2z" fill="#1c64f2"/>
                     <path d="M4.18 12.06L12 17l7.82-4.94V17c0 .55-.45 1-1 1H5.18c-.55 0-1-.45-1-1v-4.94z" fill="#1c64f2" opacity="0.8"/>
                 </svg>
@@ -400,7 +536,7 @@
             </a>
             <div class="user-menu">
                 <div class="avatar">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg viewBox="0 0 24 24">
                         <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                     </svg>
                 </div>
@@ -411,156 +547,273 @@
             </div>
         </nav>
 
-        <header class="hero">
-            <div class="hero-icon">
-                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 12h3l2.5 7 4.5-13.5L16.5 16H20" stroke="#1c64f2" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M15 8l3 3m0-3l-3 3" stroke="#1c64f2" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
+        <!-- PAGE HERO SECTION -->
+        <header class="hero-block">
+            <div class="hero-left">
+                <div class="hero-square-icon">
+                    <svg viewBox="0 0 24 24">
+                        <line x1="18" y1="6" x2="6" y2="18" stroke-linecap="round"/>
+                        <line x1="6" y1="6" x2="18" y2="18" stroke-linecap="round"/>
+                        <path d="M4 12h3l2 5 4-11 2 8h5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="hero-text">
+                    <h1>Mathematics – 2025 Paper 1</h1>
+                    <p>Select a question to view the answer and watch the step-by-step explanation.</p>
+                </div>
             </div>
-            <div class="hero-text">
-                <h1>Mathematics</h1>
-                <p>Choose a year and exam paper to start learning with step-by-step video explanations.</p>
-            </div>
+            <a href="#" class="btn-back">
+                <svg viewBox="0 0 24 24"><path d="M19 12H5m7-7l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Back to Papers
+            </a>
         </header>
 
-        <main class="accordion-group">
-            
-            <div class="accordion-item expanded" id="y2025">
-                <button class="accordion-header" onclick="toggleYear('y2025')">
-                    <div class="header-left">
-                        <div class="calendar-box">
-                            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                                <line x1="16" y1="2" x2="16" y2="6"/>
-                                <line x1="8" y1="2" x2="8" y2="6"/>
-                                <line x1="3" y1="10" x2="21" y2="10"/>
-                            </svg>
-                        </div>
-                        <span class="year-text">2025</span>
-                        <span class="badge-latest">Latest</span>
-                    </div>
-                    <svg class="header-arrow" viewBox="0 0 24 24">
-                        <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- TOP CARD PAPERS ACCORDION HEADER -->
+        <div class="papers-card-wrapper">
+            <div class="paper-header-row">
+                <div class="header-year-block">
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6"/>
+                        <line x1="8" y1="2" x2="8" y2="6"/>
+                        <line x1="3" y1="10" x2="21" y2="10"/>
                     </svg>
-                </button>
-                <div class="accordion-panel" style="max-height: 200px;">
-                    <div class="panel-content">
-                        <div class="paper-item">
-                            <span class="paper-name">Mathematics Paper 1</span>
-                            <a href="#" class="btn-view">
-                                View Paper
-                                <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            </a>
-                        </div>
-                        <div class="paper-item">
-                            <span class="paper-name">Mathematics Paper 2</span>
-                            <a href="#" class="btn-view">
-                                View Paper
-                                <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                            </a>
-                        </div>
-                    </div>
+                    <span class="header-year-title">2025</span>
+                    <span class="badge-latest">Latest</span>
+                </div>
+                <svg class="arrow-up-toggle" viewBox="0 0 24 24">
+                    <path d="M18 15l-6-6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            
+            <div class="sub-paper-row">
+                <span class="sub-paper-title">Mathematics Paper 1</span>
+                <a href="#" class="btn-view-paper">
+                    View Paper
+                    <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+            </div>
+            <div class="sub-paper-row">
+                <span class="sub-paper-title">Mathematics Paper 2</span>
+                <a href="#" class="btn-view-paper">
+                    View Paper
+                    <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <!-- MAIN QUESTIONS LIST CARD -->
+        <main class="workspace-card">
+            
+            <!-- SECTION A -->
+            <h3 class="section-divider-title">Section A: Algebra</h3>
+
+            <!-- Q 1.1 -->
+            <div class="question-row">
+                <div class="q-number">1.1</div>
+                <div class="q-body-block">
+                    <div class="q-text">Solve for <span class="math-render">x</span>:</div>
+                    <div class="math-render">2x + 3 = 11</div>
+                </div>
+                <div class="q-marks">(2)</div>
+                <div class="q-actions">
+                    <button class="btn-action">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3"/></svg>
+                        View Answer
+                    </button>
+                    <button class="btn-action filled">
+                        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Explain Answer
+                    </button>
                 </div>
             </div>
 
-            <script>
-                const years = ['2024', '2023', '2022', '2021', '2020', '2019', '2018', '2017', '2016 and Older'];
-                years.forEach((yr, index) => {
-                    const cleanId = 'y' + parseInt(yr);
-                    document.write(`
-                        <div class="accordion-item" id="${cleanId}">
-                            <button class="accordion-header" onclick="toggleYear('${cleanId}')">
-                                <div class="header-left">
-                                    <div class="calendar-box">
-                                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                                            <line x1="16" y1="2" x2="16" y2="6"/>
-                                            <line x1="8" y1="2" x2="8" y2="6"/>
-                                            <line x1="3" y1="10" x2="21" y2="10"/>
-                                        </svg>
-                                    </div>
-                                    <span class="year-text">${yr}</span>
-                                </div>
-                                <svg class="header-arrow" viewBox="0 0 24 24">
-                                    <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </button>
-                            <div class="accordion-panel">
-                                <div class="panel-content">
-                                    <div class="paper-item">
-                                        <span class="paper-name">Mathematics Paper 1</span>
-                                        <a href="#" class="btn-view">
-                                            View Paper
-                                            <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                        </a>
-                                    </div>
-                                    <div class="paper-item">
-                                        <span class="paper-name">Mathematics Paper 2</span>
-                                        <a href="#" class="btn-view">
-                                            View Paper
-                                            <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+            <!-- Q 1.2 -->
+            <div class="question-row">
+                <div class="q-number">1.2</div>
+                <div class="q-body-block">
+                    <div class="q-text">Solve for <span class="math-render">x</span>:</div>
+                    <div class="math-render">3(x &minus; 2) = 15</div>
+                </div>
+                <div class="q-marks">(2)</div>
+                <div class="q-actions">
+                    <button class="btn-action">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3"/></svg>
+                        View Answer
+                    </button>
+                    <button class="btn-action filled">
+                        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Explain Answer
+                    </button>
+                </div>
+            </div>
+
+            <!-- Q 1.3 -->
+            <div class="question-row">
+                <div class="q-number">1.3</div>
+                <div class="q-body-block">
+                    <div class="q-text">Solve for <span class="math-render">x</span>:</div>
+                    <div class="math-render">x<sup>2</sup> &minus; 5x + 6 = 0</div>
+                </div>
+                <div class="q-marks">(3)</div>
+                <div class="q-actions">
+                    <button class="btn-action">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3"/></svg>
+                        View Answer
+                    </button>
+                    <button class="btn-action filled">
+                        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Explain Answer
+                    </button>
+                </div>
+            </div>
+
+            <!-- Q 1.4 -->
+            <div class="question-row">
+                <div class="q-number">1.4</div>
+                <div class="q-body-block">
+                    <div class="q-text">Simplify completely:</div>
+                    <div class="math-render">
+                        <div class="math-fraction">
+                            <span class="num">2x<sup>2</sup> &minus; 8x</span>
+                            <span class="den">2x</span>
                         </div>
-                    `);
-                });
-            </script>
+                    </div>
+                </div>
+                <div class="q-marks">(3)</div>
+                <div class="q-actions">
+                    <button class="btn-action">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3"/></svg>
+                        View Answer
+                    </button>
+                    <button class="btn-action filled">
+                        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Explain Answer
+                    </button>
+                </div>
+            </div>
+
+            <!-- Q 1.5 -->
+            <div class="question-row">
+                <div class="q-number">1.5</div>
+                <div class="q-body-block">
+                    <div class="q-text">Factorise completely:</div>
+                    <div class="math-render">x<sup>2</sup> &minus; 9</div>
+                </div>
+                <div class="q-marks">(2)</div>
+                <div class="q-actions">
+                    <button class="btn-action">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3"/></svg>
+                        View Answer
+                    </button>
+                    <button class="btn-action filled">
+                        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Explain Answer
+                    </button>
+                </div>
+            </div>
+
+            <!-- SECTION B -->
+            <h3 class="section-divider-title spacing-top">Section B: Functions & Graphs</h3>
+
+            <!-- Q 2.1 -->
+            <div class="question-row">
+                <div class="q-number">2.1</div>
+                <div class="q-body-block">
+                    <div class="q-text">Given <span class="math-render">f(x) = 2x &minus; 1</span>, calculate <span class="math-render">f(3)</span>.</div>
+                </div>
+                <div class="q-marks">(2)</div>
+                <div class="q-actions">
+                    <button class="btn-action">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3"/></svg>
+                        View Answer
+                    </button>
+                    <button class="btn-action filled">
+                        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Explain Answer
+                    </button>
+                </div>
+            </div>
+
+            <!-- Q 2.2 -->
+            <div class="question-row">
+                <div class="q-number">2.2</div>
+                <div class="q-body-block">
+                    <div class="q-text">If <span class="math-render">g(x) = x<sup>2</sup> + 4x &minus; 5</span>, determine the values of <span class="math-render">x</span> for which <span class="math-render">g(x) = 0</span>.</div>
+                </div>
+                <div class="q-marks">(3)</div>
+                <div class="q-actions">
+                    <button class="btn-action">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3"/></svg>
+                        View Answer
+                    </button>
+                    <button class="btn-action filled">
+                        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Explain Answer
+                    </button>
+                </div>
+            </div>
+
+            <!-- Q 2.3 -->
+            <div class="question-row">
+                <div class="q-number">2.3</div>
+                <div class="q-body-block">
+                    <div class="q-text">Sketch the graph of <span class="math-render">y = &minus;x + 2</span> on the provided axes.</div>
+                </div>
+                <div class="q-marks">(4)</div>
+                <div class="q-actions">
+                    <button class="btn-action">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3"/></svg>
+                        View Answer
+                    </button>
+                    <button class="btn-action filled">
+                        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Explain Answer
+                    </button>
+                </div>
+            </div>
+
+            <!-- Q 2.4 -->
+            <div class="question-row">
+                <div class="q-number">2.4</div>
+                <div class="q-body-block">
+                    <div class="q-text">Determine the equation of the line that passes through the points <span class="math-render">(2; 3)</span> and <span class="math-render">(6; 11)</span>.</div>
+                </div>
+                <div class="q-marks">(4)</div>
+                <div class="q-actions">
+                    <button class="btn-action">
+                        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3"/></svg>
+                        View Answer
+                    </button>
+                    <button class="btn-action filled">
+                        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        Explain Answer
+                    </button>
+                </div>
+            </div>
 
         </main>
 
-        <section class="info-card">
-            <div class="info-icon-container">
+        <!-- TIP FOOTER NOTIFICATION -->
+        <footer class="tip-box">
+            <div class="tip-icon-circle">
                 <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.5 1.5-3.5A5.5 5.5 0 0 0 12.5 2.5a5.5 5.5 0 0 0-5.5 5.5c0 1.3.5 2.5 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/>
                     <line x1="9" y1="18" x2="15" y2="18"/>
                     <line x1="10" y1="22" x2="14" y2="22"/>
                 </svg>
             </div>
-            <div class="info-text">
+            <div class="tip-text">
                 <h4>Tip</h4>
-                <p>Select a year and paper to access step-by-step video explanations for every question.</p>
+                <p>View the answer first if you get stuck, then watch the explanation to understand it better.</p>
             </div>
-        </section>
-
-        <section class="info-card">
-            <div class="info-icon-container">
-                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                    <rect x="9" y="11" width="6" height="5" rx="1"/>
-                    <path d="M10 11V9a2 2 0 1 1 4 0v2"/>
-                </svg>
-            </div>
-            <div class="info-text">
-                <h4>Your progress is saved</h4>
-                <p>Continue learning anytime. Your watch history and progress are saved automatically.</p>
-            </div>
-        </section>
-
-        <footer class="footer">
-            &copy; 2026 Grade 12 Learning. All rights reserved.
         </footer>
+
+        <div class="page-footer">
+            &copy; 2026 Grade 12 Learning. All rights reserved.
+        </div>
 
     </div>
 
-    <script>
-        function toggleYear(id) {
-            const currentItem = document.getElementById(id);
-            const panel = currentItem.querySelector('.accordion-panel');
-            const isExpanded = currentItem.classList.contains('expanded');
-            
-            document.querySelectorAll('.accordion-item').forEach(item => {
-                item.classList.remove('expanded');
-                item.querySelector('.accordion-panel').style.maxHeight = null;
-            });
-
-            if (!isExpanded) {
-                currentItem.classList.add('expanded');
-                panel.style.maxHeight = panel.scrollHeight + "px";
-            }
-        }
-    </script>
 </body>
 </html>
