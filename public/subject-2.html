@@ -4,294 +4,340 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Grade 12 Learning - Choose Your Subject</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     
     <style>
         /* ==========================================================================
-           COLOR PALETTE & SYSTEM TOKENS (PIXEL MATCHED TO IMAGE)
+           COLOR PALETTE & DESIGN SYSTEM TOKENS (PIXEL-MATCHED FROM ATTACHMENT)
            ========================================================================== */
         :root {
-            --primary-blue: #1d68f2;
-            --primary-hover-blue: #144eb7;
-            --primary-light-blue: #eff6ff;
-            --primary-border-blue: #dbeafe;
+            /* Primary Brand Colorways */
+            --brand-primary: #1d68f2;
+            --brand-primary-rgb: 29, 104, 242;
+            --brand-hover: #1153cb;
+            --brand-active: #0a3da1;
+            --brand-light: #eff6ff;
+            --brand-border: #dbeafe;
             
-            --text-main-dark: #07122c; /* Deeper midnight blue observed in original layout */
-            --text-secondary-muted: #4b5b75;
-            --text-light-gray: #64748b;
+            /* UI Neutral Typography Palette */
+            --color-text-title: #07122c;
+            --color-text-body: #4b5b75;
+            --color-text-muted: #64748b;
+            --color-border-light: #f1f5f9;
+            --color-border-medium: #cbd5e1;
             
-            --border-ui-light: #f1f5f9;
-            --border-ui-medium: #cbd5e1;
+            /* Layout & Surface Ecosystem */
+            --bg-canvas: #f8fafc;
+            --bg-card: #ffffff;
             
-            --bg-canvas: #f8fafc; /* Crisp, clean background tint */
-            --bg-card-pure: #ffffff;
-            
+            /* Advanced Elevation & Drop Shadows */
             --shadow-subtle: 0 4px 20px rgba(29, 104, 242, 0.015);
             --shadow-hover: 0 12px 36px rgba(29, 104, 242, 0.04);
+            --shadow-soft-card: 0 8px 30px rgba(0, 0, 0, 0.02);
             
-            --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            /* Motion Dynamics & Interaction Curvature */
+            --easing-fluid: cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-speed: 0.25s;
+            --transition-smooth: all var(--transition-speed) var(--easing-fluid);
         }
 
         /* ==========================================================================
-           RESET & DOCUMENT OVERRIDES
+           COMPREHENSIVE GLOBAL SYSTEM RESET & HORIZONTAL SCROLL PROTECTION
            ========================================================================== */
-        * {
+        *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        html, body {
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
             width: 100%;
             min-height: 100vh;
             background-color: var(--bg-canvas);
-            color: var(--text-main-dark);
-            overflow-x: hidden !important; /* Strict protection against side-scrolling */
+            color: var(--color-text-title);
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow-x: hidden !important; /* The absolute structural guard against sideways scrolling */
+            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: flex-start;
         }
 
         /* ==========================================================================
-           PAGE LAYOUT WRAPPERS
+           STRUCTURAL CONTAINER SYSTEM
            ========================================================================== */
-        .app-container {
+        .app-root {
             width: 100%;
-            max-width: 980px; /* Perfectly scales to the compact, elegant desktop width of the mockup */
-            padding: 0 24px 64px 24px;
+            max-width: 1024px; /* Perfect golden layout width match */
+            padding: 0 24px 80px 24px;
             display: flex;
             flex-direction: column;
-            gap: 28px;
+            gap: 32px;
+            box-sizing: border-box;
         }
 
         /* ==========================================================================
-           1. NAVIGATION BAR STYLING
+           1. PREMIUM HEADER / NAVIGATION BAR
            ========================================================================== */
-        .navbar-wrapper {
+        .navigation-outer-container {
             width: 100%;
             display: flex;
             justify-content: center;
             background: transparent;
+            z-index: 100;
         }
 
-        .navbar {
+        .navigation-bar {
             width: 100%;
-            max-width: 980px;
+            max-width: 1024px;
             padding: 32px 24px 20px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             background: transparent;
+            box-sizing: border-box;
         }
 
-        .navbar-brand {
+        .brand-identity {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--text-main-dark);
+            gap: 12px;
             text-decoration: none;
-            user-select: none;
+            color: var(--color-text-title);
+            font-weight: 800;
+            font-size: 1.65rem;
             letter-spacing: -0.8px;
+            user-select: none;
+            transition: var(--transition-smooth);
         }
 
-        .navbar-brand span {
-            color: var(--primary-blue);
+        .brand-identity:hover {
+            opacity: 0.95;
+        }
+
+        .brand-logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--brand-primary);
+        }
+
+        .brand-logo-container svg {
+            width: 38px;
+            height: 38px;
+            fill: none;
+            stroke: var(--brand-primary);
+            stroke-width: 2.2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .brand-identity span {
+            color: var(--brand-primary);
             font-weight: 600;
         }
 
-        .navbar-brand svg {
-            width: 36px;
-            height: 36px;
-            color: var(--primary-blue);
-        }
-
-        .navbar-user-profile {
+        .user-account-menu {
             display: flex;
             align-items: center;
             gap: 10px;
             cursor: pointer;
             user-select: none;
+            padding: 4px;
+            border-radius: 50px;
             transition: var(--transition-smooth);
         }
 
-        .navbar-user-profile:hover {
+        .user-account-menu:hover {
             opacity: 0.85;
         }
 
-        .profile-avatar-circle {
+        .user-avatar-wrapper {
             width: 38px;
             height: 38px;
-            background-color: var(--primary-light-blue);
-            color: var(--primary-blue);
+            background-color: var(--brand-light);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: var(--transition-smooth);
         }
 
-        .profile-avatar-circle svg {
+        .user-avatar-wrapper svg {
             width: 20px;
             height: 20px;
-            fill: var(--primary-blue);
+            fill: var(--brand-primary);
         }
 
-        .profile-username-label {
+        .user-greeting {
             font-weight: 600;
-            font-size: 0.95rem;
-            color: #07122c;
+            font-size: 0.98rem;
+            color: var(--color-text-title);
+            letter-spacing: -0.2px;
         }
 
-        .profile-dropdown-arrow {
+        .dropdown-chevron-icon {
             width: 12px;
             height: 12px;
-            stroke: var(--primary-blue);
+            stroke: var(--brand-primary);
             stroke-width: 2.5;
             fill: none;
             margin-left: 2px;
         }
 
         /* ==========================================================================
-           2. PAGE HEADER / HERO SECTION
+           2. HERO / PAGE HEADER SECTION
            ========================================================================== */
-        .page-header {
+        .page-hero {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 24px;
-            margin-top: 12px;
+            margin-top: 8px;
             background: transparent;
+            box-sizing: border-box;
         }
 
-        .header-graphic-box {
-            width: 76px;
-            height: 76px;
-            background-color: var(--primary-light-blue);
-            border-radius: 50%; /* Perfect circle matching the soft layout theme */
+        .hero-illustration-wrapper {
+            width: 80px;
+            height: 80px;
+            background-color: var(--brand-light);
+            border: 1px solid var(--brand-border);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
         }
 
-        .header-graphic-box svg {
-            width: 36px;
-            height: 36px;
-            stroke: var(--primary-blue);
+        .hero-illustration-wrapper svg {
+            width: 38px;
+            height: 38px;
+            stroke: var(--brand-primary);
             stroke-width: 1.8;
             fill: none;
         }
 
-        .header-content {
+        .hero-text-block {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            height: 76px;
         }
 
-        .header-content h1 {
-            font-size: 2.1rem;
-            font-weight: 700;
-            letter-spacing: -0.8px;
+        .hero-text-block h1 {
+            font-size: 2.35rem;
+            font-weight: 800;
+            letter-spacing: -1.2px;
             margin-bottom: 6px;
-            color: var(--text-main-dark);
+            color: var(--color-text-title);
+            line-height: 1.15;
         }
 
-        .header-content p {
-            font-size: 0.98rem;
-            color: var(--text-secondary-muted);
+        .hero-text-block p {
+            font-size: 1.05rem;
+            color: var(--color-text-body);
             font-weight: 500;
-            line-height: 1.4;
+            line-height: 1.45;
         }
 
         /* ==========================================================================
-           3. SUBJECT CARDS - GRID LAYOUT (2x2)
+           3. SUBJECT CARDS GRID (COMPACT, 2x2 STRUCTURAL SYSTEM)
            ========================================================================== */
-        .subject-grid {
+        .subject-cards-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 24px;
+            box-sizing: border-box;
         }
 
         .subject-card {
-            background: var(--bg-card-pure);
-            border-radius: 20px;
-            padding: 32px;
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 36px;
             border: 1px solid rgba(226, 232, 240, 0.7);
-            box-shadow: var(--shadow-subtle);
+            box-shadow: var(--shadow-soft-card);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            min-height: 270px;
+            min-height: 290px;
             transition: var(--transition-smooth);
+            position: relative;
+            box-sizing: border-box;
         }
 
         .subject-card:hover {
-            transform: translateY(-2px);
+            transform: translateY(-4px);
             box-shadow: var(--shadow-hover);
             border-color: rgba(29, 104, 242, 0.15);
         }
 
-        .subject-card-body {
-            margin-bottom: 16px;
+        .subject-card-header {
+            margin-bottom: 24px;
         }
 
-        .subject-card-icon-container {
-            width: 64px;
-            height: 64px;
-            background-color: var(--primary-light-blue);
+        .subject-icon-box {
+            width: 68px;
+            height: 68px;
+            background-color: var(--brand-light);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 24px;
+            transition: var(--transition-smooth);
         }
 
-        .subject-card-icon-container svg {
-            width: 28px;
-            height: 28px;
-            stroke: var(--primary-blue);
+        .subject-icon-box svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--brand-primary);
             stroke-width: 1.8;
             fill: none;
         }
 
-        /* Specific alignment override for Beaker and Chart Icons to match native proportions */
-        .icon-beaker svg {
-            width: 26px;
-            height: 26px;
-        }
-
         .subject-card h2 {
-            font-size: 1.35rem;
-            font-weight: 700;
-            color: var(--text-main-dark);
-            margin-bottom: 10px;
-            letter-spacing: -0.4px;
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--color-text-title);
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
         }
 
         .subject-card p {
-            font-size: 0.92rem;
-            color: var(--text-secondary-muted);
-            line-height: 1.5;
+            font-size: 0.95rem;
+            color: var(--color-text-body);
+            line-height: 1.55;
             font-weight: 500;
         }
 
-        .subject-card-footer {
+        .subject-card-action-row {
             display: flex;
             justify-content: flex-end;
             align-items: center;
             width: 100%;
         }
 
-        .subject-card-action-btn {
-            width: 46px;
-            height: 46px;
-            border: 1px solid var(--primary-light-blue);
-            background: var(--bg-card-pure);
-            border-radius: 12px;
+        .subject-action-btn {
+            width: 52px;
+            height: 52px;
+            border: 1px solid var(--color-border-light);
+            background: var(--bg-card);
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -299,96 +345,93 @@
             transition: var(--transition-smooth);
         }
 
-        .subject-card-action-btn svg {
-            width: 18px;
-            height: 18px;
-            stroke: var(--primary-blue);
+        .subject-action-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--brand-primary);
             stroke-width: 2.2;
             fill: none;
             transition: var(--transition-smooth);
         }
 
-        .subject-card:hover .subject-card-action-btn {
-            background-color: var(--primary-blue);
-            border-color: var(--primary-blue);
+        .subject-card:hover .subject-action-btn {
+            background-color: var(--brand-primary);
+            border-color: var(--brand-primary);
         }
 
-        .subject-card:hover .subject-card-action-btn svg {
+        .subject-card:hover .subject-action-btn svg {
             stroke: #ffffff;
-            transform: translateX(1px);
+            transform: translateX(2px);
         }
 
         /* ==========================================================================
-           4. SUB-FEATURES BANNER (4 COLUMNS / VERTICAL SEPARATORS)
+           4. HORIZONTAL ADVANTAGES / FEATURES BAR (4-COLUMN SYSTEM)
            ========================================================================== */
         .features-horizontal-bar {
-            background: var(--bg-card-pure);
+            background: var(--bg-card);
             border: 1px solid rgba(226, 232, 240, 0.7);
-            border-radius: 20px;
-            padding: 24px 16px;
+            border-radius: 24px;
+            padding: 32px;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            box-shadow: var(--shadow-subtle);
+            box-shadow: var(--shadow-soft-card);
+            box-sizing: border-box;
         }
 
-        .horizontal-feature-node {
+        .feature-node {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            padding: 12px 14px;
+            padding: 8px 16px;
             position: relative;
+            box-sizing: border-box;
         }
 
-        /* Desktop grid vertical divider lines */
-        .horizontal-feature-node:not(:last-child)::after {
+        /* Clean dividers for standard layouts */
+        .feature-node:not(:last-child)::after {
             content: '';
             position: absolute;
             right: 0;
             top: 15%;
             height: 70%;
             width: 1px;
-            background-color: #f1f5f9;
+            background-color: var(--color-border-light);
         }
 
-        .horizontal-feature-icon-wrapper {
-            width: 48px;
-            height: 48px;
-            background-color: var(--primary-light-blue);
+        .feature-icon-wrapper {
+            width: 52px;
+            height: 52px;
+            background-color: var(--brand-light);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 14px;
+            margin-bottom: 18px;
         }
 
-        .horizontal-feature-icon-wrapper svg {
-            width: 22px;
-            height: 22px;
-            stroke: var(--primary-blue);
+        .feature-icon-wrapper svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--brand-primary);
             stroke-width: 1.8;
             fill: none;
         }
 
-        /* Specific fill rules for solid vector design points */
-        .horizontal-feature-icon-wrapper.fill-icon svg {
-            fill: var(--primary-light-blue);
-        }
-
-        .horizontal-feature-node h3 {
-            font-size: 0.92rem;
-            font-weight: 700;
-            color: var(--text-main-dark);
-            margin-bottom: 6px;
+        .feature-node h3 {
+            font-size: 0.96rem;
+            font-weight: 800;
+            color: var(--color-text-title);
+            margin-bottom: 8px;
             letter-spacing: -0.2px;
         }
 
-        .horizontal-feature-node p {
-            font-size: 0.78rem;
-            color: var(--text-secondary-muted);
-            line-height: 1.4;
+        .feature-node p {
+            font-size: 0.8rem;
+            color: var(--color-text-body);
+            line-height: 1.45;
             font-weight: 500;
-            max-width: 180px;
+            max-width: 185px;
         }
 
         /* ==========================================================================
@@ -396,197 +439,201 @@
            ========================================================================== */
         
         /* Dashboard smart-tip component */
-        .dashboard-tip-banner {
+        .dashboard-tip-card {
             background-color: #f0f7ff;
             border: 1px solid rgba(219, 234, 254, 0.6);
-            border-radius: 14px;
-            padding: 16px 20px;
+            border-radius: 16px;
+            padding: 18px 24px;
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 16px;
+            box-sizing: border-box;
         }
 
-        .dashboard-tip-banner svg {
-            width: 20px;
-            height: 20px;
-            stroke: var(--primary-blue);
+        .dashboard-tip-card svg {
+            width: 22px;
+            height: 22px;
+            stroke: var(--brand-primary);
             stroke-width: 2;
             fill: none;
             flex-shrink: 0;
         }
 
-        .dashboard-tip-banner p {
-            font-size: 0.88rem;
-            color: var(--text-secondary-muted);
+        .dashboard-tip-card p {
+            font-size: 0.92rem;
+            color: var(--color-text-body);
             font-weight: 600;
         }
 
-        /* Security encryption status card */
-        .encryption-status-banner {
+        /* Strict data encryption security notifier card */
+        .encryption-status-card {
             background-color: #f8fafc;
             border: 1px solid rgba(226, 232, 240, 0.7);
-            border-radius: 14px;
-            padding: 20px 24px;
+            border-radius: 16px;
+            padding: 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 16px;
+            box-sizing: border-box;
         }
 
-        .encryption-content-left {
+        .encryption-left {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 18px;
         }
 
-        .encryption-content-left svg {
-            width: 22px;
-            height: 22px;
-            stroke: var(--primary-blue);
+        .encryption-left svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--brand-primary);
             stroke-width: 2;
             fill: none;
             flex-shrink: 0;
         }
 
-        .encryption-details h4 {
-            font-size: 0.92rem;
-            font-weight: 700;
-            color: var(--text-main-dark);
+        .encryption-text h4 {
+            font-size: 0.96rem;
+            font-weight: 800;
+            color: var(--color-text-title);
             margin-bottom: 2px;
         }
 
-        .encryption-details p {
-            font-size: 0.82rem;
-            color: var(--text-secondary-muted);
+        .encryption-text p {
+            font-size: 0.85rem;
+            color: var(--color-text-body);
             font-weight: 500;
         }
 
-        .encryption-learn-more-link {
-            font-size: 0.88rem;
+        .encryption-link {
+            font-size: 0.9rem;
             font-weight: 700;
-            color: var(--primary-blue);
+            color: var(--brand-primary);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             white-space: nowrap;
             transition: var(--transition-smooth);
         }
 
-        .encryption-learn-more-link svg {
-            width: 12px;
-            height: 12px;
-            stroke: var(--primary-blue);
+        .encryption-link svg {
+            width: 14px;
+            height: 14px;
+            stroke: var(--brand-primary);
             stroke-width: 2.5;
             fill: none;
             transition: var(--transition-smooth);
         }
 
-        .encryption-learn-more-link:hover {
-            color: var(--primary-hover-blue);
+        .encryption-link:hover {
+            color: var(--brand-hover);
         }
 
-        .encryption-learn-more-link:hover svg {
+        .encryption-link:hover svg {
             transform: translateX(2px);
-            stroke: var(--primary-hover-blue);
+            stroke: var(--brand-hover);
         }
 
         /* ==========================================================================
-           6. CLEAN COMPACT FOOTER
+           6. COMPREHENSIVE SITE FOOTER
            ========================================================================== */
-        .app-footer {
+        .page-footer {
             text-align: center;
-            font-size: 0.78rem;
-            color: var(--text-light-gray);
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
             font-weight: 500;
-            margin-top: 16px;
+            margin-top: 12px;
         }
 
         /* ==========================================================================
-           FLUID & ABSOLUTE RESPONSIVE OVERRIDES (SIDE-SCROLL SAFE SYSTEM)
+           FLUID & RESPONSIVE BREAKPOINTS (SIDE-SCROLL SAFE STRUCTURE)
            ========================================================================== */
+        @media (max-width: 1024px) {
+            .app-root {
+                padding: 0 20px 64px 20px;
+            }
+        }
+
         @media (max-width: 900px) {
             .features-horizontal-bar {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 16px;
-                padding: 20px;
+                gap: 24px;
+                padding: 24px;
             }
-            .horizontal-feature-node::after {
-                display: none !important; /* Disables dividers on wrap */
+            .feature-node::after {
+                display: none !important; /* Strips dividers when stacked */
             }
         }
 
         @media (max-width: 768px) {
-            .navbar {
-                padding: 24px 16px 16px 16px;
+            .navigation-bar {
+                padding: 24px 20px 16px 20px;
             }
-            .app-container {
-                padding: 0 16px 48px 16px;
-                gap: 20px;
+            .app-root {
+                gap: 24px;
             }
-            .page-header {
+            .page-hero {
                 gap: 16px;
                 margin-top: 4px;
             }
-            .header-graphic-box {
-                width: 60px;
-                height: 60px;
+            .hero-illustration-wrapper {
+                width: 64px;
+                height: 64px;
             }
-            .header-graphic-box svg {
-                width: 28px;
-                height: 28px;
+            .hero-illustration-wrapper svg {
+                width: 30px;
+                height: 30px;
             }
-            .header-content {
-                height: 60px;
+            .hero-text-block h1 {
+                font-size: 1.95rem;
             }
-            .header-content h1 {
-                font-size: 1.75rem;
+            .hero-text-block p {
+                font-size: 0.92rem;
             }
-            .header-content p {
-                font-size: 0.88rem;
-            }
-            .subject-grid {
-                grid-template-columns: 1fr; /* Pure linear stack for zero mobile overflow */
-                gap: 16px;
+            .subject-cards-grid {
+                grid-template-columns: 1fr; /* Stack layout guarantees 0% horizontal overflow on mobile and tablets */
+                gap: 20px;
             }
             .subject-card {
-                padding: 24px;
+                padding: 28px;
                 min-height: auto;
             }
-            .subject-card-icon-container {
-                margin-bottom: 16px;
+            .subject-icon-box {
+                margin-bottom: 20px;
             }
         }
 
         @media (max-width: 480px) {
-            .navbar-brand {
+            .brand-identity {
                 font-size: 1.35rem;
             }
-            .navbar-brand svg {
-                width: 30px;
-                height: 30px;
+            .brand-logo-container svg {
+                width: 32px;
+                height: 32px;
             }
-            .profile-username-label {
-                display: none; /* Hide text on small viewports to save status bar real estate */
+            .user-greeting {
+                display: none; /* Safely hide greeting to prevent cramped headers on mobile devices */
             }
-            .profile-avatar-circle {
+            .user-avatar-wrapper {
                 width: 34px;
                 height: 34px;
             }
-            .profile-dropdown-arrow {
+            .dropdown-chevron-icon {
                 display: none;
             }
             .features-horizontal-bar {
-                grid-template-columns: 1fr; /* Vertical stack on micro-viewports */
-                padding: 16px;
+                grid-template-columns: 1fr; /* Full single-column for easy scrolling on small phones */
+                padding: 20px;
             }
-            .encryption-status-banner {
+            .encryption-status-card {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 14px;
-                padding: 18px;
+                gap: 16px;
+                padding: 20px;
             }
-            .encryption-learn-more-link {
+            .encryption-link {
                 align-self: flex-start;
                 padding-top: 4px;
             }
@@ -595,49 +642,51 @@
 </head>
 <body>
 
-    <nav class="navbar-wrapper">
-        <div class="navbar">
-            <a href="#" class="navbar-brand">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                    <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/>
-                </svg>
+    <nav class="navigation-outer-container">
+        <div class="navigation-bar">
+            <a href="#" class="brand-identity">
+                <div class="brand-logo-container">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                        <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/>
+                    </svg>
+                </div>
                 Grade 12 <span>Learning</span>
             </a>
-            <div class="navbar-user-profile">
-                <div class="profile-avatar-circle">
+            <div class="user-account-menu">
+                <div class="user-avatar-wrapper">
                     <svg viewBox="0 0 24 24">
                         <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
                     </svg>
                 </div>
-                <span class="profile-username-label">Hi, Paul</span>
-                <svg class="profile-dropdown-arrow" viewBox="0 0 24 24">
+                <span class="user-greeting">Hi, Paul</span>
+                <svg class="dropdown-chevron-icon" viewBox="0 0 24 24">
                     <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </div>
         </div>
     </nav>
 
-    <div class="app-container">
+    <div class="app-root">
         
-        <header class="page-header">
-            <div class="header-graphic-box">
+        <header class="page-hero">
+            <div class="hero-illustration-wrapper">
                 <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
                     <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
                 </svg>
             </div>
-            <div class="header-content">
+            <div class="hero-text-block">
                 <h1>Choose Your Subject</h1>
                 <p>Select a subject to explore past exam papers and watch step-by-step video explanations.</p>
             </div>
         </header>
 
-        <main class="subject-grid">
+        <main class="subject-cards-grid">
             
             <section class="subject-card">
-                <div class="subject-card-body">
-                    <div class="subject-card-icon-container">
+                <div class="subject-card-header">
+                    <div class="subject-icon-box">
                         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M3 12h2l3 9 4-15h9"/>
                             <path d="M14 11l4 4M18 11l-4 4"/>
@@ -646,8 +695,8 @@
                     <h2>Mathematics</h2>
                     <p>Access past exam papers and master every question with clear explanations.</p>
                 </div>
-                <div class="subject-card-footer">
-                    <button class="subject-card-action-btn" aria-label="Go to Mathematics">
+                <div class="subject-card-action-row">
+                    <button class="subject-action-btn" aria-label="Go to Mathematics">
                         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M5 12h14M12 5l7 7-7 7"/>
                         </svg>
@@ -656,8 +705,8 @@
             </section>
 
             <section class="subject-card">
-                <div class="subject-card-body">
-                    <div class="subject-card-icon-container icon-beaker">
+                <div class="subject-card-header">
+                    <div class="subject-icon-box">
                         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M6 3h12M12 3v13M10 12h4M5 21h14M7 3l4.5 9.5a1 1 0 0 1 0 1L7 21h10l-4.5-7.5a1 1 0 0 1 0-1L17 3H7z"/>
                         </svg>
@@ -665,8 +714,8 @@
                     <h2>Physical Sciences</h2>
                     <p>Step-by-step solutions to help you understand and excel in Physical Sciences.</p>
                 </div>
-                <div class="subject-card-footer">
-                    <button class="subject-card-action-btn" aria-label="Go to Physical Sciences">
+                <div class="subject-card-action-row">
+                    <button class="subject-action-btn" aria-label="Go to Physical Sciences">
                         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M5 12h14M12 5l7 7-7 7"/>
                         </svg>
@@ -675,8 +724,8 @@
             </section>
 
             <section class="subject-card">
-                <div class="subject-card-body">
-                    <div class="subject-card-icon-container">
+                <div class="subject-card-header">
+                    <div class="subject-icon-box">
                         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
                             <line x1="8" y1="6" x2="16" y2="6"/>
@@ -690,8 +739,8 @@
                     <h2>Accounting</h2>
                     <p>Detailed explanations to strengthen your Accounting skills and confidence.</p>
                 </div>
-                <div class="subject-card-footer">
-                    <button class="subject-card-action-btn" aria-label="Go to Accounting">
+                <div class="subject-card-action-row">
+                    <button class="subject-action-btn" aria-label="Go to Accounting">
                         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M5 12h14M12 5l7 7-7 7"/>
                         </svg>
@@ -700,8 +749,8 @@
             </section>
 
             <section class="subject-card">
-                <div class="subject-card-body">
-                    <div class="subject-card-icon-container">
+                <div class="subject-card-header">
+                    <div class="subject-icon-box">
                         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                             <line x1="18" y1="20" x2="18" y2="10" stroke-width="2.5"/>
                             <line x1="12" y1="20" x2="12" y2="4" stroke-width="2.5"/>
@@ -711,8 +760,8 @@
                     <h2>Mathematical Literacy</h2>
                     <p>Learn concepts step-by-step and improve your problem-solving skills.</p>
                 </div>
-                <div class="subject-card-footer">
-                    <button class="subject-card-action-btn" aria-label="Go to Mathematical Literacy">
+                <div class="subject-card-action-row">
+                    <button class="subject-action-btn" aria-label="Go to Mathematical Literacy">
                         <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M5 12h14M12 5l7 7-7 7"/>
                         </svg>
@@ -724,8 +773,8 @@
 
         <section class="features-horizontal-bar">
             
-            <div class="horizontal-feature-node">
-                <div class="horizontal-feature-icon-wrapper">
+            <div class="feature-node">
+                <div class="feature-icon-wrapper">
                     <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"/>
                         <polygon points="10 8 16 12 10 16 10 8"/>
@@ -735,8 +784,8 @@
                 <p>Watch clear, step-by-step solutions for every question.</p>
             </div>
 
-            <div class="horizontal-feature-node">
-                <div class="horizontal-feature-icon-wrapper">
+            <div class="feature-node">
+                <div class="feature-icon-wrapper">
                     <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                         <polyline points="14 2 14 8 20 8"/>
@@ -749,8 +798,8 @@
                 <p>Access a wide range of papers by year and subject.</p>
             </div>
 
-            <div class="horizontal-feature-node">
-                <div class="horizontal-feature-icon-wrapper">
+            <div class="feature-node">
+                <div class="feature-icon-wrapper">
                     <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"/>
                         <circle cx="12" cy="12" r="6"/>
@@ -761,8 +810,8 @@
                 <p>Pause, rewind and replay until you truly understand.</p>
             </div>
 
-            <div class="horizontal-feature-node">
-                <div class="horizontal-feature-icon-wrapper">
+            <div class="feature-node">
+                <div class="feature-icon-wrapper">
                     <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
                         <polyline points="17 6 23 6 23 12"/>
@@ -774,25 +823,25 @@
 
         </section>
 
-        <section class="dashboard-tip-banner">
+        <section class="dashboard-tip-card">
             <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A5.5 5.5 0 0 0 12.5 2.5a5.5 5.5 0 0 0-5.5 5.5c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/>
+                <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.5 1.5-3.5A5.5 5.5 0 0 0 12.5 2.5a5.5 5.5 0 0 0-5.5 5.5c0 1.3.5 2.5 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/>
                 <path d="M9 18h6M10 22h4"/>
             </svg>
             <p>Tip: You can change your subject anytime from the dashboard.</p>
         </section>
 
-        <section class="encryption-status-banner">
-            <div class="encryption-content-left">
+        <section class="encryption-status-card">
+            <div class="encryption-left">
                 <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                 </svg>
-                <div class="encryption-details">
+                <div class="encryption-text">
                     <h4>Your data is secure</h4>
                     <p>Your progress and information are encrypted and stored securely.</p>
                 </div>
             </div>
-            <a href="#" class="encryption-learn-more-link">
+            <a href="#" class="encryption-link">
                 Learn more 
                 <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M9 5l7 7-7 7"/>
@@ -800,7 +849,7 @@
             </a>
         </section>
 
-        <footer class="app-footer">
+        <footer class="page-footer">
             &copy; 2025 Grade 12 Learning. All rights reserved.
         </footer>
 
@@ -808,4 +857,3 @@
 
 </body>
 </html>
-
