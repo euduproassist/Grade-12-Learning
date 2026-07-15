@@ -1,1 +1,1679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Grade 12 Learning - Mathematics Workspace</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="initializeMathematicalTypesetting()"></script>
+
+    <style>
+        /* ==========================================================================
+           1. CORE DESIGN TOKENS, COLORS, & VARIABLES (100% BRAND ALIGNED)
+           ========================================================================== */
+        :root {
+            --brand-primary: #1d68f2;
+            --brand-primary-rgb: 29, 104, 242;
+            --brand-hover: #1153cb;
+            --brand-active: #0a3da1;
+            --brand-light: #eff6ff;
+            --brand-border: #dbeafe;
+            
+            --success-green: #059669;
+            --success-bg: #ecfdf5;
+            
+            --color-text-title: #07122c;
+            --color-text-body: #4b5b75;
+            --color-text-muted: #64748b;
+            
+            --color-border-light: #f1f5f9;
+            --color-border-card: #e2e8f0;
+            --color-border-active: #cbd5e1;
+            
+            --bg-canvas: #f8fafc;
+            --bg-card: #ffffff;
+            
+            --easing-fluid: cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-speed: 0.28s;
+            --transition-smooth: all var(--transition-speed) var(--easing-fluid);
+            
+            --shadow-subtle: 0 4px 20px rgba(29, 104, 242, 0.015);
+            --shadow-hover: 0 12px 36px rgba(29, 104, 242, 0.05);
+            --shadow-soft-card: 0 8px 30px rgba(0, 0, 0, 0.02);
+            --shadow-medium: 0 8px 30px rgba(7, 18, 44, 0.04);
+            
+            --border-radius-lg: 24px;
+            --border-radius-md: 16px;
+            --border-radius-sm: 12px;
+        }
+
+        /* ==========================================================================
+           2. RESET ENGINE & SHIELD AGAINST HORIZONTAL SIDE-SCROLLING
+           ========================================================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            width: 100%;
+            min-height: 100vh;
+            background-color: var(--bg-canvas);
+            color: var(--color-text-title);
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            overflow-x: hidden !important; 
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        /* ==========================================================================
+           3. VIEW CONTROLLER (ROUTING SYSTEM SHEETS)
+           ========================================================================== */
+        .app-view {
+            display: none;
+            width: 100%;
+            max-width: 840px; 
+            padding: 0 24px 80px 24px;
+            flex-direction: column;
+            gap: 24px;
+            box-sizing: border-box;
+            animation: fadeInView 0.35s var(--easing-fluid);
+        }
+
+        .app-view.is-active {
+            display: flex;
+        }
+
+        @keyframes fadeInView {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ==========================================================================
+           4. NAVIGATION HEADER SYSTEM
+           ========================================================================== */
+        .nav-outer-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            background: transparent;
+            z-index: 100;
+        }
+
+        .navigation-header {
+            width: 100%;
+            max-width: 840px;
+            padding: 32px 24px 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: transparent;
+            box-sizing: border-box;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--brand-primary);
+            text-decoration: none;
+            font-size: 0.98rem;
+            font-weight: 700;
+            transition: var(--transition-smooth);
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            color: var(--brand-hover);
+        }
+
+        .back-button svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            stroke-width: 2.8;
+            fill: none;
+        }
+
+        .user-dropdown-trigger {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
+            padding: 4px;
+            border-radius: 50px;
+            transition: var(--transition-smooth);
+        }
+
+        .user-dropdown-trigger:hover {
+            opacity: 0.85;
+        }
+
+        .user-avatar-circle {
+            width: 38px;
+            height: 38px;
+            background-color: var(--brand-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-smooth);
+        }
+
+        .user-avatar-circle svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--brand-primary);
+        }
+
+        .user-name-label {
+            font-weight: 700;
+            font-size: 0.98rem;
+            color: var(--color-text-title);
+            letter-spacing: -0.2px;
+        }
+
+        .dropdown-chevron {
+            width: 12px;
+            height: 12px;
+            stroke: var(--color-text-title);
+            stroke-width: 2.5;
+            fill: none;
+            margin-left: 2px;
+        }
+
+        /* ==========================================================================
+           5. ACCORDION HEADER & YEAR DRAWER
+           ========================================================================== */
+        .accordion-wrapper-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            border: 1px solid rgba(226, 232, 240, 0.85);
+            box-shadow: var(--shadow-soft-card);
+            overflow: hidden;
+            width: 100%;
+            transition: var(--transition-smooth);
+        }
+
+        .accordion-wrapper-card:hover {
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(29, 104, 242, 0.1);
+        }
+
+        .accordion-header-btn {
+            width: 100%;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .accordion-meta-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .accordion-calendar-icon-box {
+            width: 44px;
+            height: 44px;
+            background-color: #f1f5f9;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .accordion-calendar-icon-box svg {
+            width: 22px;
+            height: 22px;
+            stroke: var(--brand-primary);
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .accordion-subject-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--color-text-title);
+            letter-spacing: -0.4px;
+        }
+
+        .accordion-arrow-indicator {
+            width: 20px;
+            height: 20px;
+            stroke: var(--brand-primary);
+            stroke-width: 2.5;
+            fill: none;
+            transition: transform 0.28s var(--easing-fluid);
+        }
+
+        .accordion-wrapper-card.is-expanded .accordion-arrow-indicator {
+            transform: rotate(180deg);
+        }
+
+        .accordion-transition-panel {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.28s var(--easing-fluid);
+        }
+
+        .accordion-wrapper-card.is-expanded .accordion-transition-panel {
+            max-height: 250px;
+        }
+
+        .accordion-inner-content {
+            padding: 0 24px 24px 24px;
+            border-top: 1px solid var(--color-border-light);
+            padding-top: 20px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .segmented-tab-btn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            border: 1px solid var(--brand-border);
+            background: #ffffff;
+            color: var(--brand-primary);
+        }
+
+        .segmented-tab-btn.is-active {
+            background: var(--brand-primary);
+            border-color: var(--brand-primary);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(29, 104, 242, 0.15);
+        }
+
+        /* ==========================================================================
+           6. SYLLABUS SECTION BREAKS
+           ========================================================================== */
+        .section-separator-bar {
+            margin-top: 12px;
+            margin-bottom: 4px;
+        }
+
+        .section-separator-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--color-text-title);
+            letter-spacing: -0.5px;
+        }
+
+        /* ==========================================================================
+           7. QUESTION CARDS & SYSTEM WORKSPACE
+           ========================================================================== */
+        .questions-vertical-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .question-item-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            border: 1px solid rgba(226, 232, 240, 0.85);
+            box-shadow: var(--shadow-soft-card);
+            padding: 24px 28px;
+            transition: var(--transition-smooth);
+            width: 100%;
+        }
+
+        .question-item-card:hover {
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(29, 104, 242, 0.1);
+        }
+
+        .question-flex-body {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            width: 100%;
+        }
+
+        .question-content-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex: 1;
+            min-width: 0; /* Prevents flexbox child from growing beyond layout limits */
+        }
+
+        .question-index-number {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--brand-primary);
+            white-space: nowrap;
+        }
+
+        .question-text-content {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--color-text-title);
+            line-height: 1.55;
+            display: inline-flex;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 100%;
+            min-width: 0;
+            word-break: break-word;
+        }
+
+        .math-typeset-wrapper {
+            display: inline-block;
+            margin-left: 8px;
+            font-size: 1.15rem;
+            vertical-align: middle;
+            max-width: 100%;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .math-typeset-wrapper::-webkit-scrollbar {
+            display: none;
+        }
+
+        .question-elements-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-shrink: 0;
+        }
+
+        .points-weight-pill {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-text-muted);
+            background-color: #f1f5f9;
+            padding: 6px 12px;
+            border-radius: 8px;
+            white-space: nowrap;
+        }
+
+        .question-actions-toolbar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Action Buttons */
+        .action-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 22px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            text-decoration: none;
+            white-space: nowrap;
+        }
+
+        .action-button-outline {
+            background: #ffffff;
+            border: 1px solid var(--brand-border);
+            color: var(--brand-primary);
+        }
+
+        .action-button-outline:hover {
+            background-color: var(--brand-light);
+            border-color: var(--brand-primary);
+        }
+
+        .action-button-solid {
+            background: var(--brand-primary);
+            border: 1px solid var(--brand-primary);
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(29, 104, 242, 0.1);
+        }
+
+        .action-button-solid:hover {
+            background: var(--brand-hover);
+            border-color: var(--brand-hover);
+            box-shadow: 0 6px 16px rgba(17, 83, 203, 0.2);
+        }
+
+        /* Disabled State Rules */
+        .action-button:disabled,
+        .action-button.is-disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .action-button-solid svg {
+            width: 12px;
+            height: 12px;
+            fill: currentColor;
+        }
+
+        /* ==========================================================================
+           8. COMPREHENSIVE DETAIL VIEW COMPONENTS (FROM BLUEPRINT SECOND IMAGE)
+           ========================================================================== */
+        .paper-banner {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            gap: 16px;
+        }
+
+        .banner-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .math-icon-wrapper {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: var(--brand-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(29, 104, 242, 0.08);
+        }
+
+        .math-icon-wrapper svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--brand-primary);
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .banner-title-group h1 {
+            font-size: 1.55rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+            color: var(--color-text-title);
+        }
+
+        .banner-title-group p {
+            color: var(--color-text-muted);
+            font-size: 0.92rem;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--color-border-card);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-subtle);
+            padding: 24px;
+            width: 100%;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            min-width: 0;
+        }
+
+        /* Question Detail Segment Header Bar */
+        .question-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 1.05rem;
+            gap: 16px;
+        }
+
+        .question-label {
+            font-weight: 800;
+            color: var(--brand-primary);
+            flex-shrink: 0;
+        }
+
+        .question-equation {
+            font-weight: 600;
+            flex: 1;
+            margin-left: 8px;
+            color: var(--color-text-title);
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none; 
+            max-width: 100%;
+        }
+        
+        .question-equation::-webkit-scrollbar {
+            display: none;
+        }
+
+        .question-marks {
+            color: var(--color-text-title);
+            font-weight: 700;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+            text-align: right;
+        }
+
+        /* Interactive Dynamic Answer Visibility Components */
+        .answer-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            gap: 12px;
+        }
+
+        .section-header {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--color-text-title);
+        }
+
+        .toggle-answer-btn {
+            background: transparent;
+            border: none;
+            color: var(--brand-primary);
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color var(--transition-smooth);
+        }
+
+        .toggle-answer-btn:hover {
+            color: var(--brand-hover);
+        }
+
+        .final-answer-box {
+            border: 1.5px solid var(--color-border-light);
+            border-radius: var(--border-radius-md);
+            padding: 16px;
+            display: inline-flex; 
+            align-items: center;
+            gap: 16px;
+            max-width: 100%;
+            transition: var(--transition-smooth);
+        }
+
+        .final-answer-pill {
+            background-color: var(--success-bg);
+            color: var(--success-green);
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.2px;
+            flex-shrink: 0;
+        }
+
+        .final-answer-math {
+            border: 1.5px solid var(--brand-primary);
+            border-radius: var(--border-radius-sm);
+            padding: 4px 14px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: inline-block;
+            max-width: 100%;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .final-answer-math::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* ==========================================================================
+           9. RESPONSIVE MATHEMATICAL CONTAINERS
+           ========================================================================== */
+        .solution-math-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 12px 0;
+            width: 100%;
+            overflow-x: auto; 
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+        }
+
+        .solution-math-container .katex-display {
+            font-size: clamp(0.95rem, 3.8vw, 1.2rem);
+            margin: 0.35em 0;
+            max-width: 100%;
+        }
+
+        /* ==========================================================================
+           10. STEP BY STEP ROADMAP CARDS
+           ========================================================================== */
+        .step-row {
+            border-bottom: 1px solid var(--color-border-light);
+            padding: 24px 0;
+            width: 100%;
+        }
+
+        .step-row:last-child {
+            border-bottom: none;
+            padding-bottom: 8px;
+        }
+
+        .step-header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            gap: 12px;
+        }
+
+        .step-title-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .step-badge-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: var(--brand-primary);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-instruction-text {
+            font-size: 0.98rem;
+            font-weight: 600;
+            color: var(--color-text-body);
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .step-pill-indicator {
+            background-color: var(--brand-light);
+            color: var(--brand-primary);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        /* Advisory Tips Component */
+        .tip-container {
+            background-color: var(--bg-canvas);
+            border: 1px solid var(--color-border-card);
+            border-radius: var(--border-radius-md);
+            padding: 16px 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-top: 16px;
+            width: 100%;
+        }
+
+        .tip-icon-box {
+            color: var(--brand-primary);
+            flex-shrink: 0;
+        }
+
+        .tip-icon-box svg {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .tip-text-content {
+            font-size: 0.92rem;
+            line-height: 1.5;
+            color: var(--color-text-body);
+        }
+
+        .tip-text-content strong {
+            color: var(--color-text-title);
+            display: block;
+            margin-bottom: 2px;
+            font-weight: 700;
+        }
+
+        /* Walkthrough Explanation Footer Cards */
+        .explain-footer-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--color-border-card);
+            border-radius: var(--border-radius-lg);
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 24px;
+            gap: 16px;
+            width: 100%;
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .explain-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .video-thumbnail-avatar {
+            width: 48px;
+            height: 48px;
+            background-color: var(--brand-light);
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--brand-primary);
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(29, 104, 242, 0.05);
+        }
+
+        .video-thumbnail-avatar svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        .explain-text h3 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            margin-bottom: 2px;
+            color: var(--color-text-title);
+        }
+
+        .explain-text p {
+            font-size: 0.9rem;
+            color: var(--color-text-body);
+            font-weight: 500;
+        }
+
+        .explain-action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: 1.5px solid var(--brand-primary);
+            background: transparent;
+            color: var(--brand-primary);
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: not-allowed;
+            font-size: 0.95rem;
+            opacity: 0.55;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        /* ==========================================================================
+           11. SYSTEM FOOTER
+           ========================================================================== */
+        .page-footer {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            font-weight: 600;
+            padding: 48px 0 16px 0;
+            width: 100%;
+            border-top: 1px solid var(--color-border-light);
+            margin-top: 24px;
+        }
+
+        /* ==========================================================================
+           12. FLUID MEDIA QUERIES (0% SIDE-SCROLLING ASSURANCE)
+           ========================================================================== */
+        @media (max-width: 820px) {
+            .question-flex-body {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .question-elements-right {
+                width: 100%;
+                justify-content: space-between;
+                border-top: 1px solid var(--color-border-light);
+                padding-top: 16px;
+                margin-top: 4px;
+            }
+        }
+
+        @media (max-width: 680px) {
+            .navigation-header {
+                padding: 24px 20px 16px 20px;
+            }
+            
+            .app-view {
+                padding: 0 16px 60px 16px;
+                gap: 20px;
+            }
+
+            .question-item-card {
+                padding: 20px;
+                border-radius: 20px;
+            }
+            
+            .question-content-left {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+                width: 100%;
+            }
+
+            .math-typeset-wrapper {
+                display: block;
+                margin-left: 0;
+                margin-top: 10px;
+                font-size: 1.1rem;
+                width: 100%;
+            }
+            
+            .question-elements-right {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 14px;
+            }
+
+            .points-weight-pill {
+                align-self: flex-start;
+            }
+
+            .question-actions-toolbar {
+                flex-direction: column; 
+                width: 100%;
+                gap: 10px;
+            }
+            
+            .action-button {
+                width: 100%; 
+                text-align: center;
+            }
+            
+            .user-name-label, .dropdown-chevron {
+                display: none; 
+            }
+            
+            .accordion-inner-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .segmented-tab-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .paper-banner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+                margin-bottom: 24px;
+            }
+
+            .question-bar {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .question-equation {
+                margin-left: 0;
+                width: 100%;
+                white-space: normal; 
+            }
+
+            .question-marks {
+                align-self: flex-end;
+            }
+
+            .explain-footer-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .explain-left {
+                width: 100%;
+            }
+
+            .explain-action-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 14px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .step-header-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .step-pill-indicator {
+                align-self: flex-end;
+            }
+
+            .final-answer-box {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                gap: 12px;
+            }
+
+            .final-answer-math {
+                width: 100%;
+                text-align: center;
+            }
+
+            .banner-title-group h1 {
+                font-size: 1.35rem;
+            }
+
+            .card {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav-outer-wrapper">
+        <header class="navigation-header">
+            <button class="back-button" id="globalBackButton" onclick="handleNavigationBack()">
+                <svg viewBox="0 0 24 24">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                <span id="backButtonText">Back to Papers</span>
+            </button>
+            
+            <div class="user-dropdown-trigger">
+                <div class="user-avatar-circle">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                </div>
+                <span class="user-name-label">Hi, Paul</span>
+                <svg class="dropdown-chevron" viewBox="0 0 24 24">
+                    <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </header>
+    </nav>
+
+    <div class="app-view is-active" id="questionsListView">
+        
+        <div class="accordion-wrapper-card is-expanded" id="examAccordion">
+            <button class="accordion-header-btn" onclick="toggleExamAccordion()" aria-expanded="true" aria-controls="examAccordionPanel">
+                <div class="accordion-meta-group">
+                    <div class="accordion-calendar-icon-box">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                    </div>
+                    <span class="accordion-subject-title">2025 Latest</span>
+                </div>
+                <svg class="accordion-arrow-indicator" viewBox="0 0 24 24">
+                    <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            
+            <div class="accordion-transition-panel" id="examAccordionPanel" style="max-height: 250px;">
+                <div class="accordion-inner-content">
+                    <button class="segmented-tab-btn is-active" onclick="switchPaperChannel(1, this)">Mathematics Paper 1</button>
+                    <button class="segmented-tab-btn" onclick="switchPaperChannel(2, this)">Mathematics Paper 2</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-separator-bar">
+            <h2 class="section-separator-title">Section A: Algebra</h2>
+        </div>
+
+        <main class="questions-vertical-stack">
+            
+            <article class="question-item-card">
+                <div class="question-flex-body">
+                    <div class="question-content-left">
+                        <span class="question-index-number">1.1</span>
+                        <div class="question-text-content">
+                            Simplify the expression completely:
+                            <span class="math-typeset-wrapper">$$\frac{2x^2 - 8x}{2x}$$</span>
+                        </div>
+                    </div>
+                    <div class="question-elements-right">
+                        <span class="points-weight-pill">(2)</span>
+                        <div class="question-actions-toolbar">
+                            <button class="action-button action-button-outline" onclick="loadSolutionWorkspace('1.1')">View Answer</button>
+                            <button class="action-button action-button-solid" disabled>
+                                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                Explain Answer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="question-item-card">
+                <div class="question-flex-body">
+                    <div class="question-content-left">
+                        <span class="question-index-number">1.2</span>
+                        <div class="question-text-content">
+                            Solve for $x$:
+                            <span class="math-typeset-wrapper">$$x^2 - 5x + 6 = 0$$</span>
+                        </div>
+                    </div>
+                    <div class="question-elements-right">
+                        <span class="points-weight-pill">(3)</span>
+                        <div class="question-actions-toolbar">
+                            <button class="action-button action-button-outline" onclick="loadSolutionWorkspace('1.2')">View Answer</button>
+                            <button class="action-button action-button-solid" disabled>
+                                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                Explain Answer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="question-item-card">
+                <div class="question-flex-body">
+                    <div class="question-content-left">
+                        <span class="question-index-number">1.3</span>
+                        <div class="question-text-content">
+                            Solve for $x$ and $y$ simultaneously:
+                            <span class="math-typeset-wrapper">$$y = x - 3 \quad \text{and} \quad x^2 + y^2 = 9$$</span>
+                        </div>
+                    </div>
+                    <div class="question-elements-right">
+                        <span class="points-weight-pill">(6)</span>
+                        <div class="question-actions-toolbar">
+                            <button class="action-button action-button-outline" onclick="loadSolutionWorkspace('1.3')">View Answer</button>
+                            <button class="action-button action-button-solid" disabled>
+                                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                Explain Answer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="question-item-card">
+                <div class="question-flex-body">
+                    <div class="question-content-left">
+                        <span class="question-index-number">1.4</span>
+                        <div class="question-text-content">
+                            Solve for $x$, correct to two decimal places:
+                            <span class="math-typeset-wrapper">$$3x^2 - 2x - 7 = 0$$</span>
+                        </div>
+                    </div>
+                    <div class="question-elements-right">
+                        <span class="points-weight-pill">(4)</span>
+                        <div class="question-actions-toolbar">
+                            <button class="action-button action-button-outline" onclick="loadSolutionWorkspace('1.4')">View Answer</button>
+                            <button class="action-button action-button-solid" disabled>
+                                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                Explain Answer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="question-item-card">
+                <div class="question-flex-body">
+                    <div class="question-content-left">
+                        <span class="question-index-number">1.5</span>
+                        <div class="question-text-content">
+                            Solve for $x$ in the inequality below:
+                            <span class="math-typeset-wrapper">$$(2x - 3)(x + 1) > 0$$</span>
+                        </div>
+                    </div>
+                    <div class="question-elements-right">
+                        <span class="points-weight-pill">(3)</span>
+                        <div class="question-actions-toolbar">
+                            <button class="action-button action-button-outline" onclick="loadSolutionWorkspace('1.5')">View Answer</button>
+                            <button class="action-button action-button-solid" disabled>
+                                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                Explain Answer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="question-item-card">
+                <div class="question-flex-body">
+                    <div class="question-content-left">
+                        <span class="question-index-number">1.6</span>
+                        <div class="question-text-content">
+                            Simplify the expression with exponents completely:
+                            <span class="math-typeset-wrapper">$$\frac{3^{x+1} \cdot 9^{x-2}}{27^{x-1}}$$</span>
+                        </div>
+                    </div>
+                    <div class="question-elements-right">
+                        <span class="points-weight-pill">(4)</span>
+                        <div class="question-actions-toolbar">
+                            <button class="action-button action-button-outline" onclick="loadSolutionWorkspace('1.6')">View Answer</button>
+                            <button class="action-button action-button-solid" disabled>
+                                <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                Explain Answer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </main>
+
+        <footer class="page-footer">
+            &copy; 2026 Grade 12 Learning. All rights reserved.
+        </footer>
+
+    </div>
+
+    <div class="app-view" id="solutionDetailsView">
+        
+        <header class="paper-banner">
+            <div class="banner-left">
+                <div class="math-icon-wrapper">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M3 12h3l3-9 4 18 3-12h5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="banner-title-group">
+                    <h1 id="detailViewHeadingTitle">Mathematics &ndash; 2025 Paper 1</h1>
+                    <p>Select a question to view the answer and watch the step-by-step explanation.</p>
+                </div>
+            </div>
+            <button class="back-button" onclick="transitionToListView()" aria-label="Go back to the questions gallery">← Back to Questions</button>
+        </header>
+
+        <section class="card question-bar" aria-labelledby="question-badge-ref">
+            <span id="question-badge-ref" class="question-label">Question 1.1</span>
+            <span class="question-equation" id="detailViewQuestionText">Solve for $x$: &nbsp;$2x + 3 = 11$</span>
+            <span class="question-marks" id="detailViewQuestionMarks">(2 Marks)</span>
+        </section>
+
+        <main class="card">
+            
+            <div class="answer-header-row">
+                <h2 class="section-header">Answer</h2>
+                <button class="toggle-answer-btn" id="toggleAnswerBtn" onclick="toggleAnswerContainer()" aria-expanded="true" aria-controls="answerValueBlock">
+                    <svg style="width:16px; height:16px; fill:currentColor;" viewBox="0 0 24 24">
+                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                    </svg>
+                    <span id="toggleText">Hide Answer</span>
+                </button>
+            </div>
+
+            <div id="answerValueBlock" class="final-answer-box">
+                <span class="final-answer-pill">Final Answer</span>
+                <span class="final-answer-math" id="detailViewFinalAnswer">$x = 4$</span>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid var(--color-border-light); margin: 24px 0;" aria-hidden="true">
+
+            <h2 class="section-header" style="margin-bottom: 8px;">Step-by-Step Solution</h2>
+
+            <div id="stepsDynamicContainer"></div>
+
+            <aside class="tip-container" aria-label="Formula Solving Advice Tip Box">
+                <div class="tip-icon-box">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M9 21h6M9 18h6M10 15H14M12 2a7 7 0 0 1 7 7c0 2.5-2 4.85-3 5.5s-1.5 2.5-1.5 2.5H9.5s-.5-1.85-1.5-2.5-3-3-3-5.5a7 7 0 0 1 7-7z" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="tip-text-content">
+                    <strong>Tip</strong>
+                    <span id="detailViewTipText">Always balance both sides of the equation when solving for $x$.</span>
+                </div>
+            </aside>
+
+        </main>
+
+        <section class="explain-footer-card">
+            <div class="explain-left">
+                <div class="video-thumbnail-avatar">
+                    <svg viewBox="0 0 24 24">
+                        <polygon points="5 3 19 12 5 21 5 3"/>
+                    </svg>
+                </div>
+                <div class="explain-text">
+                    <h3>Want to understand this better?</h3>
+                    <p>Watch a step-by-step video explanation for this question.</p>
+                </div>
+            </div>
+            <button class="explain-action-btn" aria-label="Watch step-by-step explainer video" disabled>
+                Explain Answer
+                <svg viewBox="0 0 24 24">
+                    <polygon points="5 3 19 12 5 21 5 3"/>
+                </svg>
+            </button>
+        </section>
+
+        <footer class="page-footer">
+            &copy; 2026 Grade 12 Learning. All rights reserved.
+        </footer>
+
+    </div>
+
+    <script>
+        "use strict";
+
+        /* ==========================================================================
+           1. SOLUTION DATABASE SCHEMAS (SCALED HEADROOM FOR MASSIVE ARCHITECTURE)
+           ========================================================================== */
+        const solutionsManifest = {
+            '1.1': {
+                label: "Question 1.1",
+                marks: "(2 Marks)",
+                equation: "Simplify completely: \\quad \\frac{2x^2 - 8x}{2x}",
+                finalAnswer: "x - 4 \\quad \\text{where } x \\neq 0",
+                tip: "When simplifying fractions, factor first! Never cancel terms that are added or subtracted.",
+                steps: [
+                    {
+                        number: 1,
+                        instruction: "Factor out the common term 2x from the algebraic expression in the numerator.",
+                        mathHtml: `<div>$$\\frac{2x(x - 4)}{2x}$$</div>`
+                    },
+                    {
+                        number: 2,
+                        instruction: "Simplify the algebraic fraction by dividing both parts by the matching factors of 2x.",
+                        mathHtml: `<div>$$\\frac{\\cancel{2x}(x - 4)}{\\cancel{2x}}$$</div>`
+                    },
+                    {
+                        number: 3,
+                        instruction: "State the final simplified restriction on the denominator.",
+                        mathHtml: `<div>$$x - 4 \\quad (x \\neq 0)$$</div>`
+                    }
+                ]
+            },
+            '1.2': {
+                label: "Question 1.2",
+                marks: "(3 Marks)",
+                equation: "Solve for $x$: \\quad x^2 - 5x + 6 = 0",
+                finalAnswer: "x = 2 \\quad \\text{or} \\quad x = 3",
+                tip: "Look for two numbers that multiply to the constant term (+6) and add up to the coefficient of x (-5).",
+                steps: [
+                    {
+                        number: 1,
+                        instruction: "Determine the factors of the quadratic trinomial.",
+                        mathHtml: `<div>$$x^2 - 5x + 6 = 0$$</div>
+                                   <div>$$(x - 2)(x - 3) = 0$$</div>`
+                    },
+                    {
+                        number: 2,
+                        instruction: "Apply the zero factor property to set each factor independently to 0.",
+                        mathHtml: `<div>$$x - 2 = 0 \\quad \\text{or} \\quad x - 3 = 0$$</div>`
+                    },
+                    {
+                        number: 3,
+                        instruction: "Solve the linear equations to obtain the final roots.",
+                        mathHtml: `<div>$$x = 2 \\quad \\text{or} \\quad x = 3$$</div>`
+                    }
+                ]
+            },
+            '1.3': {
+                label: "Question 1.3",
+                marks: "(6 Marks)",
+                equation: "Solve simultaneously: \\quad y = x - 3 \\quad \\text{and} \\quad x^2 + y^2 = 9",
+                finalAnswer: "(0; -3) \\quad \\text{and} \\quad (3; 0)",
+                tip: "Always choose the simplest linear equation to substitute into the quadratic expression.",
+                steps: [
+                    {
+                        number: 1,
+                        instruction: "Identify the linear and quadratic equations and set up substitution.",
+                        mathHtml: `<div>$$\\text{Eq. 1: } y = x - 3$$</div>
+                                   <div>$$\\text{Eq. 2: } x^2 + y^2 = 9$$</div>`
+                    },
+                    {
+                        number: 2,
+                        instruction: "Substitute Eq. 1 into Eq. 2 and expand.",
+                        mathHtml: `<div>$$x^2 + (x - 3)^2 = 9$$</div>
+                                   <div>$$x^2 + (x^2 - 6x + 9) = 9$$</div>`
+                    },
+                    {
+                        number: 3,
+                        instruction: "Group like terms to arrange the equation in standard form.",
+                        mathHtml: `<div>$$2x^2 - 6x + 9 - 9 = 0$$</div>
+                                   <div>$$2x^2 - 6x = 0$$</div>`
+                    },
+                    {
+                        number: 4,
+                        instruction: "Factorize the quadratic expression using the common factor 2x.",
+                        mathHtml: `<div>$$2x(x - 3) = 0$$</div>`
+                    },
+                    {
+                        number: 5,
+                        instruction: "Solve for the two possible values of x.",
+                        mathHtml: `<div>$$2x = 0 \\implies x = 0$$</div>
+                                   <div>$$x - 3 = 0 \\implies x = 3$$</div>`
+                    },
+                    {
+                        number: 6,
+                        instruction: "Substitute the x values back into Eq. 1 to compute matching values for y.",
+                        mathHtml: `<div>$$\\text{For } x = 0: \\quad y = 0 - 3 = -3 \\implies (0; -3)$$</div>
+                                   <div>$$\\text{For } x = 3: \\quad y = 3 - 3 = 0 \\implies (3; 0)$$</div>`
+                    }
+                ]
+            },
+            '1.4': {
+                label: "Question 1.4",
+                marks: "(4 Marks)",
+                equation: "Solve for $x$: \\quad 3x^2 - 2x - 7 = 0 \\quad (2\\text{ dec. places})",
+                finalAnswer: "x \\approx 1.90 \\quad \\text{or} \\quad x \\approx -1.23",
+                tip: "Use the quadratic formula when a quadratic expression cannot be easily factorized with rational roots.",
+                steps: [
+                    {
+                        number: 1,
+                        instruction: "Identify coefficients and state the quadratic formula.",
+                        mathHtml: `<div>$$a = 3, \\quad b = -2, \\quad c = -7$$</div>
+                                   <div>$$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$</div>`
+                    },
+                    {
+                        number: 2,
+                        instruction: "Substitute the identified coefficients into the formula.",
+                        mathHtml: `<div>$$x = \\frac{-(-2) \\pm \\sqrt{(-2)^2 - 4(3)(-7)}}{2(3)}$$</div>`
+                    },
+                    {
+                        number: 3,
+                        instruction: "Simplify the discriminant and radical portions.",
+                        mathHtml: `<div>$$x = \\frac{2 \\pm \\sqrt{4 + 84}}{6}$$</div>
+                                   <div>$$x = \\frac{2 \\pm \\sqrt{88}}{6}$$</div>`
+                    },
+                    {
+                        number: 4,
+                        instruction: "Calculate the decimal values and round to exactly two decimal places.",
+                        mathHtml: `<div>$$x = \\frac{2 + 9.3808}{6} \\implies x \\approx 1.90$$</div>
+                                   <div>$$x = \\frac{2 - 9.3808}{6} \\implies x \\approx -1.23$$</div>`
+                    }
+                ]
+            },
+            '1.5': {
+                label: "Question 1.5",
+                marks: "(3 Marks)",
+                equation: "Solve for $x$: \\quad (2x - 3)(x + 1) > 0",
+                finalAnswer: "x < -1 \\quad \\text{or} \\quad x > \\frac{3}{2}",
+                tip: "Inequalities require finding critical boundary points first, then analyzing intervals using a sketch or signs.",
+                steps: [
+                    {
+                        number: 1,
+                        instruction: "Set the factors equal to 0 to determine critical values.",
+                        mathHtml: `<div>$$(2x - 3)(x + 1) = 0$$</div>
+                                   <div>$$\\text{Critical values: } x = \\frac{3}{2} \\quad \\text{or} \\quad x = -1$$</div>`
+                    },
+                    {
+                        number: 2,
+                        instruction: "Analyze signs across the target boundary limits.",
+                        mathHtml: `<div>$$\\text{For } x < -1: \\quad (\\text{neg}) \\times (\\text{neg}) > 0 \\quad (\\text{True})$$</div>
+                                   <div>$$\\text{For } -1 < x < \\frac{3}{2}: \\quad (\\text{neg}) \\times (\\text{pos}) < 0 \\quad (\\text{False})$$</div>
+                                   <div>$$\\text{For } x > \\frac{3}{2}: \\quad (\\text{pos}) \\times (\\text{pos}) > 0 \\quad (\\text{True})$$</div>`
+                    },
+                    {
+                        number: 3,
+                        instruction: "Formulate the final matching mathematical interval.",
+                        mathHtml: `<div>$$x < -1 \\quad \\text{or} \\quad x > \\frac{3}{2}$$</div>`
+                    }
+                ]
+            },
+            '1.6': {
+                label: "Question 1.6",
+                marks: "(4 Marks)",
+                equation: "Simplify completely: \\quad \\frac{3^{x+1} \\cdot 9^{x-2}}{27^{x-1}}",
+                finalAnswer: "1",
+                tip: "Convert all composite bases (9 and 27) into prime bases (3) before applying laws of exponents.",
+                steps: [
+                    {
+                        number: 1,
+                        instruction: "Express base numbers as prime bases of 3.",
+                        mathHtml: `<div>$$9 = 3^2 \\quad \\text{and} \\quad 27 = 3^3$$</div>
+                                   <div>$$\\frac{3^{x+1} \\cdot (3^2)^{x-2}}{(3^3)^{x-1}}$$</div>`
+                    },
+                    {
+                        number: 2,
+                        instruction: "Multiply exponents to remove outer parentheses.",
+                        mathHtml: `<div>$$\\frac{3^{x+1} \\cdot 3^{2x-4}}{3^{3x-3}}$$</div>`
+                    },
+                    {
+                        number: 3,
+                        instruction: "Apply exponent product and quotient laws to combine the bases.",
+                        mathHtml: `<div>$$3^{(x+1) + (2x-4) - (3x-3)}$$</div>`
+                    },
+                    {
+                        number: 4,
+                        instruction: "Simplify terms inside the exponent to produce the final evaluation.",
+                        mathHtml: `<div>$$3^{3x - 3 - 3x + 3} = 3^0 = 1$$</div>`
+                    }
+                ]
+            }
+        };
+
+        /* ==========================================================================
+           2. COLLAPSIBLE ACCORDION MANAGER (HEADER CARDS)
+           ========================================================================== */
+        function toggleExamAccordion() {
+            const accordionCard = document.getElementById('examAccordion');
+            const transitionPanel = document.getElementById('examAccordionPanel');
+            const toggleButton = accordionCard.querySelector('.accordion-header-btn');
+            
+            if (accordionCard.classList.contains('is-expanded')) {
+                accordionCard.classList.remove('is-expanded');
+                transitionPanel.style.maxHeight = '0';
+                toggleButton.setAttribute('aria-expanded', 'false');
+            } else {
+                accordionCard.classList.add('is-expanded');
+                transitionPanel.style.maxHeight = '250px';
+                toggleButton.setAttribute('aria-expanded', 'true');
+            }
+        }
+
+        /* ==========================================================================
+           3. SEGMENT SELECTOR ACTIVE TAB VISUAL TOGGLER
+           ========================================================================== */
+        function switchPaperChannel(paperNumber, clickedButtonElement) {
+            const innerPanel = clickedButtonElement.parentElement;
+            innerPanel.querySelectorAll('.segmented-tab-btn').forEach(button => {
+                button.classList.remove('is-active');
+            });
+            clickedButtonElement.classList.add('is-active');
+            
+            if (paperNumber === 2) {
+                console.warn("Paper 2 features are currently locked.");
+            }
+        }
+
+        /* ==========================================================================
+           4. VIEW ROUTING STATE SYSTEM (TRANSITIONS BETWEEN LISTS & DETAILED SOLUTIONS)
+           ========================================================================== */
+        let activeQuestionId = null;
+
+        function loadSolutionWorkspace(questionIdentifier) {
+            const targetData = solutionsManifest[questionIdentifier];
+            if (!targetData) return;
+            
+            activeQuestionId = questionIdentifier;
+            
+            // Set UI Header labels
+            document.getElementById('detailViewHeadingTitle').textContent = `Mathematics - 2025 Paper 1`;
+            document.getElementById('question-badge-ref').textContent = targetData.label;
+            document.getElementById('detailViewQuestionMarks').textContent = targetData.marks;
+            document.getElementById('detailViewTipText').textContent = targetData.tip;
+            
+            // Set formulas
+            document.getElementById('detailViewQuestionText').innerHTML = `Solve: \\quad $${targetData.equation}$`;
+            document.getElementById('detailViewFinalAnswer').innerHTML = `$${targetData.finalAnswer}$`;
+            
+            // Parse steps dynamically
+            const stepsContainer = document.getElementById('stepsDynamicContainer');
+            stepsContainer.innerHTML = ''; // Reset container cleanly
+            
+            targetData.steps.forEach(step => {
+                const stepSection = document.createElement('section');
+                stepSection.className = 'step-row';
+                stepSection.setAttribute('aria-label', `Solution Step ${step.number} Details`);
+                
+                stepSection.innerHTML = `
+                    <div class="step-header-container">
+                        <div class="step-title-left">
+                            <div class="step-badge-number">${step.number}</div>
+                            <h3 class="step-instruction-text">${step.instruction}</h3>
+                        </div>
+                        <span class="step-pill-indicator">Step ${step.number}</span>
+                    </div>
+                    <div class="solution-math-container">
+                        ${step.mathHtml}
+                    </div>
+                `;
+                stepsContainer.appendChild(stepSection);
+            });
+            
+            // Update global Navigation Header workflow states
+            document.getElementById('backButtonText').textContent = "Back to Questions";
+            
+            // Fluid screen transition
+            document.getElementById('questionsListView').classList.remove('is-active');
+            document.getElementById('solutionDetailsView').classList.add('is-active');
+            
+            // Fire typesetting render engine
+            initializeMathematicalTypesetting();
+            
+            // Smooth auto scroll to top of screen
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function transitionToListView() {
+            // Return back text states
+            document.getElementById('backButtonText').textContent = "Back to Papers";
+            
+            // Flip screens
+            document.getElementById('solutionDetailsView').classList.remove('is-active');
+            document.getElementById('questionsListView').classList.add('is-active');
+            
+            activeQuestionId = null;
+            
+            // Clean dynamic steps rendering
+            document.getElementById('stepsDynamicContainer').innerHTML = '';
+            
+            // Smooth auto scroll to top of screen
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        /* ==========================================================================
+           5. BACK NAVIGATION CONTROLLER HANDLE
+           ========================================================================== */
+        function handleNavigationBack() {
+            if (document.getElementById('solutionDetailsView').classList.contains('is-active')) {
+                transitionToListView();
+            } else {
+                history.back();
+            }
+        }
+
+        /* ==========================================================================
+           6. INTERACTIVE ANSWER ACCORDION TOGGLE
+           ========================================================================== */
+        function toggleAnswerContainer() {
+            const answerBox = document.getElementById('answerValueBlock');
+            const toggleButton = document.getElementById('toggleAnswerBtn');
+            const toggleText = document.getElementById('toggleText');
+            
+            if (answerBox.style.display === 'none') {
+                answerBox.style.display = 'flex';
+                toggleButton.setAttribute('aria-expanded', 'true');
+                toggleText.textContent = 'Hide Answer';
+                toggleButton.querySelector('svg').outerHTML = `
+                    <svg style="width:16px; height:16px; fill:currentColor;" viewBox="0 0 24 24">
+                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                    </svg>
+                `;
+            } else {
+                answerBox.style.display = 'none';
+                toggleButton.setAttribute('aria-expanded', 'false');
+                toggleText.textContent = 'Show Answer';
+                toggleButton.querySelector('svg').outerHTML = `
+                    <svg style="width:16px; height:16px; fill:currentColor;" viewBox="0 0 24 24">
+                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12c-2.5 0-4.5-2-4.5-4.5S9.5 7.5 12 7.5s4.5 2 4.5 4.5-2 4.5-4.5 4.5z"/>
+                    </svg>
+                `;
+            }
+        }
+
+        /* ==========================================================================
+           7. RENDER MATHEMATICAL FORMULAS USING KATEX ENGINE
+           ========================================================================== */
+        function initializeMathematicalTypesetting() {
+            if (typeof renderMathInElement === 'function') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+    </script>
+</body>
+</html>
 
