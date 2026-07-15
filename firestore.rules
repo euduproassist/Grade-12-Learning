@@ -1,0 +1,20 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    match /users/{userId} {
+      // 1. Allows the duplicate-email check to query the collection even if sign-in failed
+      allow read: if true; 
+      
+      // 2. Allows the newly registered user to write their document (setDoc) 
+      // and update their verification status/PIN (updateDoc) matching their auth UID.
+      allow create, update: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    match /mail/{mailId} {
+      // 3. Allows the newly registered (but unverified) user to successfully write 
+      // the verification email document to trigger the Firestore Mail Extension.
+      allow create: if request.auth != null;
+    }
+  }
+}
