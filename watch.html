@@ -15,17 +15,17 @@
 
     <style>
         /* ==========================================================================
-           1. CORE DESIGN TOKENS, CSS VARIABLES & THEMING SYSTEM
+           1. CORE DESIGN TOKENS, GLOBAL CSS VARIABLES & THEMING SYSTEM
            ========================================================================== */
         :root {
-            /* Primary Color Palette */
+            /* Primary Brand Color System */
             --brand-primary: #1d68f2;
             --brand-primary-rgb: 29, 104, 242;
             --brand-light: #eff6ff;
             --brand-hover: #1153cb;
             --brand-border: #dbeafe;
             
-            /* Status Indicators */
+            /* UI Status Indicators */
             --success-green: #059669;
             --success-bg: #ecfdf5;
             --warning-amber: #d97706;
@@ -33,7 +33,7 @@
             --danger-red: #dc2626;
             --danger-bg: #fef2f2;
             
-            /* Grayscale & Typography Neutrals */
+            /* Grayscale, Canvas Backgrounds & Typography Neutrals */
             --text-dark: #07122c;
             --text-normal: #1e293b;
             --text-muted: #4b5b75;
@@ -43,14 +43,14 @@
             --border-color: #f1f5f9;
             --border-color-darker: #e2e8f0;
             
-            /* Shadows & Animations */
+            /* Premium Elevation Shadows & Smooth Transitions */
             --shadow-subtle: 0 4px 20px rgba(7, 18, 44, 0.02);
             --shadow-medium: 0 8px 30px rgba(7, 18, 44, 0.04);
             --shadow-lux: 0 20px 40px rgba(7, 18, 44, 0.06);
             --transition-smooth: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             --transition-snappy: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
             
-            /* Layout Borders */
+            /* Layout Rounded Borders */
             --border-radius-xl: 24px;
             --border-radius-lg: 16px;
             --border-radius-md: 12px;
@@ -58,7 +58,7 @@
         }
 
         /* ==========================================================================
-           2. DEFENSIVE STYLING RESET (FORBIDS SIDEWAYS SCROLLING AT ALL TIMES)
+           2. DEFENSIVE LAYOUT RESET SYSTEM (ELIMINATES HORIZONTAL SCROLL ENTIRELY)
            ========================================================================== */
         *, *::before, *::after {
             box-sizing: border-box;
@@ -69,7 +69,7 @@
         html, body {
             width: 100%;
             max-width: 100%;
-            overflow-x: hidden; /* Absolute guard against horizontal scroll */
+            overflow-x: hidden; /* Absolute structural guarantee against horizontal scroll */
             scroll-behavior: smooth;
             -webkit-text-size-adjust: 100%;
             -webkit-tap-highlight-color: transparent;
@@ -89,7 +89,7 @@
             padding: 0;
         }
 
-        /* Responsive Wrapper Container */
+        /* Main Wrapper Containment Block */
         .container {
             width: 100%;
             max-width: 820px;
@@ -101,7 +101,7 @@
         }
 
         /* ==========================================================================
-           3. APPLICATION NAVBAR ARCHITECTURE
+           3. APPLICATION BRANDING NAVBAR ARCHITECTURE
            ========================================================================== */
         .navbar {
             width: 100%;
@@ -195,7 +195,7 @@
         }
 
         /* ==========================================================================
-           4. PAPER HEADER BANNER SYSTEM
+           4. ACADEMIC PAPER BANNER ROW
            ========================================================================== */
         .paper-banner {
             width: 100%;
@@ -272,7 +272,7 @@
         }
 
         /* ==========================================================================
-           5. INTERACTIVE CARDS & CONTENT ARCHITECTURE
+           5. LAYOUT BLOCKS AND MAIN CARDS CONFIGURATION
            ========================================================================== */
         .card {
             background-color: var(--bg-white);
@@ -285,7 +285,7 @@
             box-sizing: border-box;
         }
 
-        /* Question Indicator Bar */
+        /* Question Status Banner */
         .question-bar {
             display: flex;
             align-items: center;
@@ -322,7 +322,7 @@
             text-align: right;
         }
 
-        /* Interactive Section Header Layout */
+        /* Interactive Card Header Elements */
         .answer-header-row {
             display: flex;
             align-items: center;
@@ -355,7 +355,7 @@
         }
 
         /* ==========================================================================
-           6. EXPLANATION INTERACTIVE VIDEO CARD (100% MATCH TO ATTACHED PHOTO)
+           6. INTERACTIVE VIDEO SCREEN WITH EMBEDDED MATH STEPS (PIXEL-PERFECT MATCH)
            ========================================================================== */
         .video-player-card {
             background-color: #f1f5f9;
@@ -370,15 +370,15 @@
         }
 
         .video-screen {
-            background: radial-gradient(circle, #f8fafc 0%, #e2h9f0 100%);
-            background-color: #fbfcfd;
+            background: radial-gradient(circle, #fcfdfe 0%, #f1f5f9 100%);
+            background-color: #fcfdfe;
             border-radius: 8px;
             width: 100%;
             aspect-ratio: 16 / 9;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 20px;
+            padding: 24px;
             position: relative;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
             border: 1.5px solid #cbd5e1;
@@ -398,52 +398,55 @@
             z-index: 10;
         }
 
-        /* Whiteboard Mathematical Steps Configuration */
+        /* Whiteboard Mathematical Sequence Configuration */
         .video-whiteboard-content {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 6px;
             text-align: center;
             color: #0f172a;
             width: 100%;
             height: 100%;
-            padding: 10px 0 40px 0;
+            padding: 12px 0 32px 0;
             box-sizing: border-box;
         }
 
         .whiteboard-title {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             font-weight: 800;
             color: #1e293b;
+            margin-bottom: 4px;
         }
 
         .whiteboard-equation {
-            font-size: 1.5rem;
+            font-size: 1.45rem;
             font-weight: 700;
             color: var(--brand-primary);
-            margin: 4px 0;
+            margin: 2px 0;
         }
 
         .whiteboard-step-text {
             color: var(--danger-red);
             font-size: 0.95rem;
             font-weight: 700;
+            margin: 2px 0;
         }
 
         .whiteboard-box-result {
-            border: 2px solid #0f172a;
+            border: 2px dashed #0f172a;
             padding: 4px 18px;
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             font-weight: 800;
             color: #0f172a;
             margin-top: 6px;
             display: inline-block;
             background-color: #ffffff;
+            border-radius: 4px;
         }
 
-        /* Video Controls Interface overlay styling */
+        /* Video Controls Overlay Frame */
         .video-controls-bar {
             background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
             position: absolute;
@@ -519,7 +522,7 @@
         }
 
         /* ==========================================================================
-           7. VALUE PROPOSITION DESCRIPTION CARD & META DATA
+           7. META DETAILS AND LEARNING VALUATION LISTS
            ========================================================================== */
         .info-card-row {
             display: flex;
@@ -554,7 +557,7 @@
 
         .info-card-text {
             flex: 1;
-            min-width: 0; /* Safeguard breaking text layouts */
+            min-width: 0;
         }
 
         .info-card-text h4 {
@@ -584,7 +587,7 @@
             border: 1px solid var(--border-color-darker);
         }
 
-        /* Key Takeaways Section styling exactly like Mockup checklists */
+        /* Checklist Design Components */
         .takeaways-section {
             margin-top: 12px;
             width: 100%;
@@ -639,7 +642,7 @@
         }
 
         /* ==========================================================================
-           8. ALTERNATIVE LAYOUT OPT-IN BANNER (NAVIGATE TO WRITTEN RESPONSE)
+           8. NAVIGATION REDIRECT FOOTER ACTION CARD
            ========================================================================== */
         .explain-footer-card {
             background-color: var(--bg-white);
@@ -730,7 +733,7 @@
             stroke-width: 2.5;
         }
 
-        /* Footer copyrights */
+        /* Copyright Block */
         .copyright-footer {
             text-align: center;
             font-size: 0.85rem;
@@ -786,10 +789,10 @@
                 align-self: flex-end;
             }
 
-            /* Adapt Video Player size dynamically for narrower viewports */
+            /* Responsive layout configurations for the media player */
             .video-screen {
-                aspect-ratio: 16 / 10;
-                padding: 12px;
+                aspect-ratio: 16 / 11;
+                padding: 14px;
             }
 
             .whiteboard-title {
@@ -797,7 +800,7 @@
             }
 
             .whiteboard-equation {
-                font-size: 1.25rem;
+                font-size: 1.2rem;
             }
 
             .whiteboard-step-text {
@@ -805,7 +808,7 @@
             }
 
             .whiteboard-box-result {
-                font-size: 1.2rem;
+                font-size: 1.15rem;
                 padding: 3px 14px;
             }
 
@@ -901,9 +904,9 @@
         </header>
 
         <section class="card question-bar">
-            <span class="question-label">Question 1.1</span>
-            <span class="question-equation">Solve for $x$: &nbsp;$2x + 3 = 11$</span>
-            <span class="question-marks">(2 Marks)</span>
+            <span class="question-label">Question 1.1.1</span>
+            <span class="question-equation">Solve for $x$: &nbsp;$x^2 - x - 20 = 0$</span>
+            <span class="question-marks">(3 Marks)</span>
         </section>
 
         <main class="card">
@@ -921,17 +924,16 @@
 
             <div class="video-player-card">
                 <div class="video-screen">
-                    <span class="video-header-badge">Question 1.1</span>
+                    <span class="video-header-badge">Question 1.1.1</span>
                     
                     <div class="video-whiteboard-content">
                         <div class="whiteboard-title">Solve for $x$:</div>
-                        <div class="whiteboard-equation">$$2x + 3 = 11$$</div>
-                        <div class="whiteboard-step-text">Step 1: Subtract 3 from both sides.</div>
-                        <div class="whiteboard-equation">$$2x + 3 - 3 = 11 - 3$$</div>
-                        <div class="whiteboard-equation">$$2x = 8$$</div>
-                        <div class="whiteboard-step-text">Step 2: Divide both sides by 2.</div>
-                        <div class="whiteboard-equation">$$\frac{2x}{2} = \frac{8}{2}$$</div>
-                        <div class="whiteboard-box-result">$$x = 4$$</div>
+                        <div class="whiteboard-equation">$$x^2 - x - 20 = 0$$</div>
+                        <div class="whiteboard-step-text">Step 1: Factorise the quadratic equation.</div>
+                        <div class="whiteboard-equation">$$(x - 5)(x + 4) = 0$$</div>
+                        <div class="whiteboard-step-text">Step 2: Solve each factor.</div>
+                        <div class="whiteboard-equation">$$x - 5 = 0 \quad \text{or} \quad x + 4 = 0$$</div>
+                        <div class="whiteboard-box-result">$$x = 5 \quad \text{or} \quad x = -4$$</div>
                     </div>
 
                     <div class="video-controls-bar">
@@ -961,7 +963,7 @@
                 </div>
                 <div class="info-card-text">
                     <h4>What you'll learn in this video</h4>
-                    <p>We'll explain how to isolate $x$ by using inverse operations and show each step clearly.</p>
+                    <p>We'll explain how to factorise quadratic equations by finding matching factors of the constant term.</p>
                 </div>
                 <div class="time-badge">
                     <svg style="width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2.5;" viewBox="0 0 24 24">
@@ -981,21 +983,21 @@
                     <div class="takeaway-checkbox">
                         <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
                     </div>
-                    <span class="takeaway-content">Always undo addition or subtraction first.</span>
+                    <span class="takeaway-content">Find factors of the last term (-20) that add up to the middle coefficient (-1).</span>
                 </div>
 
                 <div class="takeaway-item">
                     <div class="takeaway-checkbox">
                         <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
                     </div>
-                    <span class="takeaway-content">Then undo multiplication or division.</span>
+                    <span class="takeaway-content">Set both factors to zero independently using the zero product property.</span>
                 </div>
 
                 <div class="takeaway-item">
                     <div class="takeaway-checkbox">
                         <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
                     </div>
-                    <span class="takeaway-content">Keep the equation balanced on both sides.</span>
+                    <span class="takeaway-content">Always verify both final solutions by substituting back into the initial equation.</span>
                 </div>
             </section>
 
