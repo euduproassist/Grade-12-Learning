@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Grade 12 Learning - Mathematics 2025 Paper 1</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMath()"></script>
+
+    <style>
+        /* ==========================================================================
+           1. CORE COLOR PALETTE, CSS VARIABLES, & GLOBAL RESET
+           ========================================================================== */
+        :root {
+            --brand-primary: #1d68f2;
+            --brand-light: #eff6ff;
+            --brand-hover: #1153cb;
+            --brand-border: #dbeafe;
+            
+            --text-dark: #07122c;
+            --text-muted: #4b5b75;
+            --bg-canvas: #f8fafc;
+            --bg-white: #ffffff;
+            
+            --border-color: #f1f5f9;
+            --shadow-subtle: 0 4px 20px rgba(7, 18, 44, 0.02);
+            --transition-speed: 0.25s;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden; /* Hard block against global horizontal viewport scrolling */
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-canvas);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Responsive Outer Container */
+        .container {
+            width: 100%;
+            max-width: 820px;
+            padding: 0 16px 60px 16px; /* Fluid horizontal padding */
+        }
+
+        /* ==========================================================================
+           2. NAVIGATION HEADER (FLEXIBLE ROW)
+           ========================================================================== */
+        .navbar {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px 0;
+            margin-bottom: 24px;
+            gap: 12px;
+            flex-wrap: wrap; /* Wraps cleanly on extremely narrow screens */
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--brand-primary);
+        }
+
+        .brand-logo svg {
+            width: 38px;
+            height: 38px;
+            fill: var(--brand-primary);
+            flex-shrink: 0;
+        }
+
+        .brand-title {
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            letter-spacing: -0.4px;
+        }
+
+        .brand-title span {
+            color: var(--brand-primary);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--brand-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .avatar svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--brand-primary);
+        }
+
+        .user-name {
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .chevron-down {
+            width: 14px;
+            height: 14px;
+            stroke: var(--text-dark);
+            stroke-width: 2.5;
+            fill: none;
+            flex-shrink: 0;
+        }
+
+        /* ==========================================================================
+           3. BANNER TITLE SECTION (RESPONSIVE HERO ROW)
+           ========================================================================== */
+        .paper-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            gap: 16px;
+        }
+
+        .banner-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .math-icon-wrapper {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: var(--brand-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .math-icon-wrapper svg {
+            width: 28px;
+            height: 28px;
+            stroke: var(--brand-primary);
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .banner-title-group h1 {
+            font-size: 1.55rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+            color: var(--text-dark);
+        }
+
+        .banner-title-group p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            font-weight: 500;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border: 1px solid var(--brand-primary);
+            color: var(--brand-primary);
+            background: transparent;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color var(--transition-speed) ease, transform 0.1s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .back-button:hover {
+            background-color: var(--brand-light);
+        }
+
+        .back-button:active {
+            transform: scale(0.98);
+        }
+
+        /* ==========================================================================
+           4. CARD SYSTEM (QUESTION & ANSWER CONTAINERS)
+           ========================================================================== */
+        .card {
+            background-color: var(--bg-white);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 16px;
+            box-shadow: var(--shadow-subtle);
+            padding: 24px;
+            margin-bottom: 24px;
+            width: 100%;
+            word-wrap: break-word; /* Prevents overflow of unexpected text */
+        }
+
+        /* Question Banner Row */
+        .question-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 1.05rem;
+            gap: 12px;
+        }
+
+        .question-label {
+            font-weight: 800;
+            color: var(--brand-primary);
+            flex-shrink: 0;
+        }
+
+        .question-equation {
+            font-weight: 600;
+            flex: 1;
+            margin-left: 8px;
+            overflow-x: auto; /* Dynamic formula container protection */
+            white-space: nowrap;
+        }
+
+        .question-marks {
+            color: var(--text-dark);
+            font-weight: 700;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+            text-align: right;
+        }
+
+        /* Answer Section Header Layout */
+        .answer-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            gap: 12px;
+        }
+
+        .section-header {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        .toggle-answer-btn {
+            background: transparent;
+            border: none;
+            color: var(--brand-primary);
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color var(--transition-speed) ease;
+        }
+
+        .toggle-answer-btn:hover {
+            color: var(--brand-hover);
+        }
+
+        /* Answer Output Badge Container */
+        .final-answer-box {
+            border: 1.5px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            display: inline-flex; /* Adapts to exact visual width from image */
+            align-items: center;
+            gap: 16px;
+            max-width: 100%;
+        }
+
+        .final-answer-pill {
+            background-color: #ecfdf5;
+            color: #059669;
+            font-size: 0.85rem;
+            font-weight: 700;
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.2px;
+            flex-shrink: 0;
+        }
+
+        .final-answer-math {
+            border: 1.5px solid var(--brand-primary);
+            border-radius: 8px;
+            padding: 4px 14px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        /* ==========================================================================
+           5. MATH EQUATIONS ADAPTIVE WRAPPERS (ZERO OVERFLOW MECHANISM)
+           ========================================================================== */
+        .solution-math-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 8px 0;
+            width: 100%;
+            overflow-x: auto; /* Fallback internal horizontal scrolling strictly isolated to long formulas */
+            overflow-y: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Responsive Math scaling for narrow viewports */
+        .solution-math-container .katex-display {
+            font-size: 1.15rem;
+            margin: 0.4em 0;
+            max-width: 100%;
+        }
+
+        /* ==========================================================================
+           6. STEP BY STEP SOLUTION ROWS
+           ========================================================================== */
+        .step-row {
+            border-bottom: 1px solid var(--border-color);
+            padding: 24px 0;
+            width: 100%;
+        }
+
+        .step-row:last-child {
+            border-bottom: none;
+            padding-bottom: 8px;
+        }
+
+        .step-header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            gap: 12px;
+        }
+
+        .step-title-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .step-badge-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: var(--brand-primary);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-instruction-text {
+            font-size: 0.98rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .step-pill-indicator {
+            background-color: #eff6ff;
+            color: var(--brand-primary);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        /* ==========================================================================
+           7. INTERACTIVE TIP CARD
+           ========================================================================== */
+        .tip-container {
+            background-color: #f8fafc;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-top: 16px;
+            width: 100%;
+        }
+
+        .tip-icon-box {
+            color: var(--brand-primary);
+            flex-shrink: 0;
+        }
+
+        .tip-icon-box svg {
+            width: 24px;
+            height: 24px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .tip-text-content {
+            font-size: 0.92rem;
+            line-height: 1.5;
+            color: var(--text-muted);
+        }
+
+        .tip-text-content strong {
+            color: var(--text-dark);
+            display: block;
+            margin-bottom: 2px;
+            font-weight: 700;
+        }
+
+        /* ==========================================================================
+           8. VIDEO BRAND EXPLANATION CALLOUT CARD
+           ========================================================================== */
+        .explain-footer-card {
+            background-color: var(--bg-white);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 16px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 24px;
+            gap: 16px;
+            width: 100%;
+        }
+
+        .explain-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .video-thumbnail-avatar {
+            width: 48px;
+            height: 48px;
+            background-color: var(--brand-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--brand-primary);
+            flex-shrink: 0;
+        }
+
+        .video-thumbnail-avatar svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        .explain-text h3 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            margin-bottom: 2px;
+            color: var(--text-dark);
+        }
+
+        .explain-text p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .explain-action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: 1.5px solid var(--brand-primary);
+            background: transparent;
+            color: var(--brand-primary);
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all var(--transition-speed) ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .explain-action-btn:hover {
+            background-color: var(--brand-light);
+            box-shadow: 0 4px 12px rgba(29, 104, 242, 0.05);
+        }
+
+        .explain-action-btn svg {
+            width: 12px;
+            height: 12px;
+            fill: currentColor;
+        }
+
+        /* Footer Copyright Block */
+        .copyright-footer {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-top: 48px;
+            padding-bottom: 24px;
+            font-weight: 500;
+            width: 100%;
+        }
+
+        /* ==========================================================================
+           9. MULTI-DEVICE ULTRA-RESPONSIVE ADAPTATIONS (SMART WRAPPING & CONTAINER QUERIES)
+           ========================================================================== */
+        
+        /* Tablet & iPad Viewports (under 820px) */
+        @media (max-width: 820px) {
+            .container {
+                padding: 0 16px 40px 16px;
+            }
+        }
+
+        /* Mobile Viewports (under 680px) */
+        @media (max-width: 680px) {
+            .navbar {
+                padding: 16px 0;
+                margin-bottom: 16px;
+            }
+
+            .paper-banner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+                margin-bottom: 24px;
+            }
+
+            .back-button {
+                width: 100%;
+                justify-content: center;
+                padding: 12px;
+            }
+
+            .explain-footer-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+                padding: 20px;
+            }
+
+            .explain-left {
+                width: 100%;
+            }
+
+            .explain-action-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 14px;
+            }
+
+            .question-bar {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .question-equation {
+                margin-left: 0;
+                width: 100%;
+                white-space: normal; /* Permits mathematical statement wrapping on small mobile screen */
+            }
+
+            .question-marks {
+                align-self: flex-end;
+            }
+        }
+
+        /* Extra Small Screen Sizes (under 400px - iPhone SE, etc.) */
+        @media (max-width: 400px) {
+            .step-header-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .step-pill-indicator {
+                align-self: flex-end;
+            }
+
+            .final-answer-box {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                gap: 12px;
+            }
+
+            .final-answer-math {
+                width: 100%;
+                text-align: center;
+            }
+
+            .banner-title-group h1 {
+                font-size: 1.35rem;
+            }
+
+            .card {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <nav class="navbar">
+            <a href="#" class="brand-logo" aria-label="Grade 12 Learning Home">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>
+                    <path d="M3.58 12.44L12 17l8.42-4.56v4.61L12 21.61l-8.42-4.56v-4.61z"/>
+                </svg>
+                <span class="brand-title">Grade 12 <span>Learning</span></span>
+            </a>
+            
+            <div class="user-profile" aria-haspopup="true" aria-expanded="false">
+                <div class="avatar">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                </div>
+                <span class="user-name">Hi, Paul</span>
+                <svg class="chevron-down" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </nav>
+
+        <header class="paper-banner">
+            <div class="banner-left">
+                <div class="math-icon-wrapper">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M3 12h3l3-9 4 18 3-12h5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="banner-title-group">
+                    <h1>Mathematics &ndash; 2025 Paper 1</h1>
+                    <p>Select a question to view the answer and watch the step-by-step explanation.</p>
+                </div>
+            </div>
+            <button class="back-button" onclick="history.back();" aria-label="Go back to previous questions list">← Back to Questions</button>
+        </header>
+
+        <section class="card question-bar" aria-labelledby="question-title">
+            <span id="question-title" class="question-label">Question 1.1</span>
+            <span class="question-equation">Solve for $x$: &nbsp;$2x + 3 = 11$</span>
+            <span class="question-marks">(2 Marks)</span>
+        </section>
+
+        <main class="card">
+            
+            <div class="answer-header-row">
+                <h2 class="section-header">Answer</h2>
+                <button class="toggle-answer-btn" id="toggleAnswerBtn" onclick="toggleAnswerContainer()" aria-expanded="true" aria-controls="answerValueBlock">
+                    <svg style="width:16px; height:16px; fill:currentColor;" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                    </svg>
+                    <span id="toggleText">Hide Answer</span>
+                </button>
+            </div>
+
+            <div id="answerValueBlock" class="final-answer-box">
+                <span class="final-answer-pill">Final Answer</span>
+                <span class="final-answer-math">$x = 4$</span>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 24px 0;" aria-hidden="true">
+
+            <h2 class="section-header" style="margin-bottom: 8px;">Step-by-Step Solution</h2>
+
+            <section class="step-row" aria-label="Step 1 Details">
+                <div class="step-header-container">
+                    <div class="step-title-left">
+                        <div class="step-badge-number">1</div>
+                        <h3 class="step-instruction-text">Subtract 3 from both sides to isolate the term with $x$.</h3>
+                    </div>
+                    <span class="step-pill-indicator">Step 1</span>
+                </div>
+                <div class="solution-math-container">
+                    <div>$$2x + 3 = 11$$</div>
+                    <div>$$2x + 3 - 3 = 11 - 3$$</div>
+                    <div>$$2x = 8$$</div>
+                </div>
+            </section>
+
+            <section class="step-row" aria-label="Step 2 Details">
+                <div class="step-header-container">
+                    <div class="step-title-left">
+                        <div class="step-badge-number">2</div>
+                        <h3 class="step-instruction-text">Divide both sides by 2 to solve for $x$.</h3>
+                    </div>
+                    <span class="step-pill-indicator">Step 2</span>
+                </div>
+                <div class="solution-math-container">
+                    <div>$$2x = 8$$</div>
+                    <div>$$\frac{2x}{2} = \frac{8}{2}$$</div>
+                    <div>$$x = 4$$</div>
+                </div>
+            </section>
+
+            <section class="step-row" aria-label="Step 3 Details">
+                <div class="step-header-container">
+                    <div class="step-title-left">
+                        <div class="step-badge-number">3</div>
+                        <h3 class="step-instruction-text">Therefore, the value of $x$ is 4.</h3>
+                    </div>
+                    <span class="step-pill-indicator">Step 3</span>
+                </div>
+                <div class="solution-math-container">
+                    <div>$$x = 4$$</div>
+                </div>
+            </section>
+
+            <aside class="tip-container" aria-label="Helpful hint">
+                <div class="tip-icon-box">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M9 21h6M9 18h6M10 15H14M12 2a7 7 0 0 1 7 7c0 2.5-2 4.85-3 5.5s-1.5 2.5-1.5 2.5H9.5s-.5-1.85-1.5-2.5-3-3-3-5.5a7 7 0 0 1 7-7z" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="tip-text-content">
+                    <strong>Tip</strong>
+                    Always balance both sides of the equation when solving for $x$.
+                </div>
+            </aside>
+
+        </main>
+
+        <section class="explain-footer-card">
+            <div class="explain-left">
+                <div class="video-thumbnail-avatar">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <polygon points="5 3 19 12 5 21 5 3"/>
+                    </svg>
+                </div>
+                <div class="explain-text">
+                    <h3>Want to understand this better?</h3>
+                    <p>Watch a step-by-step video explanation for this question.</p>
+                </div>
+            </div>
+            <button class="explain-action-btn" aria-label="Watch video explanation of answer">
+                Explain Answer
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <polygon points="5 3 19 12 5 21 5 3"/>
+                </svg>
+            </button>
+        </section>
+
+        <footer class="copyright-footer">
+            &copy; 2025 Grade 12 Learning. All rights reserved.
+        </footer>
+
+    </div>
+
+    <script>
+        // Toggle the visibility of the interactive answer block
+        function toggleAnswerContainer() {
+            const answerBox = document.getElementById('answerValueBlock');
+            const toggleButton = document.getElementById('toggleAnswerBtn');
+            const toggleText = document.getElementById('toggleText');
+            
+            if (answerBox.style.display === 'none') {
+                answerBox.style.display = 'flex';
+                toggleButton.setAttribute('aria-expanded', 'true');
+                toggleText.textContent = 'Hide Answer';
+                toggleButton.querySelector('svg').outerHTML = `
+                    <svg style="width:16px; height:16px; fill:currentColor;" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                    </svg>
+                `;
+            } else {
+                answerBox.style.display = 'none';
+                toggleButton.setAttribute('aria-expanded', 'false');
+                toggleText.textContent = 'Show Answer';
+                toggleButton.querySelector('svg').outerHTML = `
+                    <svg style="width:16px; height:16px; fill:currentColor;" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12c-2.5 0-4.5-2-4.5-4.5S9.5 7.5 12 7.5s4.5 2 4.5 4.5-2 4.5-4.5 4.5z"/>
+                    </svg>
+                `;
+            }
+        }
+
+        // Initialize and process KaTeX typesetting formulas
+        function renderMath() {
+            if (typeof renderMathInElement === 'function') {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+    </script>
+</body>
+</html>
