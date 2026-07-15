@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght=0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
@@ -15,17 +15,15 @@
 
     <style>
         /* ==========================================================================
-           1. CORE DESIGN TOKENS & SYSTEM VARIABLES
+           1. CORE DESIGN TOKENS, CSS VARIABLES & THEMING SYSTEM
            ========================================================================== */
         :root {
-            /* Brand Color Palette */
             --brand-primary: #1d68f2;
             --brand-primary-rgb: 29, 104, 242;
             --brand-light: #eff6ff;
             --brand-hover: #1153cb;
             --brand-border: #dbeafe;
             
-            /* Status Colors */
             --success-green: #059669;
             --success-bg: #ecfdf5;
             --warning-amber: #d97706;
@@ -33,7 +31,6 @@
             --danger-red: #dc2626;
             --danger-bg: #fef2f2;
             
-            /* Neutral Color System */
             --text-dark: #07122c;
             --text-normal: #1e293b;
             --text-muted: #4b5b75;
@@ -43,14 +40,12 @@
             --border-color: #f1f5f9;
             --border-color-darker: #e2e8f0;
             
-            /* Elevation & Animation Profiles */
             --shadow-subtle: 0 4px 20px rgba(7, 18, 44, 0.02);
             --shadow-medium: 0 8px 30px rgba(7, 18, 44, 0.04);
             --shadow-lux: 0 20px 40px rgba(7, 18, 44, 0.06);
             --transition-smooth: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             --transition-snappy: 0.15s cubic-bezier(0.16, 1, 0.3, 1);
             
-            /* Responsive Structural Curves */
             --border-radius-xl: 24px;
             --border-radius-lg: 16px;
             --border-radius-md: 12px;
@@ -58,7 +53,7 @@
         }
 
         /* ==========================================================================
-           2. DEFENSIVE GLOBAL LAYOUT RESET (GUARANTEES ZERO SIDEWAYS SCROLL)
+           2. DEFENSIVE GLOBAL RESET (STRICT GUARANTEE OF 0% SIDEWAYS SCROLL)
            ========================================================================== */
         *, *::before, *::after {
             box-sizing: border-box;
@@ -69,7 +64,7 @@
         html, body {
             width: 100%;
             max-width: 100%;
-            overflow-x: hidden; /* Absolute structural shield against sideways scrolling */
+            overflow-x: hidden; 
             scroll-behavior: smooth;
             -webkit-text-size-adjust: 100%;
             -webkit-tap-highlight-color: transparent;
@@ -89,7 +84,6 @@
             padding: 0;
         }
 
-        /* Responsive Safe Outer Shell */
         .container {
             width: 100%;
             max-width: 820px;
@@ -101,7 +95,7 @@
         }
 
         /* ==========================================================================
-           3. APPLICATION NAVBAR NAVIGATION ARCHITECTURE
+           3. APPLICATION NAVBAR
            ========================================================================== */
         .navbar {
             width: 100%;
@@ -150,7 +144,6 @@
             color: var(--brand-primary);
         }
 
-        /* User Identity Profile Controls */
         .user-profile {
             display: flex;
             align-items: center;
@@ -202,7 +195,7 @@
         }
 
         /* ==========================================================================
-           4. ACADEMIC PAPER BANNER ROW
+           4. PAPER HEADER BANNER
            ========================================================================== */
         .paper-banner {
             width: 100%;
@@ -291,7 +284,7 @@
         }
 
         /* ==========================================================================
-           5. ADAPTIVE CARDS FRAMEWORK
+           5. INTERACTIVE CARDS & CONTENT ARCHITECTURE
            ========================================================================== */
         .card {
             background-color: var(--bg-white);
@@ -304,7 +297,6 @@
             box-sizing: border-box;
         }
 
-        /* Premium Question Indicator Bar */
         .question-bar {
             display: flex;
             align-items: center;
@@ -342,7 +334,6 @@
             text-align: right;
         }
 
-        /* Header Layout Inside Active Panels */
         .answer-header-row {
             display: flex;
             align-items: center;
@@ -377,7 +368,7 @@
         }
 
         /* ==========================================================================
-           6. INTERACTIVE VIDEO MEDIA SYSTEM (100% VISUAL ALIGNMENT TO PHOTO)
+           6. EXPLANATION INTERACTIVE VIDEO CARD (100% PHOTO ACCURATE)
            ========================================================================== */
         .video-player-card {
             background-color: #f1f5f9;
@@ -391,7 +382,6 @@
             box-sizing: border-box;
         }
 
-        /* The Board Canvas */
         .video-screen {
             background: radial-gradient(circle, #f8fafc 0%, #e2e8f0 100%);
             border-radius: 8px;
@@ -420,7 +410,6 @@
             z-index: 10;
         }
 
-        /* Mathematical Formulas Container */
         .video-whiteboard-content {
             display: flex;
             flex-direction: column;
@@ -465,7 +454,6 @@
             background-color: #ffffff;
         }
 
-        /* Video Controls Interface overlay styling */
         .video-controls-bar {
             background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
             position: absolute;
@@ -541,7 +529,7 @@
         }
 
         /* ==========================================================================
-           7. META-DETAILS INFO ROW
+           7. INFO CARDS & META ROW
            ========================================================================== */
         .info-card-row {
             display: flex;
@@ -608,7 +596,7 @@
         }
 
         /* ==========================================================================
-           8. CHECKBOX TAKEAWAY SYSTEM (MATCHES MOCKUP DESIGN)
+           8. CHECKBOX TAKEAWAY SYSTEM
            ========================================================================== */
         .takeaways-section {
             margin-top: 12px;
@@ -664,7 +652,7 @@
         }
 
         /* ==========================================================================
-           9. BOTTOM CALL TO ACTION PANEL
+           9. BOTTOM CALL TO ACTION
            ========================================================================== */
         .explain-footer-card {
             background-color: var(--bg-white);
@@ -762,7 +750,6 @@
             stroke-width: 2.5;
         }
 
-        /* copyright details */
         .copyright-footer {
             text-align: center;
             font-size: 0.85rem;
@@ -774,7 +761,7 @@
         }
 
         /* ==========================================================================
-           10. FULL RESPONSIVE VIEPORT ENGINE (0% SIDEWAYS SCROLL GUARANTEE)
+           10. FULLY ADAPTIVE RESPONSIVE RULES (0% SIDEWAYS SCROLL ENGINE)
            ========================================================================== */
         @media (max-width: 820px) {
             .container {
@@ -797,7 +784,7 @@
             }
 
             .user-name {
-                display: none; /* Safely collapse user name on tiny widths */
+                display: none; /* Collapse clean spacing on narrow screens */
             }
 
             .paper-banner {
@@ -834,7 +821,7 @@
                 align-self: flex-end;
             }
 
-            /* Responsive Board Scale Mechanics */
+            /* Rescaling board calculations safely for mobile screens */
             .video-screen {
                 aspect-ratio: auto;
                 height: 260px;
