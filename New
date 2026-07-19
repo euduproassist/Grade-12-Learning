@@ -1,3 +1,37 @@
+name: gumshore_empire
+description: "A new Flutter project."
+
+publish_to: 'none' 
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+assets:
+  - assets/
+
+
+
+
+
+
 AppInspector: Error calling Runtime.evaluate with params {expression:
 dartDevEmbedder.debugger.extensionNames, returnByValue: true, contextId: 23}Error: WipError
 -32000 Cannot find context with specified id
