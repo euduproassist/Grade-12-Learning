@@ -1,74 +1,301 @@
-http://localhost:64463/
+import 'dart:async';
+import 'package:flutter/material.dart';
 
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const GumshoeEmpire());
+}
 
-name: gumshore_empire
-description: "A new Flutter project."
+class GumshoeEmpire extends StatelessWidget {
+  const GumshoeEmpire({super.key});
 
-publish_to: 'none' 
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Gumshoe Empire',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(brightness: Brightness.dark),
+      home: const NapoStudioIntroScreen(),
+    );
+  }
+}
 
-version: 1.0.0+1
+// ==========================================
+// SCREEN 1: Napo Studio Intro
+// ==========================================
+class NapoStudioIntroScreen extends StatefulWidget {
+  const NapoStudioIntroScreen({super.key});
 
-environment:
-  sdk: ^3.12.2
+  @override
+  State<NapoStudioIntroScreen> createState() => _NapoStudioIntroScreenState();
+}
 
-dependencies:
-  flutter:
-    sdk: flutter
+class _NapoStudioIntroScreenState extends State<NapoStudioIntroScreen> with SingleTickerProviderStateMixin {
+  late AnimationController _fadeController;
+  late Animation<double> _fadeAnimation;
 
-  cupertino_icons: ^1.0.8
+  @override
+  void initState() {
+    super.initState();
+    _fadeController = AnimationController(vsync: this, duration: const Duration(milliseconds: 1000));
+    _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_fadeController);
+    _fadeController.forward();
 
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
+    Timer(const Duration(seconds: 3), () async {
+      await _fadeController.reverse();
+      if (mounted) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const GameLoadingScreen()));
+      }
+    });
+  }
 
+  @override
+  void dispose() {
+    _fadeController.dispose();
+    super.dispose();
+  }
 
-  flutter_lints: ^6.0.0
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: SizedBox.expand(
+        child: FadeTransition(
+          opacity: _fadeAnimation,
+          child: Image.asset('assets/napo_studio.png', fit: BoxFit.cover),
+        ),
+      ),
+    );
+  }
+}
 
-flutter:
-  uses-material-design: true
+// ==========================================
+// SCREEN 2: Loading Screen
+// ==========================================
+class GameLoadingScreen extends StatefulWidget {
+  const GameLoadingScreen({super.key});
 
-assets:
-  - assets/
+  @override
+  State<GameLoadingScreen> createState() => _GameLoadingScreenState();
+}
 
+class _GameLoadingScreenState extends State<GameLoadingScreen> {
+  double _progressValue = 0.0;
+  late Timer _loadingTimer;
 
+  @override
+  void initState() {
+    super.initState();
+    _loadingTimer = Timer.periodic(const Duration(milliseconds: 30), (timer) {
+      setState(() {
+        if (_progressValue < 1.0) {
+          _progressValue += 0.01;
+        } else {
+          _loadingTimer.cancel();
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const AuthSelectionScreen()));
+        }
+      });
+    });
+  }
 
+  @override
+  void dispose() {
+    _loadingTimer.cancel();
+    super.dispose();
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
 
+    return Scaffold(
+      body: Stack(
+        children: [
+          SizedBox.expand(child: Image.asset('assets/loading_bg.png', fit: BoxFit.cover)),
+          Positioned(
+            bottom: screenSize.height * 0.18,
+            left: screenSize.width * 0.12,
+            right: screenSize.width * 0.12,
+            child: SizedBox(
+              height: 20,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: LinearProgressIndicator(
+                  value: _progressValue,
+                  backgroundColor: Colors.black45,
+                  valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF4CAF50)),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
-AppInspector: Error calling Runtime.evaluate with params {expression:
-dartDevEmbedder.debugger.extensionNames, returnByValue: true, contextId: 23}Error: WipError
--32000 Cannot find context with specified id
+// ==========================================
+// SCREEN 3: Auth/Login Screen
+// ==========================================
+class AuthSelectionScreen extends StatelessWidget {
+  const AuthSelectionScreen({super.key});
 
-Error calling Runtime.evaluate with params {expression: dartDevEmbedder.debugger.extensionNames,
-returnByValue: true, contextId: 23}
-AppInspector: Error calling Runtime.evaluate with params {expression:
-dartDevEmbedder.debugger.extensionNames, returnByValue: true, contextId: 23}Error: WipError
--32000 Cannot find context with specified id
+  @override
+  Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
 
-Error calling Runtime.evaluate with params {expression: dartDevEmbedder.debugger.extensionNames,
-returnByValue: true, contextId: 23}
+    return Scaffold(
+      body: Stack(
+        children: [
+          SizedBox.expand(child: Image.asset('assets/login_bg.png', fit: BoxFit.cover)),
+          // Invisible touch area over the "PLAY AS GUEST" button artwork
+          Positioned(
+            bottom: screenSize.height * 0.13,
+            left: screenSize.width * 0.1,
+            width: screenSize.width * 0.8,
+            height: 65,
+            child: GestureDetector(
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const GameMenuScreen())),
+              child: Container(color: Colors.transparent),
+            ),
+          ),
+          // Invisible touch area over the "SIGN IN WITH GOOGLE" button artwork
+          Positioned(
+            bottom: screenSize.height * 0.04,
+            left: screenSize.width * 0.1,
+            width: screenSize.width * 0.8,
+            height: 65,
+            child: GestureDetector(
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ProfileSetupScreen())),
+              child: Container(color: Colors.transparent),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
-lib/main.dart:279:47: Error: Expected ')' before this.
-                      mainAxisAlignment: Main => MainAxisAlignment.center,
-                                              ^^
-lib/main.dart:279:42: Error: The getter 'Main' isn't defined for the type 'AuthSelectionScreen'.
- - 'AuthSelectionScreen' is from 'package:gumshore_empire/main.dart' ('lib/main.dart').
-Try correcting the name to the name of an existing getter, or defining a getter or field named
-'Main'.
-                      mainAxisAlignment: Main => MainAxisAlignment.center,
-                                         ^^^^
-Performing hot reload...                                           950ms
-Try again after fixing the above error(s).
-AppInspector: Error calling Runtime.evaluate with params {expression:
-dartDevEmbedder.debugger.extensionNames, returnByValue: true, contextId: 23}Error: WipError
--32000 Cannot find context with specified id
+// ==========================================
+// SCREEN 4: Game Main Menu
+// ==========================================
+class GameMenuScreen extends StatelessWidget {
+  const GameMenuScreen({super.key});
 
-Error calling Runtime.evaluate with params {expression: dartDevEmbedder.debugger.extensionNames,
-returnByValue: true, contextId: 23}
-AppInspector: Error calling Runtime.evaluate with params {expression:
-dartDevEmbedder.debugger.extensionNames, returnByValue: true, contextId: 23}Error: WipError
--32000 Cannot find context with specified id
+  @override
+  Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
 
-Error calling Runtime.evaluate with params {expression: dartDevEmbedder.debugger.extensionNames,
-returnByValue: true, contextId: 23}
+    return Scaffold(
+      body: Stack(
+        children: [
+          SizedBox.expand(child: Image.asset('assets/game_menu.png', fit: BoxFit.cover)),
+          
+          // Invisible PROFILE button hitbox top right
+          Positioned(
+            top: 0,
+            right: 0,
+            width: screenSize.width * 0.25,
+            height: 100,
+            child: SafeArea(
+              child: GestureDetector(
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ProfileSetupScreen())),
+                child: Container(color: Colors.transparent),
+              ),
+            ),
+          ),
 
+          // Invisible PLAY button hitbox
+          Positioned(
+            bottom: screenSize.height * 0.13,
+            left: screenSize.width * 0.15,
+            width: screenSize.width * 0.7,
+            height: 70,
+            child: GestureDetector(
+              onTap: () {}, // Handled by game engine later
+              child: Container(color: Colors.transparent),
+            ),
+          ),
+
+          // Row of invisible hitboxes for CASES, P.I. STORE, SETTINGS
+          Positioned(
+            bottom: screenSize.height * 0.04,
+            left: screenSize.width * 0.05,
+            right: screenSize.width * 0.05,
+            height: 55,
+            child: Row(
+              children: [
+                Expanded(child: GestureDetector(onTap: () {}, child: Container(color: Colors.transparent))),
+                Expanded(child: GestureDetector(onTap: () {}, child: Container(color: Colors.transparent))),
+                Expanded(child: GestureDetector(onTap: () {}, child: Container(color: Colors.transparent))),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ==========================================
+// SCREEN 5: Profile Setup Page
+// ==========================================
+class ProfileSetupScreen extends StatefulWidget {
+  const ProfileSetupScreen({super.key});
+
+  @override
+  State<ProfileSetupScreen> createState() => _ProfileSetupScreenState();
+}
+
+class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
+  final TextEditingController _nameController = TextEditingController(text: "Paul");
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+
+    return Scaffold(
+      body: Stack(
+        children: [
+          SizedBox.expand(child: Image.asset('assets/profile_setup.png', fit: BoxFit.cover)),
+          
+          // Overlaying a borderless text editor directly on top of the clipboard text line
+          Positioned(
+            top: screenSize.height * 0.56,
+            left: screenSize.width * 0.15,
+            right: screenSize.width * 0.15,
+            child: TextField(
+              controller: _nameController,
+              textAlign: TextAlign.left,
+              style: const TextStyle(
+                fontSize: 26, 
+                fontWeight: FontWeight.bold, 
+                color: Color(0xFF1E1E1E), // Matches your ink aesthetic
+                fontFamily: 'Courier',
+              ),
+              decoration: const InputDecoration(border: InputBorder.none),
+            ),
+          ),
+
+          // Invisible BACK button hitbox bottom left
+          Positioned(
+            bottom: screenSize.height * 0.02,
+            left: screenSize.width * 0.02,
+            width: screenSize.width * 0.35,
+            height: 60,
+            child: GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: Container(color: Colors.transparent),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
