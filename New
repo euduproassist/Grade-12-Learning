@@ -14,8 +14,44 @@ class GumshoeEmpire extends StatelessWidget {
     return MaterialApp(
       title: 'Gumshoe Empire',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(brightness: Brightness.dark),
-      home: const NapoStudioIntroScreen(),
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        fontFamily: 'Arial',
+      ),
+      // Wrapping everything in a global responsive frame builder
+      home: const ResponsiveGameFrame(child: NapoStudioIntroScreen()),
+    );
+  }
+}
+
+// ==========================================
+// NEW ARCHITECTURE: Universal Screen Wrapper
+// ==========================================
+class ResponsiveGameFrame extends StatelessWidget {
+  final Widget child;
+  const ResponsiveGameFrame({required this.child, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black, // Sleek black letterbox framing for widescreen
+      body: Center(
+        child: AspectRatio(
+          aspectRatio: 9 / 19.5, // Standard modern mobile aspect ratio (avoids stretching)
+          child: Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.5),
+                  blurRadius: 20,
+                  spreadRadius: 5,
+                )
+              ],
+            ),
+            child: ClipRect(child: child),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -37,16 +73,31 @@ class _NapoStudioIntroScreenState extends State<NapoStudioIntroScreen> with Sing
   @override
   void initState() {
     super.initState();
-    _fadeController = AnimationController(vsync: this, duration: const Duration(milliseconds: 1000));
+    _fadeController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    );
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_fadeController);
     _fadeController.forward();
 
     Timer(const Duration(seconds: 3), () async {
       await _fadeController.reverse();
       if (mounted) {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const GameLoadingScreen()));
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const ResponsiveGameFrame(child: GameLoadingScreen())),
+        );
       }
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    precacheImage(const AssetImage('assets/loading_bg.png'), context);
+    precacheImage(const AssetImage('assets/login_bg.png'), context);
+    precacheImage(const AssetImage('assets/game_menu.png'), context);
+    precacheImage(const AssetImage('assets/profile_setup.png'), context);
   }
 
   @override
@@ -62,7 +113,10 @@ class _NapoStudioIntroScreenState extends State<NapoStudioIntroScreen> with Sing
       body: SizedBox.expand(
         child: FadeTransition(
           opacity: _fadeAnimation,
-          child: Image.asset('assets/napo_studio.png', fit: BoxFit.cover),
+          child: Image.asset(
+            'assets/napo_studio.png',
+            fit: BoxFit.contain, // Prevents cropping the studio logo
+          ),
         ),
       ),
     );
@@ -92,7 +146,10 @@ class _GameLoadingScreenState extends State<GameLoadingScreen> {
           _progressValue += 0.01;
         } else {
           _loadingTimer.cancel();
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const AuthSelectionScreen()));
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (_) => const ResponsiveGameFrame(child: AuthSelectionScreen())),
+          );
         }
       });
     });
@@ -106,130 +163,290 @@ class _GameLoadingScreenState extends State<GameLoadingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-
     return Scaffold(
-      body: Stack(
-        children: [
-          SizedBox.expand(child: Image.asset('assets/loading_bg.png', fit: BoxFit.cover)),
-          Positioned(
-            bottom: screenSize.height * 0.18,
-            left: screenSize.width * 0.12,
-            right: screenSize.width * 0.12,
-            child: SizedBox(
-              height: 20,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: LinearProgressIndicator(
-                  value: _progressValue,
-                  backgroundColor: Colors.black45,
-                  valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF4CAF50)),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final height = constraints.maxHeight;
+          final width = constraints.maxWidth;
+
+          return Stack(
+            children: [
+              SizedBox.expand(
+                child: Image.asset(
+                  'assets/loading_bg.png',
+                  fit: BoxFit.cover,
                 ),
               ),
-            ),
-          ),
-        ],
+              Positioned(
+                bottom: height * 0.12,
+                left: width * 0.08,
+                right: width * 0.08,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'LOADING...',
+                      style: TextStyle(
+                        fontSize: height * 0.03,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        letterSpacing: 1.5,
+                        shadows: const [Shadow(color: Colors.black, blurRadius: 6, offset: Offset(0, 2))],
+                      ),
+                    ),
+                    SizedBox(height: height * 0.015),
+                    Container(
+                      height: height * 0.03,
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF1A120B),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: const Color(0xFF3E2723), width: 2),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: LinearProgressIndicator(
+                          value: _progressValue,
+                          backgroundColor: Colors.transparent,
+                          valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF4CAF50)),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: height * 0.02),
+                    Text(
+                      'Tip: Check every detail. The truth is always in the evidence.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: height * 0.018,
+                        color: Colors.amber.shade100,
+                        fontStyle: FontStyle.italic,
+                        shadows: const [Shadow(color: Colors.black, blurRadius: 4, offset: Offset(0, 1))],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
 }
 
 // ==========================================
-// SCREEN 3: Auth/Login Screen
+// SCREEN 3: Auth Selection Screen
 // ==========================================
 class AuthSelectionScreen extends StatelessWidget {
   const AuthSelectionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-
     return Scaffold(
-      body: Stack(
-        children: [
-          SizedBox.expand(child: Image.asset('assets/login_bg.png', fit: BoxFit.cover)),
-          // Invisible touch area over the "PLAY AS GUEST" button artwork
-          Positioned(
-            bottom: screenSize.height * 0.13,
-            left: screenSize.width * 0.1,
-            width: screenSize.width * 0.8,
-            height: 65,
-            child: GestureDetector(
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const GameMenuScreen())),
-              child: Container(color: Colors.transparent),
-            ),
-          ),
-          // Invisible touch area over the "SIGN IN WITH GOOGLE" button artwork
-          Positioned(
-            bottom: screenSize.height * 0.04,
-            left: screenSize.width * 0.1,
-            width: screenSize.width * 0.8,
-            height: 65,
-            child: GestureDetector(
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ProfileSetupScreen())),
-              child: Container(color: Colors.transparent),
-            ),
-          ),
-        ],
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final height = constraints.maxHeight;
+          final width = constraints.maxWidth;
+
+          return Stack(
+            children: [
+              SizedBox.expand(
+                child: Image.asset(
+                  'assets/login_bg.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Positioned(
+                bottom: height * 0.08,
+                left: width * 0.08,
+                right: width * 0.08,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const ResponsiveGameFrame(child: GameMenuScreen())),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF4CAF50),
+                        minimumSize: Size(double.infinity, height * 0.075),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          side: BorderSide(color: Colors.green.shade800, width: 2),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.person, color: Colors.white, size: height * 0.035),
+                          const SizedBox(width: 12),
+                          Text(
+                            'PLAY AS GUEST',
+                            style: TextStyle(fontSize: height * 0.024, fontWeight: FontWeight.bold, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: height * 0.02),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const ResponsiveGameFrame(child: ProfileSetupScreen())),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        minimumSize: Size(double.infinity, height * 0.075),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          side: BorderSide(color: Colors.grey.shade400, width: 1),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // Using Icon back-up to avoid cross-origin canvas blocked HTTP errors on Flutter Web platforms
+                          Icon(Icons.g_mobiledata, color: Colors.red, size: height * 0.045),
+                          const SizedBox(width: 4),
+                          Text(
+                            'SIGN IN WITH GOOGLE',
+                            style: TextStyle(fontSize: height * 0.022, fontWeight: FontWeight.bold, color: Colors.black87),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
 }
 
 // ==========================================
-// SCREEN 4: Game Main Menu
+// SCREEN 4: Game Main Menu Layout
 // ==========================================
 class GameMenuScreen extends StatelessWidget {
   const GameMenuScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-
     return Scaffold(
-      body: Stack(
-        children: [
-          SizedBox.expand(child: Image.asset('assets/game_menu.png', fit: BoxFit.cover)),
-          
-          // Invisible PROFILE button hitbox top right
-          Positioned(
-            top: 0,
-            right: 0,
-            width: screenSize.width * 0.25,
-            height: 100,
-            child: SafeArea(
-              child: GestureDetector(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ProfileSetupScreen())),
-                child: Container(color: Colors.transparent),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final height = constraints.maxHeight;
+          final width = constraints.maxWidth;
+
+          return Stack(
+            children: [
+              SizedBox.expand(
+                child: Image.asset(
+                  'assets/game_menu.png',
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-          ),
+              // TOP HEADERS: Level & South African Currency Counters
+              Positioned(
+                top: height * 0.05,
+                left: width * 0.04,
+                right: width * 0.04,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                      decoration: BoxDecoration(color: Colors.black87, borderRadius: BorderRadius.circular(8)),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.star, color: Colors.amber, size: 18),
+                          const SizedBox(width: 4),
+                          Text("NOVICE P.I. - Lv 1", style: TextStyle(fontSize: height * 0.015, fontWeight: FontWeight.bold)),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      decoration: BoxDecoration(color: Colors.black87, borderRadius: BorderRadius.circular(8)),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.wallet, color: Colors.green, size: 18),
+                          const SizedBox(width: 6),
+                          Text("R12 450", style: TextStyle(fontSize: height * 0.016, fontWeight: FontWeight.bold, color: Colors.green)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // BOTTOM INTERACTIVE DASHBOARD
+              Positioned(
+                bottom: height * 0.04,
+                left: width * 0.04,
+                right: width * 0.04,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: width * 0.7,
+                      height: height * 0.08,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF4CAF50),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(color: Colors.green.shade900, width: 3),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.play_arrow, color: Colors.white, size: height * 0.045),
+                          const SizedBox(width: 8),
+                          Text('PLAY', style: TextStyle(fontSize: height * 0.035, fontWeight: FontWeight.bold, color: Colors.white)),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: height * 0.02),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(child: _buildMenuButton('CASES', Icons.assignment, const Color(0xFF1565C0), height)),
+                        const SizedBox(width: 6),
+                        Expanded(child: _buildMenuButton('P.I. STORE', Icons.shopping_cart, const Color(0xFFEF6C00), height)),
+                        const SizedBox(width: 6),
+                        Expanded(child: _buildMenuButton('SETTINGS', Icons.settings, const Color(0xFF6A1B9A), height)),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
 
-          // Invisible PLAY button hitbox
-          Positioned(
-            bottom: screenSize.height * 0.13,
-            left: screenSize.width * 0.15,
-            width: screenSize.width * 0.7,
-            height: 70,
-            child: GestureDetector(
-              onTap: () {}, // Handled by game engine later
-              child: Container(color: Colors.transparent),
-            ),
-          ),
-
-          // Row of invisible hitboxes for CASES, P.I. STORE, SETTINGS
-          Positioned(
-            bottom: screenSize.height * 0.04,
-            left: screenSize.width * 0.05,
-            right: screenSize.width * 0.05,
-            height: 55,
-            child: Row(
-              children: [
-                Expanded(child: GestureDetector(onTap: () {}, child: Container(color: Colors.transparent))),
-                Expanded(child: GestureDetector(onTap: () {}, child: Container(color: Colors.transparent))),
-                Expanded(child: GestureDetector(onTap: () {}, child: Container(color: Colors.transparent))),
-              ],
-            ),
+  Widget _buildMenuButton(String label, IconData icon, Color color, double screenHeight) {
+    return Container(
+      height: screenHeight * 0.06,
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.white24, width: 1.5),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: screenHeight * 0.02, color: Colors.white),
+          const SizedBox(width: 4),
+          Text(
+            label,
+            style: TextStyle(fontSize: screenHeight * 0.014, fontWeight: FontWeight.bold, color: Colors.white),
           ),
         ],
       ),
@@ -238,7 +455,7 @@ class GameMenuScreen extends StatelessWidget {
 }
 
 // ==========================================
-// SCREEN 5: Profile Setup Page
+// SCREEN 5: Interactive Profile Setup Page
 // ==========================================
 class ProfileSetupScreen extends StatefulWidget {
   const ProfileSetupScreen({super.key});
@@ -258,43 +475,72 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-
     return Scaffold(
-      body: Stack(
-        children: [
-          SizedBox.expand(child: Image.asset('assets/profile_setup.png', fit: BoxFit.cover)),
-          
-          // Overlaying a borderless text editor directly on top of the clipboard text line
-          Positioned(
-            top: screenSize.height * 0.56,
-            left: screenSize.width * 0.15,
-            right: screenSize.width * 0.15,
-            child: TextField(
-              controller: _nameController,
-              textAlign: TextAlign.left,
-              style: const TextStyle(
-                fontSize: 26, 
-                fontWeight: FontWeight.bold, 
-                color: Color(0xFF1E1E1E), // Matches your ink aesthetic
-                fontFamily: 'Courier',
-              ),
-              decoration: const InputDecoration(border: InputBorder.none),
-            ),
-          ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          final height = constraints.maxHeight;
+          final width = constraints.maxWidth;
 
-          // Invisible BACK button hitbox bottom left
-          Positioned(
-            bottom: screenSize.height * 0.02,
-            left: screenSize.width * 0.02,
-            width: screenSize.width * 0.35,
-            height: 60,
-            child: GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: Container(color: Colors.transparent),
-            ),
-          ),
-        ],
+          return Stack(
+            children: [
+              SizedBox.expand(
+                child: Image.asset(
+                  'assets/profile_setup.png',
+                  fit: BoxFit.cover, // Clean filling aspect
+                ),
+              ),
+              Positioned.fill(
+                child: SafeArea(
+                  child: SingleChildScrollView( // Prevents crashing/overflow when keyboards pop up
+                    padding: EdgeInsets.symmetric(horizontal: width * 0.1),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(height: height * 0.38), // Aligns with the art board's text space
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.85),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: Colors.brown.shade700, width: 2),
+                          ),
+                          child: TextField(
+                            controller: _nameController,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: height * 0.03, 
+                              fontWeight: FontWeight.bold, 
+                              color: Colors.black87,
+                            ),
+                            decoration: const InputDecoration(
+                              hintText: "Enter Name",
+                              border: InputBorder.none,
+                              hintStyle: TextStyle(color: Colors.black38),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: height * 0.35),
+                        Align(
+                          alignment: Alignment.bottomLeft,
+                          child: ElevatedButton.icon(
+                            onPressed: () => Navigator.pop(context),
+                            icon: const Icon(Icons.arrow_back, color: Colors.white),
+                            label: const Text('BACK', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.black87, 
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
